@@ -29,13 +29,14 @@ JEval requires J2SE 1.2 and above.  This release was tested using J2SE 1.5.0_13
 running in Java 1.3 compatibility mode.
 
 Release contents:
-* "src" contains the Java source files for the project
-* "test" contains the Java source files for the project's test suite
+* "src/main" contains the Java source files for the project
+* "src/test" contains the Java source files for the project's test suite
 * "dist" contains the project distribution jar files
 * "lib" contains all third-party libraries needed for running the samples and/or 
 building the framework
-* "docs" contains general documentation and API Javadocs
+* "docs/api" contains general documentation and API Javadocs
 * "samples" contains demo applications
+* "gradle" includes Gradle libraries to support Gradle build script
 
 Ant build scripts for the project and the samples are provided. The standard 
 samples can be built with
@@ -46,7 +47,7 @@ Latest info is available at the public Web site: http://jeval.sourceforge.net
 Project info at the SourceForge site: http://sourceforge.net/projects/jeval/
 
 The JEval project is released under the terms of the Apache Software License 
-(see license.txt). All libraries included in the "lib" directory are subject to 
+(see LICENSE). All libraries included in the "lib" directory are subject to 
 their respective licenses.
 
 3. DISTRIBUTION JAR FILES
