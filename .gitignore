@@ -51,3 +51,7 @@ lint-report.xml
 crashlytics-build.properties
 com_crashlytics_export_strings.xml
 captures/
+
+# Eclipse IDE project files
+.classpath
+.settings/*
