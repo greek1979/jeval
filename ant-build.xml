@@ -1,0 +1,153 @@
+<?xml version="1.0"?>
+
+<!--
+  Build file for JEval.
+
+  This script requires a "lib" directory containing the necessary third party JAR files.
+  See build.properties for the definitions of the properties used in this file.
+-->
+
+<project name="jeval" default="build" basedir=".">
+	<property file="ant-build.properties"/>
+
+	<path id="libs">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+	
+	<target name="usage">
+		<echo message=""/>
+		<echo message="${name} build file"/>
+		<echo message="------------------------------------------------------"/>
+		<echo message=""/>
+		<echo message="The available targets are:"/>
+		<echo message=""/>
+		<echo message="build           --> Build the project, run tests and create release"/>
+		<echo message="clean           --> Clean all output directories"/>
+		<echo message="compile         --> Compile main source tree Java files into class files"/>
+		<echo message="compiletests    --> Compile test source tree java files into class files"/>
+		<echo message="tests           --> Run tests"/>
+		<echo message="compilesamples  --> Compile samples source tree java files into class files"/>
+		<echo message="jar             --> Create JAR file"/>
+		<echo message="javadoc         --> Generate Javadocs for main source tree"/>
+		<echo message="release         --> Generate release zip file"/>
+		<echo message=""/>
+	</target>
+	
+	<target name="build" depends="clean,compile,javadoc,compiletests,tests,compilesamples,jar,release" 
+		description="Build the project, run tests and create release"/>
+	
+	<target name="clean" description="Clean all output dirs">
+		<delete dir="${classes.dir}"/>
+		<delete dir="${dist.dir}"/>
+		<delete dir="${javadocs.dir}"/>		
+		<delete dir="${junit.reports.dir}"/>
+		<delete dir="${release.dir}"/>
+		<delete dir="${testclasses.dir}"/>
+		<delete dir="${samplesclasses.dir}"/>
+	</target>
+
+	<target name="compile" depends="" description="Compile main source tree Java files into class files">
+		<mkdir dir="${classes.dir}"/>
+
+		<javac destdir="${classes.dir}" debug="${debug}"
+				deprecation="false" optimize="false" failonerror="true">
+			<src path="${src.dir}"/>			
+			<classpath refid="libs"/>
+		</javac>
+	</target>
+	
+	<target name="compiletests" depends="compile" description="Compile test source tree java files into class files">
+		<mkdir dir="${testclasses.dir}"/>
+
+		<javac destdir="${testclasses.dir}" debug="${debug}"
+				deprecation="false" optimize="false" failonerror="true">
+			<src path="${test.dir}"/>
+			<classpath refid="libs"/>
+			<classpath location="${classes.dir}"/>
+		</javac>
+	</target>
+
+	<target name="tests" depends="compiletests" description="Run tests">
+		<property name="reports.dir" value="${junit.reports.dir}"/>
+
+		<mkdir dir="${reports.dir}"/>
+
+		<junit forkmode="perBatch" printsummary="yes" haltonfailure="yes" haltonerror="yes">
+			<classpath location="${testclasses.dir}"/>
+			<classpath location="${classes.dir}"/>
+			<classpath refid="libs"/>
+			<formatter type="plain" usefile="false"/>
+			<formatter type="xml"/>
+		</junit>
+	</target>
+	
+	<target name="compilesamples" depends="compile" description="Compile test source tree java files into class files">
+		<mkdir dir="${samplesclasses.dir}"/>
+
+		<javac destdir="${samplesclasses.dir}" 
+debug="${debug}"
+				deprecation="false" optimize="false" failonerror="true">
+			<src path="${samples.dir}"/>
+			<classpath refid="libs"/>
+			<classpath location="${classes.dir}"/>
+		</javac>
+	</target>	
+
+	<target name="jar" depends="compile" description="Create JAR file">
+		<mkdir dir="${dist.dir}"/>
+
+		<jar jarfile="${dist.dir}/jeval.jar">
+			<fileset dir="${classes.dir}">
+				<include name="META-INF/**"/>
+				<include name="net/sourceforge/jeval/**"/>
+			</fileset>
+			<manifest>
+				<attribute name="Implementation-Title" value="${title}"/>
+				<attribute name="Implementation-Version" value="${version}"/>
+				<attribute name="${name}-Version" value="${version}"/>
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="javadoc" description="Generate Javadocs for main source tree">
+
+		<mkdir dir="${javadocs.dir}"/>
+
+		<javadoc sourcepath="${src.dir}" destdir="${javadocs.dir}" windowtitle="${title}"
+				additionalparam="-breakiterator" access="package" author="true" 
+				version="true" use="true" defaultexcludes="true" overview="${src.dir}/overview.html">
+			<doctitle><![CDATA[<h1>${title}</h1>]]></doctitle>
+			<bottom><![CDATA[<i>${copyright}</i>]]></bottom>
+			<classpath refid="libs"/>
+			<packageset dir="${src.dir}">
+				<include name="net/sourceforge/jeval/**"/>
+			</packageset>
+		</javadoc>	
+	</target>
+
+	<target name="release" depends="javadoc,jar" description="Generate release zip file">
+		<mkdir dir="${release.dir}"/>
+
+		<delete file="${release.dir}/${release.zip}"/>
+		<delete file="${release.dir}/${release-with-dependencies.zip}"/>
+
+		<fileset id="main" dir=".">
+			<include name="dist/**"/>
+			<include name="docs/**"/>
+			<include name="lib/**"/>
+			<include name="samples/**"/>
+			<include name="src/**"/>
+			<include name="test/**"/>
+			<include name="*.bat"/>
+			<include name="*.txt"/>
+			<include name="*.xml"/>
+			<include name="*.properties"/>
+		</fileset>
+
+		<zip zipfile="${release.dir}/${release.zip}">
+			<zipfileset refid="main" prefix="${release.path}"/>
+		</zip>
+	</target>
+</project>
