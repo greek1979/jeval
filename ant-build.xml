@@ -51,8 +51,8 @@
 	<target name="compile" depends="" description="Compile main source tree Java files into class files">
 		<mkdir dir="${classes.dir}"/>
 
-		<javac destdir="${classes.dir}" debug="${debug}"
-				deprecation="false" optimize="false" failonerror="true">
+		<javac destdir="${classes.dir}" debug="${debug}" source="1.6" target="1.8"
+				deprecation="false" optimize="true" failonerror="true">
 			<src path="${src.dir}"/>			
 			<classpath refid="libs"/>
 		</javac>
@@ -61,8 +61,8 @@
 	<target name="compiletests" depends="compile" description="Compile test source tree java files into class files">
 		<mkdir dir="${testclasses.dir}"/>
 
-		<javac destdir="${testclasses.dir}" debug="${debug}"
-				deprecation="false" optimize="false" failonerror="true">
+		<javac destdir="${testclasses.dir}" debug="${debug}" source="1.6" target="1.8"
+				deprecation="false" optimize="true" failonerror="true">
 			<src path="${test.dir}"/>
 			<classpath refid="libs"/>
 			<classpath location="${classes.dir}"/>
