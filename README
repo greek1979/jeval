@@ -1,5 +1,5 @@
-JEval, release 0.9.4 beta (December 2008)
-http://jeval.sourceforge.net
+JEval, release 0.9.6 beta (November 2019)
+https://github.com/greek1979/jeval
 ----------------------------------------------
 
 1. INTRODUCTION
@@ -14,19 +14,19 @@ JEval Features:
 * Supports mathematical, Boolean, String and functional expressions.
 * Supports all major mathematical and Boolean operators.
 * Supports custom functions.
-* 39 Math and String functions built in and ready to use.
+* 43 Math and String functions built in and ready to use.
 * Supports nested functions.
 * Supports variables.
 * Allows for custom variable resolver.
 * No reparsing of expressions when variables change.
 * No dependencies to other non-standard Java libraries.
 * JUnit tests.
-* Compatible with J2SE 1.2 and above.
+* Compatible with J2SE 1.6 and above.
 
 2. RELEASE INFO
 
-JEval requires J2SE 1.2 and above.  This release was tested using J2SE 1.5.0_13 
-running in Java 1.3 compatibility mode.
+JEval requires J2SE 1.6 and above.  This release was tested using jdk 1.8.0_221 
+running in Java 1.6 compatibility mode.
 
 Release contents:
 * "src/main" contains the Java source files for the project
@@ -39,23 +39,23 @@ building the framework
 * "gradle" includes Gradle libraries to support Gradle build script
 
 Ant build scripts for the project and the samples are provided. The standard 
-samples can be built with
-the included Ant runtime by invoking the corresponding "build.bat" files (see 
-samples subdirectories).
-
-Latest info is available at the public Web site: http://jeval.sourceforge.net
-Project info at the SourceForge site: http://sourceforge.net/projects/jeval/
+samples can be built with the included Ant runtime by invoking the corresponding
+"ant-build.bat" files (see samples subdirectories).
 
 The JEval project is released under the terms of the Apache Software License 
 (see LICENSE). All libraries included in the "lib" directory are subject to 
 their respective licenses.
+
+Old project site at SourceForge ( http://sourceforge.net/projects/jeval/ ) has
+been deprecated and removed. JEval is superceded by mXparser library for math
+expressions only.
 
 3. DISTRIBUTION JAR FILES
 
 The "dist" directory contains the following distinct jar files for use in 
 applications.
 
-* "JEval" (~68 KB)
+* "JEval" (~86 KB)
 - Contents: JEval API
 
 4. WHERE TO START?

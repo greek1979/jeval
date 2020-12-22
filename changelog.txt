@@ -2,6 +2,15 @@ JEval CHANGELOG
 http://jeval.sourceforge.net
 --------------------
 
+Changes in version 0.9.6 (beta)
+------------------------------------
+
+1.  Supplemented API method signatures with Java generics.
+2.  Upgraded build environment to Ant 1.9 and JUnit 4.
+3.  Added runtime type checks.
+4.  Added new string functions (lines, matches, split).
+5.  Added support for relative index to string functions.
+
 Changes in version 0.9.4 (beta)
 ------------------------------------
 
