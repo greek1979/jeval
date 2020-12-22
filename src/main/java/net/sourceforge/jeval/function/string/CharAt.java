@@ -51,14 +51,16 @@ public class CharAt implements Function {
 	 * @param arguments
 	 *            A string argument that will be converted into one string and
 	 *            one integer argument. The first argument is the source string
-	 *            and the second argument is the index. The string argument(s)
-	 *            HAS to be enclosed in quotes. White space that is not enclosed
+	 *            and the second argument is the index. To get a character at
+	 *            the index relative to the end of the source string, use index
+	 *            with a negative number, where -1 is the last character, -2 is
+	 *            the character before the last one, etc. The string arguments
+	 *            HAVE to be enclosed in quotes. White space that is not enclosed
 	 *            within quotes will be trimmed. Quote characters in the first
 	 *            and last positions of any string argument (after being
 	 *            trimmed) will be removed also. The quote characters used must
 	 *            be the same as the quote characters used by the current
-	 *            instance of Evaluator. If there are multiple arguments, they
-	 *            must be separated by a comma (",").
+	 *            instance of Evaluator. Arguments must be separated by a comma (",").
 	 * 
 	 * @return A character that is located at the specified index. The value is
 	 *         returned as a string.
@@ -83,11 +85,10 @@ public class CharAt implements Function {
 			String argumentOne = FunctionHelper.trimAndRemoveQuoteChars(
 					(String) values.get(0), evaluator.getQuoteCharacter());
 			int index = ((Integer) values.get(1)).intValue();
-
-			char[] character = new char[1];
-			character[0] = argumentOne.charAt(index);
-
-			result = new String(character);
+			if (index < 0) {
+				index = argumentOne.length() + index;
+			}
+			result = String.valueOf(argumentOne.charAt(index));
 		} catch (FunctionException fe) {
 			throw new FunctionException(fe.getMessage(), fe);
 		} catch (Exception e) {

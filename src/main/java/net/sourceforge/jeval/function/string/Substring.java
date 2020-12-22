@@ -52,14 +52,17 @@ public class Substring implements Function {
 	 *            A string argument that will be converted into one string
 	 *            argument and two integer arguments. The first argument is the
 	 *            source string, the second argument is the beginning index and
-	 *            the third argument is the ending index. The string argument(s)
-	 *            HAS to be enclosed in quotes. White space that is not enclosed
-	 *            within quotes will be trimmed. Quote characters in the first
-	 *            and last positions of any string argument (after being
-	 *            trimmed) will be removed also. The quote characters used must
-	 *            be the same as the quote characters used by the current
-	 *            instance of Evaluator. If there are multiple arguments, they
-	 *            must be separated by a comma (",").
+	 *            the third argument is the ending index. To return a substring
+	 *            beginning with a position relative to the end of the string,
+	 *            use negative number for the beginning index: -1 is the last
+	 *            character, -2 is the character before the last one, etc. The   
+	 *            string arguments HAVE to be enclosed in quotes. White space
+	 *            that is not enclosed within quotes will be trimmed. Quote
+	 *            characters in the first and last positions of any string
+	 *            argument (after being trimmed) will be removed also. The
+	 *            quote characters used must be the same as the quote
+	 *            characters used by the current instance of Evaluator.
+	 *            Arguments must be separated by a comma (",").
 	 * 
 	 * @return Returns the specified substring.
 	 * 
@@ -84,6 +87,9 @@ public class Substring implements Function {
 					(String) values.get(0), evaluator.getQuoteCharacter());
 			int beginningIndex = ((Integer) values.get(1)).intValue();
 			int endingIndex = ((Integer) values.get(2)).intValue();
+			if (beginningIndex < 0) {
+				beginningIndex = argumentOne.length() + beginningIndex;
+			}
 			result = argumentOne.substring(beginningIndex, endingIndex);
 		} catch (FunctionException fe) {
 			throw new FunctionException(fe.getMessage(), fe);
