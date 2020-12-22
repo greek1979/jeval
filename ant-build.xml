@@ -116,7 +116,7 @@ debug="${debug}"
 		<mkdir dir="${javadocs.dir}"/>
 
 		<javadoc sourcepath="${src.dir}" destdir="${javadocs.dir}" windowtitle="${title}"
-				additionalparam="-breakiterator" access="package" author="true" 
+				additionalparam="-breakiterator" access="package" author="false" 
 				version="true" use="true" defaultexcludes="true" overview="${src.dir}/overview.html">
 			<doctitle><![CDATA[<h1>${title}</h1>]]></doctitle>
 			<bottom><![CDATA[<i>${copyright}</i>]]></bottom>
