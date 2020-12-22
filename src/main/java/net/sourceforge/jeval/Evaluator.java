@@ -181,13 +181,13 @@ import net.sourceforge.jeval.operator.SubtractionOperator;
 public class Evaluator {
 
 	// Contains all of the operators.
-	private List operators = new ArrayList();
+	private List<Operator> operators = new ArrayList<Operator>();
 
 	// Contains all of the functions in use.
-	private Map functions = new HashMap();
+	private Map<String, Function> functions = new HashMap<String, Function>();
 
 	// Contains all of the variables in use.
-	private Map variables = new HashMap();
+	private Map<String, String> variables = new HashMap<String, String>();
 
 	// The quote character in use.
 	private char quoteCharacter = EvaluationConstants.SINGLE_QUOTE;
@@ -215,13 +215,13 @@ public class Evaluator {
 	private String previousExpression = null;
 
 	// The previous stack of parsed operators
-	private Stack previousOperatorStack = null;
+	private Stack<ExpressionOperator> previousOperatorStack = null;
 
 	// The previous stack of parsed operands.
 	private Stack previousOperandStack = null;
 
 	// The stack of parsed operators
-	private Stack operatorStack = null;
+	private Stack<ExpressionOperator> operatorStack = null;
 
 	// The stack of parsed operands.
 	private Stack operandStack = null;
@@ -327,7 +327,7 @@ public class Evaluator {
 		isValidName(function.getName());
 
 		// Make sure the function name isn't already in use.
-		final Function existingFunction = (Function) functions.get(function
+		final Function existingFunction = functions.get(function
 				.getName());
 
 		if (existingFunction == null) {
@@ -348,7 +348,7 @@ public class Evaluator {
 	 * @return The value for a function in the list of function.
 	 */
 	public Function getFunction(final String functionName) {
-		return (Function) functions.get(functionName);
+		return functions.get(functionName);
 	}
 
 	/**
@@ -382,7 +382,7 @@ public class Evaluator {
 	 * 
 	 * @return the map of functions currently set on this object.
 	 */
-	public Map getFunctions() {
+	public Map<String, Function> getFunctions() {
 		return functions;
 	}
 	
@@ -391,7 +391,7 @@ public class Evaluator {
 	 * 
 	 * @param functions The map of functions for this object.
 	 */
-	public void setFunctions(Map functions) {
+	public void setFunctions(Map<String, Function> functions) {
 		this.functions = functions;
 	}
 
@@ -451,7 +451,7 @@ public class Evaluator {
 		 */
 		if (variableValue == null) {
 
-			variableValue = (String) variables.get(variableName);
+			variableValue = variables.get(variableName);
 		}
 
 		if (variableValue == null) {
@@ -495,7 +495,7 @@ public class Evaluator {
 	 * 
 	 * @return the map of variables currently set on this object.
 	 */
-	public Map getVariables() {
+	public Map<String, String> getVariables() {
 		return variables;
 	}
 	
@@ -504,7 +504,7 @@ public class Evaluator {
 	 * 
 	 * @param variables The map of variables for this object.
 	 */
-	public void setVariables(Map variables) {
+	public void setVariables(Map<String, String> variables) {
 		this.variables = variables;
 	}	
 	
@@ -661,8 +661,8 @@ public class Evaluator {
 	}
 
 	/**
-	 * This method is a simple wrapper around the evaluate(String) method. Its
-	 * purpose is to return a more friendly boolean return value instead of the
+	 * This method is a simple wrapper around the {@link #evaluate(String)} method.
+	 * Its purpose is to return a more friendly boolean return value instead of the
 	 * string "1.0" (for true) and "0.0" (for false) that is normally returned.
 	 * 
 	 * @param expression
@@ -695,8 +695,8 @@ public class Evaluator {
 	}
 
 	/**
-	 * This method is a simple wrapper around the evaluate(String) method. Its
-	 * purpose is to return a more friendly double return value instead of the
+	 * This method is a simple wrapper around the {@link #evaluate(String)} method.
+	 * Its purpose is to return a more friendly double return value instead of the
 	 * string number that is normally returned.
 	 * 
 	 * @param expression
@@ -756,7 +756,7 @@ public class Evaluator {
 			if (parse) {
 				// These stacks will keep track of the operands and operators.
 				operandStack = new Stack();
-				operatorStack = new Stack();
+				operatorStack = new Stack<ExpressionOperator>();
 
 				// Flags to help us keep track of what we are processing.
 				boolean haveOperand = false;
@@ -948,7 +948,7 @@ public class Evaluator {
 	 */
 	private int processOperator(final String expression,
 			final int originalOperatorIndex, final Operator originalOperator,
-			final Stack operatorStack, final Stack operandStack,
+			final Stack<ExpressionOperator> operatorStack, final Stack operandStack,
 			final boolean haveOperand, final Operator unaryOperator)
 			throws EvaluationException {
 
@@ -986,7 +986,7 @@ public class Evaluator {
 			ExpressionOperator stackOperator = null;
 
 			if (operatorStack.size() > 0) {
-				stackOperator = (ExpressionOperator) operatorStack.peek();
+				stackOperator = operatorStack.peek();
 			}
 
 			// Process until we reach an open parentheses.
@@ -995,7 +995,7 @@ public class Evaluator {
 				processTree(operandStack, operatorStack);
 
 				if (operatorStack.size() > 0) {
-					stackOperator = (ExpressionOperator) operatorStack.peek();
+					stackOperator = operatorStack.peek();
 				} else {
 					stackOperator = null;
 				}
@@ -1006,8 +1006,7 @@ public class Evaluator {
 			}
 
 			// Pop the open parameter from the stack.
-			final ExpressionOperator expressionOperator = (ExpressionOperator) operatorStack
-					.pop();
+			final ExpressionOperator expressionOperator = operatorStack.pop();
 
 			if (!(expressionOperator.getOperator() instanceof OpenParenthesesOperator)) {
 				throw new EvaluationException("Expression is invalid.");
@@ -1025,8 +1024,7 @@ public class Evaluator {
 		} else {
 			// Process non-param operator.
 			if (operatorStack.size() > 0) {
-				ExpressionOperator stackOperator = (ExpressionOperator) operatorStack
-						.peek();
+				ExpressionOperator stackOperator = operatorStack.peek();
 
 				while (stackOperator != null
 						&& stackOperator.getOperator().getPrecedence() >= operator
@@ -1034,8 +1032,7 @@ public class Evaluator {
 					processTree(operandStack, operatorStack);
 
 					if (operatorStack.size() > 0) {
-						stackOperator = (ExpressionOperator) operatorStack
-								.peek();
+						stackOperator = operatorStack.peek();
 					} else {
 						stackOperator = null;
 					}
@@ -1142,7 +1139,7 @@ public class Evaluator {
 		}
 
 		// Get the function object.
-		final Function function = (Function) functions.get(functionName);
+		final Function function = functions.get(functionName);
 
 		if (function == null) {
 			throw new EvaluationException("A function is not defined (index="
@@ -1165,7 +1162,7 @@ public class Evaluator {
 	 * @param operatorStack
 	 *            The stack of operators.
 	 */
-	private void processTree(final Stack operandStack, final Stack operatorStack) {
+	private void processTree(final Stack operandStack, final Stack<ExpressionOperator> operatorStack) {
 
 		Object rightOperand = null;
 		Object leftOperand = null;
@@ -1182,7 +1179,7 @@ public class Evaluator {
 		}
 
 		// Get the operator node from the tree.
-		operator = ((ExpressionOperator) operatorStack.pop()).getOperator();
+		operator = operatorStack.pop().getOperator();
 
 		// Build an expressin tree from the nodes.
 		final ExpressionTree tree = new ExpressionTree(this, leftOperand,
@@ -1210,7 +1207,7 @@ public class Evaluator {
 	 *                Thrown is an error is encoutnered while processing the
 	 *                expression.
 	 */
-	private String getResult(final Stack operatorStack,
+	private String getResult(final Stack<ExpressionOperator> operatorStack,
 			final Stack operandStack, final boolean wrapStringFunctionResults)
 			throws EvaluationException {
 
@@ -1361,7 +1358,7 @@ public class Evaluator {
 			// Assumes the operators are installed in order of length.
 			final int numOperators = operators.size();
 			for (int operatorCtr = 0; operatorCtr < numOperators; operatorCtr++) {
-				Operator operator = (Operator) operators.get(operatorCtr);
+				Operator operator = operators.get(operatorCtr);
 
 				if (match != null) {
 					// Look through the operators until we find the
@@ -1482,10 +1479,10 @@ public class Evaluator {
 		}
 
 		// Check if name contains an operator character.
-		final Iterator operatorIterator = operators.iterator();
+		final Iterator<Operator> operatorIterator = operators.iterator();
 
 		while (operatorIterator.hasNext()) {
-			final Operator operator = (Operator) operatorIterator.next();
+			final Operator operator = operatorIterator.next();
 
 			if (name.indexOf(operator.getSymbol()) > -1) {
 				throw new IllegalArgumentException(
@@ -1633,7 +1630,7 @@ public class Evaluator {
 	protected String processNestedFunctions(final String arguments)
 			throws EvaluationException {
 
-		StringBuffer evaluatedArguments = new StringBuffer();
+		StringBuilder evaluatedArguments = new StringBuilder();
 
 		// Process nested function calls.
 		if (arguments.length() > 0) {
@@ -1648,10 +1645,10 @@ public class Evaluator {
 			final ArgumentTokenizer tokenizer = new ArgumentTokenizer(
 					arguments, EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR);
 
-			List evalautedArgumentList = new ArrayList();
-			while (tokenizer.hasMoreTokens()) {
+			List<String> evaluatedArgumentList = new ArrayList<String>();
+			while (tokenizer.hasMoreElements()) {
 
-				String argument = tokenizer.nextToken().trim();
+				String argument = tokenizer.nextElement().trim();
 
 				try {
 					argument = argumentsEvaluator.evaluate(argument);
@@ -1659,10 +1656,10 @@ public class Evaluator {
 					throw new EvaluationException(e.getMessage(), e);
 				}
 
-				evalautedArgumentList.add(argument);
+				evaluatedArgumentList.add(argument);
 			}
 
-			Iterator evaluatedArgumentIterator = evalautedArgumentList
+			Iterator<String> evaluatedArgumentIterator = evaluatedArgumentList
 					.iterator();
 
 			while (evaluatedArgumentIterator.hasNext()) {
@@ -1673,8 +1670,7 @@ public class Evaluator {
 							.append(EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR);
 				}
 
-				String evaluatedArgument = (String) evaluatedArgumentIterator
-						.next();
+				String evaluatedArgument = evaluatedArgumentIterator.next();
 				evaluatedArguments.append(evaluatedArgument);
 			}
 		}

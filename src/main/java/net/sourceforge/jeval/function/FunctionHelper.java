@@ -17,6 +17,7 @@
 package net.sourceforge.jeval.function;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import net.sourceforge.jeval.ArgumentTokenizer;
 
@@ -81,24 +82,24 @@ public class FunctionHelper {
 	 * @param delimiter
 	 *            The delimiter to use while parsing.
 	 * 
-	 * @return An array list of Double values found in the input string.
+	 * @return A list of <code>Double</code> values found in the input string.
 	 * 
 	 * @exception FunctionException
 	 *                Thrown if the string does not properly parse into Double
 	 *                values.
 	 */
-	public static ArrayList getDoubles(final String arguments,
+	public static List<Double> getDoubles(final String arguments,
 			final char delimiter) throws FunctionException {
 
-		ArrayList returnValues = new ArrayList();
+		List<Double> returnValues = new ArrayList<Double>();
 
 		try {
 
 			final ArgumentTokenizer tokenizer = new ArgumentTokenizer(
 					arguments, delimiter);
 
-			while (tokenizer.hasMoreTokens()) {
-				final String token = tokenizer.nextToken().trim();
+			while (tokenizer.hasMoreElements()) {
+				final String token = tokenizer.nextElement().trim();
 				returnValues.add(new Double(token));
 			}
 		} catch (Exception e) {
@@ -118,23 +119,23 @@ public class FunctionHelper {
 	 * @param delimiter
 	 *            The delimiter to use while parsing.
 	 * 
-	 * @return An array list of String values found in the input string.
+	 * @return A list of <code>String</code> values found in the input string.
 	 * 
 	 * @exception FunctionException
 	 *                Thrown if the stirng does not properly parse into String
 	 *                values.
 	 */
-	public static ArrayList getStrings(final String arguments,
+	public static List<String> getStrings(final String arguments,
 			final char delimiter) throws FunctionException {
 
-		final ArrayList returnValues = new ArrayList();
+		final List<String> returnValues = new ArrayList<String>();
 
 		try {
 			ArgumentTokenizer tokenizer = new ArgumentTokenizer(arguments,
 					delimiter);
 
-			while (tokenizer.hasMoreTokens()) {
-				final String token = tokenizer.nextToken();
+			while (tokenizer.hasMoreElements()) {
+				final String token = tokenizer.nextElement();
 				returnValues.add(token);
 			}
 		} catch (Exception e) {
@@ -160,22 +161,22 @@ public class FunctionHelper {
 	 *                Thrown if the stirng does not properly parse into the
 	 *                proper objects.
 	 */
-	public static ArrayList getOneStringAndOneInteger(final String arguments,
+	public static List<Object> getOneStringAndOneInteger(final String arguments,
 			final char delimiter) throws FunctionException {
 
-		ArrayList returnValues = new ArrayList();
+		List<Object> returnValues = new ArrayList<Object>();
 
 		try {
 			final ArgumentTokenizer tokenizer = new ArgumentTokenizer(
 					arguments, delimiter);
 
 			int tokenCtr = 0;
-			while (tokenizer.hasMoreTokens()) {
+			while (tokenizer.hasMoreElements()) {
 				if (tokenCtr == 0) {
-					final String token = tokenizer.nextToken();
+					final String token = tokenizer.nextElement();
 					returnValues.add(token);
 				} else if (tokenCtr == 1) {
-					final String token = tokenizer.nextToken().trim();
+					final String token = tokenizer.nextElement().trim();
 					returnValues.add(new Integer(new Double(token).intValue()));
 				} else {
 					throw new FunctionException("Invalid values in string.");
@@ -200,28 +201,28 @@ public class FunctionHelper {
 	 * @param delimiter
 	 *            The delimiter to use while parsing.
 	 * 
-	 * @return An array list of object values found in the input string.
+	 * @return A list of object values found in the input string.
 	 * 
 	 * @exception FunctionException
 	 *                Thrown if the stirng does not properly parse into the
 	 *                proper objects.
 	 */
-	public static ArrayList getTwoStringsAndOneInteger(final String arguments,
+	public static List<Object> getTwoStringsAndOneInteger(final String arguments,
 			final char delimiter) throws FunctionException {
 
-		final ArrayList returnValues = new ArrayList();
+		final List<Object> returnValues = new ArrayList<Object>();
 
 		try {
 			final ArgumentTokenizer tokenizer = new ArgumentTokenizer(
 					arguments, delimiter);
 
 			int tokenCtr = 0;
-			while (tokenizer.hasMoreTokens()) {
+			while (tokenizer.hasMoreElements()) {
 				if (tokenCtr == 0 || tokenCtr == 1) {
-					final String token = tokenizer.nextToken();
+					final String token = tokenizer.nextElement();
 					returnValues.add(token);
 				} else if (tokenCtr == 2) {
-					final String token = tokenizer.nextToken().trim();
+					final String token = tokenizer.nextElement().trim();
 					returnValues.add(new Integer(new Double(token).intValue()));
 				} else {
 					throw new FunctionException("Invalid values in string.");
@@ -246,28 +247,28 @@ public class FunctionHelper {
 	 * @param delimiter
 	 *            The delimiter to use while parsing.
 	 * 
-	 * @return An array list of object values found in the input string.
+	 * @return A list of object values found in the input string.
 	 * 
 	 * @exception FunctionException
 	 *                Thrown if the stirng does not properly parse into the
 	 *                proper objects.
 	 */
-	public static ArrayList getOneStringAndTwoIntegers(final String arguments,
+	public static List<Object> getOneStringAndTwoIntegers(final String arguments,
 			final char delimiter) throws FunctionException {
 
-		final ArrayList returnValues = new ArrayList();
+		final List<Object> returnValues = new ArrayList<Object>();
 
 		try {
 			final ArgumentTokenizer tokenizer = new ArgumentTokenizer(
 					arguments, delimiter);
 
 			int tokenCtr = 0;
-			while (tokenizer.hasMoreTokens()) {
+			while (tokenizer.hasMoreElements()) {
 				if (tokenCtr == 0) {
-					final String token = tokenizer.nextToken().trim();
+					final String token = tokenizer.nextElement().trim();
 					returnValues.add(token);
 				} else if (tokenCtr == 1 || tokenCtr == 2) {
-					final String token = tokenizer.nextToken().trim();
+					final String token = tokenizer.nextElement().trim();
 					returnValues.add(new Integer(new Double(token).intValue()));
 				} else {
 					throw new FunctionException("Invalid values in string.");

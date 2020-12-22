@@ -16,8 +16,6 @@
 
 package net.sourceforge.jeval;
 
-import net.sourceforge.jeval.EvaluationException;
-import net.sourceforge.jeval.Evaluator;
 import net.sourceforge.jeval.function.Function;
 import net.sourceforge.jeval.function.FunctionConstants;
 import net.sourceforge.jeval.function.FunctionException;

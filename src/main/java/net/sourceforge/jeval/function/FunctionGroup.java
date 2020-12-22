@@ -37,7 +37,7 @@ public interface FunctionGroup {
 	 * 
 	 * @return A list of the functions loaded by this class.
 	 */
-	public List getFunctions();
+	public List<Function> getFunctions();
 
 	/**
 	 * Loads the functions in this function group into an instance of Evaluator.

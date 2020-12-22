@@ -16,7 +16,7 @@
 
 package net.sourceforge.jeval.function.string;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import net.sourceforge.jeval.EvaluationConstants;
 import net.sourceforge.jeval.Evaluator;
@@ -73,7 +73,7 @@ public class EqualsIgnoreCase implements Function {
 		String result = null;
 		String exceptionMessage = "Two string arguments are required.";
 
-		ArrayList strings = FunctionHelper.getStrings(arguments, 
+		List<String> strings = FunctionHelper.getStrings(arguments, 
 				EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR);
 
 		if (strings.size() != 2) {
@@ -82,9 +82,9 @@ public class EqualsIgnoreCase implements Function {
 
 		try {
 			String argumentOne = FunctionHelper.trimAndRemoveQuoteChars(
-					(String) strings.get(0), evaluator.getQuoteCharacter());
+					strings.get(0), evaluator.getQuoteCharacter());
 			String argumentTwo = FunctionHelper.trimAndRemoveQuoteChars(
-					(String) strings.get(1), evaluator.getQuoteCharacter());
+					strings.get(1), evaluator.getQuoteCharacter());
 
 			if (argumentOne.equalsIgnoreCase(argumentTwo)) {
 				result = EvaluationConstants.BOOLEAN_STRING_TRUE;

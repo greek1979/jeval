@@ -42,7 +42,7 @@ public class EvaluationHelper {
 
 			while (oldStringIndex > -1) {
 				// Remove the old string from the expression.
-				final StringBuffer buffer = new StringBuffer(replacedExpression
+				final StringBuilder buffer = new StringBuilder(replacedExpression
 						.substring(0, oldStringIndex)
 						+ replacedExpression.substring(oldStringIndex
 								+ oldString.length()));

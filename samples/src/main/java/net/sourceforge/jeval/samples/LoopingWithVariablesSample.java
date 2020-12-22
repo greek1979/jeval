@@ -39,7 +39,7 @@ public class LoopingWithVariablesSample {
 		 * of data. Let;s pretend this is data coming back from a relational
 		 * database.
 		 */
-		final List table = new ArrayList();
+		final List<List<Long>> table = new ArrayList<List<Long>>();
 		loadData(table, 50, 3);
 
 		/*
@@ -67,7 +67,7 @@ public class LoopingWithVariablesSample {
 			int numRows = table.size();
 			for (int rowNum = 0; rowNum < numRows; rowNum++) {
 
-				List row = (List) table.get(rowNum);
+				List<Long> row = table.get(rowNum);
 				Long a = (Long) row.get(0);
 				Long b = (Long) row.get(1);
 				Long c = (Long) row.get(2);
@@ -125,12 +125,12 @@ public class LoopingWithVariablesSample {
 	 * @param numColumns
 	 *            The number of columns to generate.
 	 */
-	private static void loadData(final List table, final int numRows,
+	private static void loadData(final List<List<Long>> table, final int numRows,
 			final int numColumns) {
 
 		for (int rowNum = 0; rowNum < numRows; rowNum++) {
 
-			final List row = new ArrayList();
+			final List<Long> row = new ArrayList<Long>();
 
 			for (int columnNum = 0; columnNum < numColumns; columnNum++) {
 

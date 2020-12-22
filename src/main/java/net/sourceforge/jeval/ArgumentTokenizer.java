@@ -21,7 +21,7 @@ import java.util.Enumeration;
 /**
  * This class allow for tokenizer methods to be called on a String of arguments.
  */
-public class ArgumentTokenizer implements Enumeration {
+public class ArgumentTokenizer implements Enumeration<String> {
 
 	/**
 	 * The default delimitor.
@@ -29,11 +29,13 @@ public class ArgumentTokenizer implements Enumeration {
 	public final char defaultDelimiter = 
 		EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR;
 
-	// The arguments to be tokenized. This is updated every time the nextToken
-	// method is called.
+	/**
+	 * The arguments to be tokenized. This is updated every time the nextToken
+	 * method is called.
+	 */
 	private String arguments = null;
 
-	// The separator between the arguments.
+	/** The separator between the arguments. */
 	private char delimiter = defaultDelimiter;
 
 	/**
@@ -50,20 +52,11 @@ public class ArgumentTokenizer implements Enumeration {
 	}
 
 	/**
-	 * Indicates if there are more elements.
-	 * 
-	 * @return True if there are more elements and false if not.
-	 */
-	public boolean hasMoreElements() {
-		return hasMoreTokens();
-	}
-
-	/**
-	 * Indicates if there are more tokens.
+	 * Indicates if there are more token.
 	 * 
 	 * @return True if there are more tokens and false if not.
 	 */
-	public boolean hasMoreTokens() {
+	public boolean hasMoreElements() {
 
 		if (arguments.length() > 0) {
 			return true;
@@ -73,20 +66,11 @@ public class ArgumentTokenizer implements Enumeration {
 	}
 
 	/**
-	 * Returns the next element.
-	 * 
-	 * @return The next element.
-	 */
-	public Object nextElement() {
-		return nextToken();
-	}
-
-	/**
 	 * Returns the next token.
 	 * 
 	 * @return The next element.
 	 */
-	public String nextToken() {
+	public String nextElement() {
 		int charCtr = 0;
 		int size = arguments.length();
 		int parenthesesCtr = 0;

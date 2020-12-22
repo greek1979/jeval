@@ -127,6 +127,7 @@ public class ExpressionTree {
 		Double leftResultDouble = null;
 
 		if (leftOperand instanceof ExpressionTree) {
+
 			leftResultString = ((ExpressionTree) leftOperand)
 					.evaluate(wrapStringFunctionResults);
 

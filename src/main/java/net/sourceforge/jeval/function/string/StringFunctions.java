@@ -33,7 +33,7 @@ public class StringFunctions implements FunctionGroup {
 	/**
 	 * Used to store instances of all of the functions loaded by this class.
 	 */
-	private List functions = new ArrayList();
+	private List<Function> functions = new ArrayList<Function>();
 
 	/**
 	 * Default contructor for this class. The functions loaded by this class are
@@ -73,7 +73,7 @@ public class StringFunctions implements FunctionGroup {
 	 * 
 	 * @return A list of the functions loaded by this class.
 	 */
-	public List getFunctions() {
+	public List<Function> getFunctions() {
 		return functions;
 	}
 
@@ -84,10 +84,10 @@ public class StringFunctions implements FunctionGroup {
 	 *            An instance of Evaluator to load the functions into.
 	 */
 	public void load(final Evaluator evaluator) {
-		Iterator functionIterator = functions.iterator();
+		Iterator<Function> functionIterator = functions.iterator();
 
 		while (functionIterator.hasNext()) {
-			evaluator.putFunction((Function) functionIterator.next());
+			evaluator.putFunction(functionIterator.next());
 		}
 	}
 
@@ -99,11 +99,10 @@ public class StringFunctions implements FunctionGroup {
 	 *            An instance of Evaluator to unload the functions from.
 	 */
 	public void unload(final Evaluator evaluator) {
-		Iterator functionIterator = functions.iterator();
+		Iterator<Function> functionIterator = functions.iterator();
 
 		while (functionIterator.hasNext()) {
-			evaluator.removeFunction(((Function) functionIterator.next())
-					.getName());
+			evaluator.removeFunction(functionIterator.next().getName());
 		}
 	}
 }

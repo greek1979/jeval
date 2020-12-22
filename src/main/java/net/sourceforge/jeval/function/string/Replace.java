@@ -16,7 +16,7 @@
 
 package net.sourceforge.jeval.function.string;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import net.sourceforge.jeval.EvaluationConstants;
 import net.sourceforge.jeval.Evaluator;
@@ -75,7 +75,7 @@ public class Replace implements Function {
 		String exceptionMessage = "One string argument and two character "
 				+ "arguments are required.";
 
-		ArrayList values = FunctionHelper.getStrings(arguments, 
+		List<String> values = FunctionHelper.getStrings(arguments, 
 				EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR);
 
 		if (values.size() != 3) {
@@ -84,13 +84,13 @@ public class Replace implements Function {
 
 		try {
 			String argumentOne = FunctionHelper.trimAndRemoveQuoteChars(
-					(String) values.get(0), evaluator.getQuoteCharacter());
+					values.get(0), evaluator.getQuoteCharacter());
 
 			String argumentTwo = FunctionHelper.trimAndRemoveQuoteChars(
-					(String) values.get(1), evaluator.getQuoteCharacter());
+					values.get(1), evaluator.getQuoteCharacter());
 
 			String argumentThree = FunctionHelper.trimAndRemoveQuoteChars(
-					(String) values.get(2), evaluator.getQuoteCharacter());
+					values.get(2), evaluator.getQuoteCharacter());
 
 			char oldCharacter = ' ';
 			if (argumentTwo.length() == 1) {

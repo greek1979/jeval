@@ -16,7 +16,7 @@
 
 package net.sourceforge.jeval.function.string;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import net.sourceforge.jeval.EvaluationConstants;
 import net.sourceforge.jeval.Evaluator;
@@ -72,7 +72,7 @@ public class Substring implements Function {
 		String exceptionMessage = "One string argument and two integer "
 				+ "arguments are required.";
 
-		ArrayList values = FunctionHelper.getOneStringAndTwoIntegers(arguments,
+		List<Object> values = FunctionHelper.getOneStringAndTwoIntegers(arguments,
 				EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR);
 
 		if (values.size() != 3) {

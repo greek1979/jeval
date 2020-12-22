@@ -16,7 +16,7 @@
 
 package net.sourceforge.jeval.function.math;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import net.sourceforge.jeval.EvaluationConstants;
 import net.sourceforge.jeval.Evaluator;
@@ -62,7 +62,7 @@ public class IEEEremainder implements Function {
 			throws FunctionException {
 		Double result = null;
 
-		ArrayList numbers = FunctionHelper.getDoubles(arguments, 
+		List<Double> numbers = FunctionHelper.getDoubles(arguments, 
 				EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR);
 
 		if (numbers.size() != 2) {
@@ -70,8 +70,8 @@ public class IEEEremainder implements Function {
 		}
 
 		try {
-			double argumentOne = ((Double) numbers.get(0)).doubleValue();
-			double argumentTwo = ((Double) numbers.get(1)).doubleValue();
+			double argumentOne = numbers.get(0).doubleValue();
+			double argumentTwo = numbers.get(1).doubleValue();
 			result = new Double(Math.IEEEremainder(argumentOne, argumentTwo));
 		} catch (Exception e) {
 			throw new FunctionException("Two numeric arguments are required.", e);
