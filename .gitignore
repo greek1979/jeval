@@ -54,4 +54,5 @@ captures/
 
 # Eclipse IDE project files
 .classpath
+.project
 .settings/*

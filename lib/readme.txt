@@ -5,12 +5,15 @@ using any of them in your own applications.
 
 * ant/ant.jar
 * ant/ant-junit.jar
+* ant/ant-junit4.jar
 * ant/ant-launcher.jar
-- Ant 1.6.2 (http://ant.apache.org)
+- Ant 1.9.12 (http://ant.apache.org)
 - used to build the project
 
-* junit/junit.jar
-- JUnit 3.8.1 (http://www.junit.org)
+* junit/junit-4.13.1.jar
+- JUnit 4.1.13 (https://junit.org/junit4/)
 - used to build and run the tests
 
-
+* junit/hamcrest-core-1.3.jar
+- Java Hamcrest 1.3 (http://hamcrest.org/JavaHamcrest/)
+- expression evaluator and matcher
