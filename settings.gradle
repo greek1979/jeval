@@ -1,2 +1,2 @@
 rootProject.name = 'jeval'
-include ':src', ':samples'
+include ':src', ':samples:src:main:java'
