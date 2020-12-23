@@ -76,7 +76,8 @@ public class Substring implements Function {
 				+ "arguments are required.";
 
 		List<Object> values = FunctionHelper.getOneStringAndTwoIntegers(arguments,
-				EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR);
+				EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR,
+				evaluator.getQuoteCharacter());
 
 		if (values.size() != 3) {
 			throw new FunctionException(exceptionMessage);

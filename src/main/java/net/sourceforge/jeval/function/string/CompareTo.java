@@ -73,7 +73,8 @@ public class CompareTo implements Function {
 		String exceptionMessage = "Two string arguments are required.";
 
 		List<String> strings = FunctionHelper.getStrings(arguments, 
-				EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR);
+				EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR,
+				evaluator.getQuoteCharacter());
 
 		if (strings.size() != 2) {
 			throw new FunctionException(exceptionMessage);

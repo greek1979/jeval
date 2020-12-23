@@ -19,12 +19,12 @@ package net.sourceforge.jeval;
 import java.util.Enumeration;
 
 /**
- * This class allow for tokenizer methods to be called on a String of arguments.
+ * Helper class with tokenizer methods to be called on a String of arguments.
  */
 public class ArgumentTokenizer implements Enumeration<String> {
 
 	/**
-	 * The default delimitor.
+	 * The default delimiter.
 	 */
 	public final char defaultDelimiter = 
 		EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR;
@@ -38,31 +38,51 @@ public class ArgumentTokenizer implements Enumeration<String> {
 	/** The separator between the arguments. */
 	private char delimiter = defaultDelimiter;
 
+	/** The quote character to use to detect string arguments. */
+	private char quoteCharacter = EvaluationConstants.SINGLE_QUOTE;
+
 	/**
-	 * Constructor that takes a String of arguments and a delimitoer.
+	 * Constructor that takes a String of arguments and a delimiter. For better
+	 * control over string arguments that may include comma or any other symbol
+	 * designated as default delimiter in the context of this evaluator, prefer
+	 * {@link #ArgumentTokenizer(String, char, char)} constructor.
 	 * 
 	 * @param arguments
-	 *            The String of srguments to be tokenized.
+	 *            The String of arguments to be tokenized.
 	 * @param delimiter
 	 *            The argument tokenizer.
 	 */
 	public ArgumentTokenizer(final String arguments, final char delimiter) {
 		this.arguments = arguments;
 		this.delimiter = delimiter;
+		// Use 0x00 character to ignore quotes for backward compatibility. 
+		this.quoteCharacter = '\u0000';
 	}
 
 	/**
-	 * Indicates if there are more token.
+	 * Constructor that takes a String of arguments and a delimiter.
 	 * 
-	 * @return True if there are more tokens and false if not.
+	 * @param arguments
+	 *            The String of arguments to be tokenized.
+	 * @param delimiter
+	 *            The argument tokenizer.
+	 * @param quoteCharacter
+	 *            The quote character to use for extracting strings.
+	 */
+	public ArgumentTokenizer(final String arguments, final char delimiter,
+			final char quoteCharacter) {
+		this.arguments = arguments;
+		this.delimiter = delimiter;
+		this.quoteCharacter = quoteCharacter;
+	}
+
+	/**
+	 * Indicates if there are more tokens.
+	 * 
+	 * @return <code>True</code> if there are more tokens to return.
 	 */
 	public boolean hasMoreElements() {
-
-		if (arguments.length() > 0) {
-			return true;
-		}
-
-		return false;
+		return (arguments.length() > 0);
 	}
 
 	/**
@@ -74,17 +94,22 @@ public class ArgumentTokenizer implements Enumeration<String> {
 		int charCtr = 0;
 		int size = arguments.length();
 		int parenthesesCtr = 0;
+		boolean quotedString = false;
 		String returnArgument = null;
 
 		// Loop until we hit the end of the arguments String.
 		while (charCtr < size) {
-			if (arguments.charAt(charCtr) == '(') {
+			final char ch = arguments.charAt(charCtr);
+			if (ch == quoteCharacter) {
+				quotedString = !quotedString;
+			} else if (quotedString) {
+				// Handle quote string as a single element.
+			} else if (ch == '(') {
 				parenthesesCtr++;
-			} else if (arguments.charAt(charCtr) == ')') {
+			} else if (ch == ')') {
 				parenthesesCtr--;
-			} else if (arguments.charAt(charCtr) == delimiter
+			} else if (ch == delimiter
 					&& parenthesesCtr == 0) {
-
 				returnArgument = arguments.substring(0, charCtr);
 				arguments = arguments.substring(charCtr + 1);
 				break;

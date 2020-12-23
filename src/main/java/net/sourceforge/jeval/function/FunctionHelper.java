@@ -118,6 +118,9 @@ public class FunctionHelper {
 	 *            The arguments of values to parse.
 	 * @param delimiter
 	 *            The delimiter to use while parsing.
+	 * @param quoteCharacter
+	 *            The quote character specified in the evaluation of the
+	 *            expression.
 	 * 
 	 * @return A list of <code>String</code> values found in the input string.
 	 * 
@@ -126,13 +129,13 @@ public class FunctionHelper {
 	 *                values.
 	 */
 	public static List<String> getStrings(final String arguments,
-			final char delimiter) throws FunctionException {
+			final char delimiter, final char quoteCharacter) throws FunctionException {
 
 		final List<String> returnValues = new ArrayList<String>();
 
 		try {
 			ArgumentTokenizer tokenizer = new ArgumentTokenizer(arguments,
-					delimiter);
+					delimiter, quoteCharacter);
 
 			while (tokenizer.hasMoreElements()) {
 				final String token = tokenizer.nextElement();
@@ -154,6 +157,9 @@ public class FunctionHelper {
 	 *            The arguments of values to parse.
 	 * @param delimiter
 	 *            The delimiter to use while parsing.
+	 * @param quoteCharacter
+	 *            The quote character specified in the evaluation of the
+	 *            expression.
 	 * 
 	 * @return An array list of object values found in the input string.
 	 * 
@@ -162,13 +168,13 @@ public class FunctionHelper {
 	 *                proper objects.
 	 */
 	public static List<Object> getOneStringAndOneInteger(final String arguments,
-			final char delimiter) throws FunctionException {
+			final char delimiter, final char quoteCharacter) throws FunctionException {
 
 		List<Object> returnValues = new ArrayList<Object>();
 
 		try {
 			final ArgumentTokenizer tokenizer = new ArgumentTokenizer(
-					arguments, delimiter);
+					arguments, delimiter, quoteCharacter);
 
 			int tokenCtr = 0;
 			while (tokenizer.hasMoreElements()) {
@@ -200,6 +206,9 @@ public class FunctionHelper {
 	 *            The arguments of values to parse.
 	 * @param delimiter
 	 *            The delimiter to use while parsing.
+	 * @param quoteCharacter
+	 *            The quote character specified in the evaluation of the
+	 *            expression.
 	 * 
 	 * @return A list of object values found in the input string.
 	 * 
@@ -208,13 +217,13 @@ public class FunctionHelper {
 	 *                proper objects.
 	 */
 	public static List<Object> getTwoStringsAndOneInteger(final String arguments,
-			final char delimiter) throws FunctionException {
+			final char delimiter, final char quoteCharacter) throws FunctionException {
 
 		final List<Object> returnValues = new ArrayList<Object>();
 
 		try {
 			final ArgumentTokenizer tokenizer = new ArgumentTokenizer(
-					arguments, delimiter);
+					arguments, delimiter, quoteCharacter);
 
 			int tokenCtr = 0;
 			while (tokenizer.hasMoreElements()) {
@@ -246,6 +255,9 @@ public class FunctionHelper {
 	 *            The arguments of values to parse.
 	 * @param delimiter
 	 *            The delimiter to use while parsing.
+	 * @param quoteCharacter
+	 *            The quote character specified in the evaluation of the
+	 *            expression.
 	 * 
 	 * @return A list of object values found in the input string.
 	 * 
@@ -254,13 +266,13 @@ public class FunctionHelper {
 	 *                proper objects.
 	 */
 	public static List<Object> getOneStringAndTwoIntegers(final String arguments,
-			final char delimiter) throws FunctionException {
+			final char delimiter, final char quoteCharacter) throws FunctionException {
 
 		final List<Object> returnValues = new ArrayList<Object>();
 
 		try {
 			final ArgumentTokenizer tokenizer = new ArgumentTokenizer(
-					arguments, delimiter);
+					arguments, delimiter, quoteCharacter);
 
 			int tokenCtr = 0;
 			while (tokenizer.hasMoreElements()) {

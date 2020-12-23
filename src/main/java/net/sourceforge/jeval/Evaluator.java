@@ -1402,8 +1402,9 @@ public class Evaluator {
 	}
 
 	/**
-	 * Determines if the string represents a valid expression string or not.
-	 * Valid expression strings must start and end with a quote character.
+	 * Determines if given text represents a valid string expression or not.
+	 * Valid string expression must start and end with a quote character as
+	 * defined by the current evaluation context.
 	 * 
 	 * @param expressionString
 	 *            The string being evaluated.
@@ -1643,7 +1644,8 @@ public class Evaluator {
 			argumentsEvaluator.setVariableResolver(getVariableResolver());
 
 			final ArgumentTokenizer tokenizer = new ArgumentTokenizer(
-					arguments, EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR);
+					arguments, EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR,
+					argumentsEvaluator.getQuoteCharacter());
 
 			List<String> evaluatedArgumentList = new ArrayList<String>();
 			while (tokenizer.hasMoreElements()) {

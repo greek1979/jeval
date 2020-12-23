@@ -76,7 +76,8 @@ public class Replace implements Function {
 				+ "arguments are required.";
 
 		List<String> values = FunctionHelper.getStrings(arguments, 
-				EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR);
+				EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR,
+				evaluator.getQuoteCharacter());
 
 		if (values.size() != 3) {
 			throw new FunctionException(exceptionMessage);

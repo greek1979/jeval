@@ -75,7 +75,8 @@ public class CharAt implements Function {
 				+ "are required.";
 
 		List<Object> values = FunctionHelper.getOneStringAndOneInteger(arguments,
-				EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR);
+				EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR,
+				evaluator.getQuoteCharacter());
 
 		if (values.size() != 2) {
 			throw new FunctionException(exceptionMessage);

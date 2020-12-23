@@ -92,7 +92,8 @@ public class TextLines implements Function {
 				+ ", one extra string argument is optional.";
 
 		List<String> values = FunctionHelper.getStrings(arguments,
-				EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR);
+				EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR,
+				evaluator.getQuoteCharacter());
 
 		if (values.size() < 3 || values.size() > 4) {
 			throw new FunctionException(exceptionMessage);
