@@ -54,11 +54,11 @@ public class Substring implements Function {
 	 *            source string, the second argument is the beginning index and
 	 *            the third argument is the ending index. To return a substring
 	 *            beginning with a position relative to the end of the string,
-	 *            use negative number for the beginning index: -1 is the last
-	 *            character, -2 is the character before the last one, etc. The   
-	 *            string arguments HAVE to be enclosed in quotes. White space
-	 *            that is not enclosed within quotes will be trimmed. Quote
-	 *            characters in the first and last positions of any string
+	 *            use negative number for the beginning or end index: -1 is the
+	 *            last character, -2 is the character before the last one, etc.
+	 *            The string arguments HAVE to be enclosed in quotes. White
+	 *            space that is not enclosed within quotes will be trimmed.
+	 *            Quote characters in the first and last positions of a string
 	 *            argument (after being trimmed) will be removed also. The
 	 *            quote characters used must be the same as the quote
 	 *            characters used by the current instance of Evaluator.
@@ -90,9 +90,10 @@ public class Substring implements Function {
 			if (beginningIndex < 0) {
 				beginningIndex = argumentOne.length() + beginningIndex;
 			}
+			if (endingIndex < 0) {
+				endingIndex = argumentOne.length() + endingIndex;
+			}
 			result = argumentOne.substring(beginningIndex, endingIndex);
-		} catch (FunctionException fe) {
-			throw new FunctionException(fe.getMessage(), fe);
 		} catch (Exception e) {
 			throw new FunctionException(exceptionMessage, e);
 		}

@@ -87,8 +87,6 @@ public class IndexOf implements Function {
 					(String) values.get(1), evaluator.getQuoteCharacter());
 			int index = ((Integer) values.get(2)).intValue();
 			result = new Integer(argumentOne.indexOf(argumentTwo, index));
-		} catch (FunctionException fe) {
-			throw new FunctionException(fe.getMessage(), fe);
 		} catch (Exception e) {
 			throw new FunctionException(exceptionMessage, e);
 		}

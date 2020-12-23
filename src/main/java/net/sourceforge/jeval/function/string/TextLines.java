@@ -135,8 +135,6 @@ public class TextLines implements Function {
 				}
 				result.append(lines[i]);
 			}
-		} catch (FunctionException fe) {
-			throw new FunctionException(fe.getMessage(), fe);
 		} catch (Exception e) {
 			throw new FunctionException(exceptionMessage, e);
 		}

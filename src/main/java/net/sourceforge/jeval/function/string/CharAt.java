@@ -89,8 +89,6 @@ public class CharAt implements Function {
 				index = argumentOne.length() + index;
 			}
 			result = String.valueOf(argumentOne.charAt(index));
-		} catch (FunctionException fe) {
-			throw new FunctionException(fe.getMessage(), fe);
 		} catch (Exception e) {
 			throw new FunctionException(exceptionMessage, e);
 		}

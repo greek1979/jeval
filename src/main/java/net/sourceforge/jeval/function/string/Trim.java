@@ -73,8 +73,6 @@ public class Trim implements Function {
 					stringValue, evaluator.getQuoteCharacter());
 
 			result = argumentOne.trim();
-		} catch (FunctionException fe) {
-			throw new FunctionException(fe.getMessage(), fe);
 		} catch (Exception e) {
 			throw new FunctionException(exceptionMessage, e);
 		}

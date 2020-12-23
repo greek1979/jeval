@@ -85,8 +85,6 @@ public class CompareTo implements Function {
 			String argumentTwo = FunctionHelper.trimAndRemoveQuoteChars(
 					strings.get(1), evaluator.getQuoteCharacter());
 			result = new Integer(argumentOne.compareTo(argumentTwo));
-		} catch (FunctionException fe) {
-			throw new FunctionException(fe.getMessage(), fe);
 		} catch (Exception e) {
 			throw new FunctionException(exceptionMessage, e);
 		}

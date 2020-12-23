@@ -72,8 +72,6 @@ public class ToLowerCase implements Function {
 					stringValue, evaluator.getQuoteCharacter());
 
 			result = argumentOne.toLowerCase();
-		} catch (FunctionException fe) {
-			throw new FunctionException(fe.getMessage(), fe);
 		} catch (Exception e) {
 			throw new FunctionException(exceptionMessage, e);
 		}

@@ -107,8 +107,6 @@ public class Replace implements Function {
 			}
 
 			result = argumentOne.replace(oldCharacter, newCharacter);
-		} catch (FunctionException fe) {
-			throw new FunctionException(fe.getMessage(), fe);
 		} catch (Exception e) {
 			throw new FunctionException(exceptionMessage, e);
 		}

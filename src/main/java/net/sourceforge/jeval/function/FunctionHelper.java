@@ -122,7 +122,7 @@ public class FunctionHelper {
 	 * @return A list of <code>String</code> values found in the input string.
 	 * 
 	 * @exception FunctionException
-	 *                Thrown if the stirng does not properly parse into String
+	 *                Thrown if the string does not properly parse into String
 	 *                values.
 	 */
 	public static List<String> getStrings(final String arguments,
@@ -158,7 +158,7 @@ public class FunctionHelper {
 	 * @return An array list of object values found in the input string.
 	 * 
 	 * @exception FunctionException
-	 *                Thrown if the stirng does not properly parse into the
+	 *                Thrown if the string does not properly parse into the
 	 *                proper objects.
 	 */
 	public static List<Object> getOneStringAndOneInteger(final String arguments,
@@ -204,7 +204,7 @@ public class FunctionHelper {
 	 * @return A list of object values found in the input string.
 	 * 
 	 * @exception FunctionException
-	 *                Thrown if the stirng does not properly parse into the
+	 *                Thrown if the string does not properly parse into the
 	 *                proper objects.
 	 */
 	public static List<Object> getTwoStringsAndOneInteger(final String arguments,
@@ -250,7 +250,7 @@ public class FunctionHelper {
 	 * @return A list of object values found in the input string.
 	 * 
 	 * @exception FunctionException
-	 *                Thrown if the stirng does not properly parse into the
+	 *                Thrown if the string does not properly parse into the
 	 *                proper objects.
 	 */
 	public static List<Object> getOneStringAndTwoIntegers(final String arguments,

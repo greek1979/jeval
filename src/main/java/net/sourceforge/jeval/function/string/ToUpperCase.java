@@ -72,8 +72,6 @@ public class ToUpperCase implements Function {
 					stringValue, evaluator.getQuoteCharacter());
 
 			result = argumentOne.toUpperCase();
-		} catch (FunctionException fe) {
-			throw new FunctionException(fe.getMessage(), fe);
 		} catch (Exception e) {
 			throw new FunctionException(exceptionMessage, e);
 		}

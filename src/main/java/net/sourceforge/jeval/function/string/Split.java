@@ -120,8 +120,6 @@ public class Split implements Function {
 					result.append(argumentOne.substring(i, j));
 				}
 			}
-		} catch (FunctionException fe) {
-			throw new FunctionException(fe.getMessage(), fe);
 		} catch (Exception e) {
 			throw new FunctionException(exceptionMessage, e);
 		}
