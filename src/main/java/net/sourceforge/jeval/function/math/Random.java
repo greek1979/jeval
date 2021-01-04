@@ -50,8 +50,8 @@ public class Random implements Function {
 	 * @return A random double value greater than or equal to 0.0 and less than
 	 *         1.0.
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if the argument(s) are not valid for this function.
+	 * @throws FunctionException
+	 *         if the argument(s) are not valid for this function
 	 */
 	public FunctionResult execute(final Evaluator evaluator, final String arguments)
 			throws FunctionException {

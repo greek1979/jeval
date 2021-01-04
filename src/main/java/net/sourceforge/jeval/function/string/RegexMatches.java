@@ -74,13 +74,13 @@ public class RegexMatches implements Function {
 	 *         respresents a Boolean value that is compatible with the Boolean
 	 *         operators used by Evaluator.
 	 *
-	 * @exception FunctionException
-	 *                Thrown if the argument(s) are not valid for this function.
+	 * @throws FunctionException
+	 *         if the argument(s) are not valid for this function
 	 */
 	public FunctionResult execute(final Evaluator evaluator, final String arguments)
 			throws FunctionException {
 		String result = null;
-		String exceptionMessage = "Two string arguments are required.";
+		String exceptionMessage = "Two string arguments are required";
 
 		List<String> strings = FunctionHelper.getStrings(arguments,
 				EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR,

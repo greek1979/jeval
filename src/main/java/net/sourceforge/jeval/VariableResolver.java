@@ -18,9 +18,10 @@ public interface VariableResolver {
      *            The name of the variable to return the variable value for.
      *
      * @return A variable value for the specified variable name. If the variable
-     *         name can not be resolved, then null should be returned.
+     *         name cannot be resolved, then null should be returned.
      *         
-     * @throws Can throw a FunctionException if needed.
+     * @throws FunctionException
+     *         if variable name cannot be properly resolved or translated
      */
     public String resolveVariable(String variableName) throws FunctionException;
 }

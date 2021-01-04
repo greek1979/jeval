@@ -50,8 +50,8 @@ public class ToDegrees implements Function {
 	 * 
 	 * @return A measurement of the argument in degrees.
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if the argument(s) are not valid for this function.
+	 * @throws FunctionException
+	 *         if the argument(s) are not valid for this function
 	 */
 	public FunctionResult execute(Evaluator evaluator, String arguments)
 			throws FunctionException {
@@ -61,7 +61,7 @@ public class ToDegrees implements Function {
 		try {
 			number = new Double(arguments);
 		} catch (Exception e) {
-			throw new FunctionException("Invalid argument.", e);
+			throw new FunctionException("Invalid argument", e);
 		}
 
 		result = new Double(Math.toDegrees(number.doubleValue()));

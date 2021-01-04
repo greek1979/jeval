@@ -51,8 +51,8 @@ public class Rint implements Function {
 	 * @return A double value that is closest in value to the argument and is
 	 *         equal to a mathematical integer.
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if the argument(s) are not valid for this function.
+	 * @throws FunctionException
+	 *         if the argument(s) are not valid for this function
 	 */
 	public FunctionResult execute(final Evaluator evaluator, final String arguments)
 			throws FunctionException {
@@ -62,7 +62,7 @@ public class Rint implements Function {
 		try {
 			number = new Double(arguments);
 		} catch (Exception e) {
-			throw new FunctionException("Invalid argument.", e);
+			throw new FunctionException("Invalid argument", e);
 		}
 
 		result = new Double(Math.rint(number.doubleValue()));

@@ -30,6 +30,8 @@ public interface Operator {
 	 *            The left operand being evaluated.
 	 * @param rightOperand
 	 *            The right operand being evaluated.
+	 * 
+	 * @return The value of the evaluated operands as <code>double</code>
 	 */
 	public abstract double evaluate(double leftOperand, double rightOperand);
 
@@ -41,11 +43,10 @@ public interface Operator {
 	 * @param rightOperand
 	 *            The right operand being evaluated.
 	 * 
-	 * @return String The value of the evaluated operands.
+	 * @return The value of the evaluated operands as <code>String</code>
 	 * 
-	 * @exception EvaluateException
-	 *                Thrown when an error is found while evaluating the
-	 *                expression.
+	 * @throws EvaluationException
+	 *         when an error is found while evaluating the expression
 	 */
 	public abstract String evaluate(final String leftOperand,
 			final String rightOperand) throws EvaluationException;
@@ -55,6 +56,8 @@ public interface Operator {
 	 * 
 	 * @param operand
 	 *            The operand being evaluated.
+	 * 
+	 * @return The value of the evaluated operands as <code>double</code>
 	 */
 	public abstract double evaluate(final double operand);
 

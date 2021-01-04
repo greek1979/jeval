@@ -41,20 +41,20 @@ public class Eval implements Function {
 
 	/**
 	 * Executes the function for the specified argument. This method is called
-	 * internally by Evaluator.
+	 * internally by Evaluator. <br><br><b>Note #1:</b> THE STRING ARGUMENT
+	 * SHOULD NOT BE ENCLOSED IN QUOTES OR THE EXPRESSION MAY NOT BE EVALUATED
+	 * CORRECTLY. <br><b>Note #2:</b> Function calls are valid within the eval
+	 * function.
 	 * 
 	 * @param evaluator
 	 *            An instance of evaluator.
 	 * @param arguments
-	 *            A string expression that is compatible with Evaluator. *** THE
-	 *            STRING ARGUMENT SHOULD NOT BE ENCLOSED IN QUOTES OR THE
-	 *            EXPRESSION MAY NOT BE EVALUATED CORRECTLY.*** *** FUNCTION
-	 *            CALLS ARE VALID WITHIN THE EVAL FUNCTION. ***
+	 *            A string expression that is compatible with Evaluator. 
 	 * 
 	 * @return The evaluated result fot the input expression.
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if the argument(s) are not valid for this function.
+	 * @throws FunctionException
+	 *         if the argument(s) are not valid for this function
 	 */
 	public FunctionResult execute(final Evaluator evaluator,
 			final String arguments) throws FunctionException {

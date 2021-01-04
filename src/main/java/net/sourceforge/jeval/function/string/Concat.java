@@ -63,13 +63,13 @@ public class Concat implements Function {
 	 * @return Returns a strng that is made up the first string, followed by the
 	 *         second string.
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if the argument(s) are not valid for this function.
+	 * @throws FunctionException
+	 *         if the argument(s) are not valid for this function
 	 */
 	public FunctionResult execute(final Evaluator evaluator, final String arguments)
 			throws FunctionException {
 		String result = null;
-		String exceptionMessage = "Two string arguments are required.";
+		String exceptionMessage = "Two string arguments are required";
 
 		List<String> strings = FunctionHelper.getStrings(arguments, 
 				EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR,

@@ -51,8 +51,8 @@ public class Exp implements Function {
 	 * @return The the value e to the argument power, where e is the base of the
 	 *         natural logarithms
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if the argument(s) are not valid for this function.
+	 * @throws FunctionException
+	 *         if the argument(s) are not valid for this function
 	 */
 	public FunctionResult execute(final Evaluator evaluator, final String arguments)
 			throws FunctionException {
@@ -62,7 +62,7 @@ public class Exp implements Function {
 		try {
 			number = new Double(arguments);
 		} catch (Exception e) {
-			throw new FunctionException("Invalid argument.", e);
+			throw new FunctionException("Invalid argument", e);
 		}
 
 		result = new Double(Math.exp(number.doubleValue()));

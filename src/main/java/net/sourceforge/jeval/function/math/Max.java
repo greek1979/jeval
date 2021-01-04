@@ -53,8 +53,8 @@ public class Max implements Function {
 	 * 
 	 * @return The greater of two values.
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if the argument(s) are not valid for this function.
+	 * @throws FunctionException
+	 *         if the argument(s) are not valid for this function
 	 */
 	public FunctionResult execute(final Evaluator evaluator, final String arguments)
 			throws FunctionException {
@@ -64,7 +64,7 @@ public class Max implements Function {
 				EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR);
 
 		if (numbers.size() != 2) {
-			throw new FunctionException("Two numeric arguments are required.");
+			throw new FunctionException("Two numeric arguments are required");
 		}
 
 		try {
@@ -72,7 +72,7 @@ public class Max implements Function {
 			double argumentTwo = numbers.get(1).doubleValue();
 			result = new Double(Math.max(argumentOne, argumentTwo));
 		} catch (Exception e) {
-			throw new FunctionException("Two numeric arguments are required.", e);
+			throw new FunctionException("Two numeric arguments are required", e);
 		}
 
 		return new FunctionResult(result.toString(), 

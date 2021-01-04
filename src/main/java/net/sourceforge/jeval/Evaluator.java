@@ -74,11 +74,11 @@ import net.sourceforge.jeval.operator.SubtractionOperator;
  * <li>- unary minus</li>
  * <li>= equal (for numbers and strings)</li>
  * <li>!= not equal (for numbers and strings)</li>
- * <li>< less than (for numbers and strings)</li>
- * <li><= less than or equal (for numbers and strings)</li>
- * <li>> greater than (for numbers and strings)</li>
- * <li>>= greater than or equal (for numbers and strings)</li>
- * <li>&& boolean and</li>
+ * <li>&lt; less than (for numbers and strings)</li>
+ * <li>&lt;= less than or equal (for numbers and strings)</li>
+ * <li>&gt; greater than (for numbers and strings)</li>
+ * <li>&gt;= greater than or equal (for numbers and strings)</li>
+ * <li>&amp;&amp; boolean and</li>
  * <li>|| boolean or</li>
  * <li>! boolean not</li>
  * </ul>
@@ -139,19 +139,19 @@ import net.sourceforge.jeval.operator.SubtractionOperator;
  * <li>+ unary plus, - unary minus, ! boolean not</li>
  * <li>* multiplication, / division, % modulus</li>
  * <li>+ addition, - subtraction</li>
- * <li>< less than, <= less than or equal, > greater than, >= greater than or
- * equal</li>
+ * <li>&lt; less than, &lt;= less than or equal, &gt; greater than, &gt;= greater
+ * than or equal</li>
  * <li>= equal, != not equal</li>
- * <li>&& boolean and</li>
+ * <li>&amp;&amp; boolean and</li>
  * <li>|| boolean or</li>
  * </ul>
- * Function and variable names can not break any of the following rules:<br>
+ * Function and variable names may not break any of the following rules:<br>
  * <ul>
- * <li>can not start with a number</li>
- * <li>can not contain an operator (see the above list of operators)/li>
- * <li>can not contain a quote character - single or double/li>
- * <li>can not contain a brace character - open or closed/li>
- * <li>can not contain one of the following special characters: #, ~ , ^ !</li>
+ * <li>cannot start with a number</li>
+ * <li>cannot contain an operator (see the above list of operators)</li>
+ * <li>cannot contain a quote character - single or double</li>
+ * <li>cannot contain a brace character - open or closed</li>
+ * <li>cannot contain one of the following special characters: #, ~ , ^ !</li>
  * </ul>
  * Other Notes:
  * <ul>
@@ -159,7 +159,7 @@ import net.sourceforge.jeval.operator.SubtractionOperator;
  * <li>Allows for the quote character (single or double) to be specified at run
  * time. Quote characters are required for specifying string values.</li>
  * <li>Expressions can contain different types of expressions within the same
- * expression. However, Numeric and string types can not be mixed in a left /
+ * expression. However, Numeric and string types cannot be mixed in a left /
  * right operand pair.</li>
  * <li>An expression can be parsed before being evaluated by calling the parse()
  * method. This may save on response time if parsing takes more than a few 
@@ -172,7 +172,7 @@ import net.sourceforge.jeval.operator.SubtractionOperator;
  * <li>Nested functions calls are supported. Nested function support can be
  * turned off to improve performance. Custom functions can be coded to handle
  * nested calls instead if desired.</li>
- * <li>The string used to start variables, "#{", can not appear in an
+ * <li>The string used to start variables, "#{", cannot appear in an
  * expression.
  * <li>See the evaluate methods in this class, JUnit tests and samples for more
  * details.</li>
@@ -255,9 +255,8 @@ public class Evaluator {
 	 * @param processNestedFunctions
 	 *            Indicates if nested function calls should be processed or not.
 	 * 
-	 * @exception IllegalArgumentException
-	 *                Thrown when the quote character is not a valid quote
-	 *                character.
+	 * @throws IllegalArgumentException
+	 *         when the quote character is not a valid quote character
 	 */
 	public Evaluator(final char quoteCharacter,
 			final boolean loadMathVariables, final boolean loadMathFunctions,
@@ -298,16 +297,15 @@ public class Evaluator {
 	 * @param quoteCharacter
 	 *            The quote character to use when evaluating expressions.
 	 * 
-	 * @exception IllegalArgumentException
-	 *                Thrown when the quote character is not a valid quote
-	 *                character.
+	 * @throws IllegalArgumentException
+	 *         when the quote character is not a valid quote character
 	 */
 	public void setQuoteCharacter(final char quoteCharacter) {
 		if (quoteCharacter == EvaluationConstants.SINGLE_QUOTE
 				|| quoteCharacter == EvaluationConstants.DOUBLE_QUOTE) {
 			this.quoteCharacter = quoteCharacter;
 		} else {
-			throw new IllegalArgumentException("Invalid quote character.");
+			throw new IllegalArgumentException("Invalid quote character");
 		}
 	}
 
@@ -318,9 +316,9 @@ public class Evaluator {
 	 * @param function
 	 *            The function being added.
 	 * 
-	 * @exception IllegalArgumentException
-	 *                Thrown when the function name is not valid or the function
-	 *                name is already in use.
+	 * @throws IllegalArgumentException
+	 *         when the function name is not valid or the function name is
+	 *         already in use
 	 */
 	public void putFunction(final Function function) {
 		// Make sure the function name is valid.
@@ -334,12 +332,12 @@ public class Evaluator {
 			functions.put(function.getName(), function);
 		} else {
 			throw new IllegalArgumentException("A function with the same name "
-					+ "already exists.");
+					+ "already exists");
 		}
 	}
 
 	/**
-	 * Returns a funtion from the list of functions. If the function can not be
+	 * Returns a funtion from the list of functions. If the function is not
 	 * found in the list of functions, then null will be returned.
 	 * 
 	 * @param functionName
@@ -362,7 +360,7 @@ public class Evaluator {
 		if (functions.containsKey(functionName)) {
 			functions.remove(functionName);
 		} else {
-			throw new IllegalArgumentException("The function does not exist.");
+			throw new IllegalArgumentException("The function does not exist");
 		}
 	}
 
@@ -415,7 +413,7 @@ public class Evaluator {
 
     /**
 	 * Returns the value for a variable in the list of variables. If the
-	 * variable can not be found in the list of variables, then null will be
+	 * variable cannot be found in the list of variables, then null will be
 	 * returned.
 	 * 
 	 * @param variableName
@@ -423,9 +421,8 @@ public class Evaluator {
 	 * 
 	 * @return The value for a variable in the list of variables.
 	 * 
-	 * @throws Throws
-	 *             an EvaluatorException if the variable name can not be
-	 *             resolved.
+	 * @throws EvaluationException
+	 *         if the variable name cannot be resolved
 	 */
 	public String getVariableValue(final String variableName)
 			throws EvaluationException {
@@ -457,8 +454,8 @@ public class Evaluator {
 		if (variableValue == null) {
 
 			throw new EvaluationException(
-					"Can not resolve variable with name equal to \""
-							+ variableName + "\".");
+					"Cannot resolve variable with name equal to \""
+							+ variableName + "\"");
 		}
 
 		return variableValue;
@@ -475,7 +472,7 @@ public class Evaluator {
 		if (variables.containsKey(variableName)) {
 			variables.remove(variableName);
 		} else {
-			throw new IllegalArgumentException("The variable does not exist.");
+			throw new IllegalArgumentException("The variable does not exist");
 		}
 	}
 
@@ -545,9 +542,8 @@ public class Evaluator {
 	 *         doubles, so resulting numbers will contain at least one decimal
 	 *         place.
 	 * 
-	 * @exception EvaluateException
-	 *                Thrown when an error is found while evaluating the
-	 *                expression.
+	 * @throws EvaluationException
+	 *         when an error is found while evaluating the expression
 	 */
 	public String evaluate(final String expression) throws EvaluationException {
 		return evaluate(expression, true, true);
@@ -567,16 +563,15 @@ public class Evaluator {
 	 *         doubles, so resulting numbers will contain at least one decimal
 	 *         place.
 	 * 
-	 * @exception EvaluateException
-	 *                Thrown when an error is found while evaluating the
-	 *                expression.
+	 * @throws EvaluationException
+	 *         when an error is found while evaluating the expression
 	 */
 	public String evaluate() throws EvaluationException {
 		// Get the previously parsed expression.
 		final String expression = previousExpression;
 
 		if (expression == null || expression.length() == 0) {
-			throw new EvaluationException("No expression has been specified.");
+			throw new EvaluationException("No expression has been specified");
 		}
 
 		return evaluate(expression, true, true);
@@ -602,9 +597,8 @@ public class Evaluator {
 	 *         doubles, so resulting numbers will contain at least one decimal
 	 *         place.
 	 * 
-	 * @exception EvaluateException
-	 *                Thrown when an error is found while evaluating the
-	 *                expression.
+	 * @throws EvaluationException
+	 *         when an error is found while evaluating the expression
 	 */
 	public String evaluate(final String expression, final boolean keepQuotes,
 			final boolean wrapStringFunctionResults) throws EvaluationException {
@@ -643,9 +637,8 @@ public class Evaluator {
 	 *         doubles, so resulting numbers will contain at least one decimal
 	 *         place.
 	 * 
-	 * @exception EvaluateException
-	 *                Thrown when an error is found while evaluating the
-	 *                expression.
+	 * @throws EvaluationException
+	 *         when an error is found while evaluating the expression
 	 */
 	public String evaluate(final boolean keepQuotes,
 			final boolean wrapStringFunctionResults) throws EvaluationException {
@@ -654,7 +647,7 @@ public class Evaluator {
 		final String expression = previousExpression;
 
 		if (expression == null || expression.length() == 0) {
-			throw new EvaluationException("No expression has been specified.");
+			throw new EvaluationException("No expression has been specified");
 		}
 
 		return evaluate(expression, keepQuotes, wrapStringFunctionResults);
@@ -671,10 +664,9 @@ public class Evaluator {
 	 * @return A boolean value that represents the result of the evaluated
 	 *         expression.
 	 * 
-	 * @exception EvaluateException
-	 *                Thrown when an error is found while evaluating the
-	 *                expression. It is also thrown if the result is not able to
-	 *                be converted to a boolean value.
+	 * @throws EvaluationException
+	 *         when an error is found while evaluating the expression; also thrown
+	 *         if the result cannot be converted to a boolean value
 	 */
 	public boolean getBooleanResult(final String expression)
 			throws EvaluationException {
@@ -705,10 +697,9 @@ public class Evaluator {
 	 * @return A double value that represents the result of the evaluated
 	 *         expression.
 	 * 
-	 * @exception EvaluateException
-	 *                Thrown when an error is found while evaluating the
-	 *                expression. It is also thrown if the result is not able to
-	 *                be converted to a double value.
+	 * @throws EvaluationException
+	 *         when an error is found while evaluating the expression; also thrown
+	 *         if the result cannot be converted to a boolean value
 	 */
 	public double getNumberResult(final String expression)
 			throws EvaluationException {
@@ -720,7 +711,7 @@ public class Evaluator {
 			doubleResult = new Double(result);
 		} catch (NumberFormatException nfe) {
 			throw new EvaluationException(
-					"Expression does not produce a number.", nfe);
+					"Expression does not produce a number", nfe);
 		}
 
 		return doubleResult.doubleValue();
@@ -736,9 +727,8 @@ public class Evaluator {
 	 * @param expression
 	 *            The expression to evaluate.
 	 * 
-	 * @exception EvaluateException
-	 *                Thrown when an error is found while evaluating the
-	 *                expression.
+	 * @throws EvaluationException
+	 *         when an error is found while evaluating the expression
 	 */
 	public void parse(final String expression) throws EvaluationException {
 
@@ -814,7 +804,7 @@ public class Evaluator {
 								throw new EvaluationException(
 										"Consecutive unary "
 												+ "operators are not allowed (index="
-												+ charCtr + ").");
+												+ charCtr + ")");
 							}
 						} else {
 							charCtr = processOperator(expression,
@@ -888,9 +878,8 @@ public class Evaluator {
 	 * @return The new position in the expression where processing should
 	 *         continue.
 	 * 
-	 * @exception EvaluateException
-	 *                Thrown is an error is encoutnered while processing the
-	 *                expression.
+	 * @throws EvaluationException
+	 *         when an error is found while evaluating the expression
 	 */
 	private int processOperand(final String expression, final int charCtr,
 			final int operatorIndex, final Stack operandStack,
@@ -909,7 +898,7 @@ public class Evaluator {
 		}
 
 		if (operandString.length() == 0) {
-			throw new EvaluationException("Expression is invalid.");
+			throw new EvaluationException("Expression is invalid");
 		}
 
 		final ExpressionOperand operand = new ExpressionOperand(operandString,
@@ -942,9 +931,8 @@ public class Evaluator {
 	 * @return The new position in the expression where processing should
 	 *         continue.
 	 * 
-	 * @exception EvaluateException
-	 *                Thrown is an error is encoutnered while processing the
-	 *                expression.
+	 * @throws EvaluationException
+	 *         when an error is found while evaluating the expression
 	 */
 	private int processOperator(final String expression,
 			final int originalOperatorIndex, final Operator originalOperator,
@@ -1002,14 +990,14 @@ public class Evaluator {
 			}
 
 			if (operatorStack.isEmpty()) {
-				throw new EvaluationException("Expression is invalid.");
+				throw new EvaluationException("Expression is invalid");
 			}
 
 			// Pop the open parameter from the stack.
 			final ExpressionOperator expressionOperator = operatorStack.pop();
 
 			if (!(expressionOperator.getOperator() instanceof OpenParenthesesOperator)) {
-				throw new EvaluationException("Expression is invalid.");
+				throw new EvaluationException("Expression is invalid");
 			}
 
 			// Process the unary operator if we have one.
@@ -1091,9 +1079,8 @@ public class Evaluator {
 	 * @return The next operator in the expression. This should be the closed
 	 *         parentheses operator.
 	 * 
-	 * @exception EvaluateException
-	 *                Thrown is an error is encoutnered while processing the
-	 *                expression.
+	 * @throws EvaluationException
+	 *         is an error is encountered while processing the expression
 	 */
 	private NextOperator processFunction(final String expression,
 			final int operatorIndex, final Stack operandStack)
@@ -1109,7 +1096,7 @@ public class Evaluator {
 					null);
 
 			if (nextOperator == null) {
-				throw new EvaluationException("Function is not closed.");
+				throw new EvaluationException("Function is not closed");
 			} else if (nextOperator.getOperator() instanceof OpenParenthesesOperator) {
 				parenthesisCount++;
 			} else if (nextOperator.getOperator() instanceof ClosedParenthesesOperator) {
@@ -1135,7 +1122,7 @@ public class Evaluator {
 			isValidName(functionName);
 		} catch (IllegalArgumentException iae) {
 			throw new EvaluationException("Invalid function name of \""
-					+ functionName + "\".", iae);
+					+ functionName + "\"", iae);
 		}
 
 		// Get the function object.
@@ -1143,7 +1130,7 @@ public class Evaluator {
 
 		if (function == null) {
 			throw new EvaluationException("A function is not defined (index="
-					+ operatorIndex + ").");
+					+ operatorIndex + ")");
 		}
 
 		final ParsedFunction parsedFunction = new ParsedFunction(function,
@@ -1203,9 +1190,8 @@ public class Evaluator {
 	 * 
 	 * @return The final result of the evaluated expression.
 	 * 
-	 * @exception EvaluateException
-	 *                Thrown is an error is encoutnered while processing the
-	 *                expression.
+	 * @throws EvaluationException
+	 *         is an error is encountered while processing the expression
 	 */
 	private String getResult(final Stack<ExpressionOperator> operatorStack,
 			final Stack operandStack, final boolean wrapStringFunctionResults)
@@ -1223,7 +1209,7 @@ public class Evaluator {
 		// It may be a tree operand that contains other tree and/or
 		// other operands.
 		if (operandStack.size() != 1) {
-			throw new EvaluationException("Expression is invalid.");
+			throw new EvaluationException("Expression is invalid");
 		}
 
 		final Object finalOperand = operandStack.pop();
@@ -1248,7 +1234,7 @@ public class Evaluator {
 				try {
 					resultDouble = new Double(resultString);
 				} catch (Exception e) {
-					throw new EvaluationException("Expression is invalid.", e);
+					throw new EvaluationException("Expression is invalid", e);
 				}
 
 				// Process a unary operator if one exists.
@@ -1263,7 +1249,7 @@ public class Evaluator {
 			} else {
 				if (resultExpressionOperand.getUnaryOperator() != null) {
 					throw new EvaluationException("Invalid operand for "
-							+ "unary operator.");
+							+ "unary operator");
 				}
 			}
 		} else if (finalOperand instanceof ParsedFunction) {
@@ -1309,14 +1295,14 @@ public class Evaluator {
 
 					if (parsedFunction.getUnaryOperator() != null) {
 						throw new EvaluationException("Invalid operand for "
-								+ "unary operator.");
+								+ "unary operator");
 					}
 				}
 			} catch (FunctionException fe) {
 				throw new EvaluationException(fe.getMessage(), fe);
 			}
 		} else {
-			throw new EvaluationException("Expression is invalid.");
+			throw new EvaluationException("Expression is invalid");
 		}
 
 		return resultString;
@@ -1410,6 +1396,9 @@ public class Evaluator {
 	 *            The string being evaluated.
 	 * 
 	 * @return True if the string is a valid string and false if not.
+	 * 
+	 * @throws EvaluationException
+	 *         on incorrect syntax of string expression
 	 */
 	protected boolean isExpressionString(final String expressionString)
 			throws EvaluationException {
@@ -1421,7 +1410,7 @@ public class Evaluator {
 		}
 
 		if (expressionString.indexOf(quoteCharacter) >= 0) {
-			throw new EvaluationException("Invalid use of quotes.");
+			throw new EvaluationException("Invalid use of quotes");
 		}
 
 		return false;
@@ -1432,51 +1421,51 @@ public class Evaluator {
 	 * 
 	 * Function and variable names must follow these rules...
 	 * <ul>
-	 * <li>can not start with a number</li>
-	 * <li>can not contain an operator (see the above list of operators)</li>
-	 * <li>can not contain a quote character - single or double</li>
-	 * <li>can not contain a brace character - open or closed</li>
-	 * <li>can not contain one of the following special characters: #, ~ , ^ !</li>
-	 * <ul>
+	 * <li>must not start with a number</li>
+	 * <li>must not contain an operator (see the above list of operators)</li>
+	 * <li>must not contain a quote character - single or double</li>
+	 * <li>must not contain a brace character - open or closed</li>
+	 * <li>must not contain one of the following special characters: #, ~ , ^ !</li>
+	 * </ul>
 	 * 
 	 * @param name
 	 *            The function or variable name being validated.
 	 * 
-	 * @exception IllegalArgumentException
-	 *                Thrown if the name is invalid.
+	 * @throws IllegalArgumentException
+	 *         if the name is invalid
 	 */
 	public void isValidName(final String name) throws IllegalArgumentException {
 
 		if (name.length() == 0) {
-			throw new IllegalArgumentException("Variable is empty.");
+			throw new IllegalArgumentException("Variable is empty");
 		}
 
 		// Check if name starts with a number.
 		final char firstChar = name.charAt(0);
 		if (firstChar >= '0' && firstChar <= '9') {
 			throw new IllegalArgumentException("A variable or function name "
-					+ "can not start with a number.");
+					+ "cannot start with a number");
 		}
 
 		// Check if name contains with a quote character.
 		if (name.indexOf(EvaluationConstants.SINGLE_QUOTE) > -1) {
 			throw new IllegalArgumentException("A variable or function name "
-					+ "can not contain a quote character.");
+					+ "cannot contain a quote character");
 		} else if (name.indexOf(EvaluationConstants.DOUBLE_QUOTE) > -1) {
 			throw new IllegalArgumentException("A variable or function name "
-					+ "can not contain a quote character.");
+					+ "cannot contain a quote character");
 		}
 
 		// Check if name contains with a brace character.
 		if (name.indexOf(EvaluationConstants.OPEN_BRACE) > -1) {
 			throw new IllegalArgumentException("A variable or function name "
-					+ "can not contain an open brace character.");
+					+ "cannot contain an open brace character");
 		} else if (name.indexOf(EvaluationConstants.CLOSED_BRACE) > -1) {
 			throw new IllegalArgumentException("A variable or function name "
-					+ "can not contain a closed brace character.");
+					+ "cannot contain a closed brace character");
 		} else if (name.indexOf(EvaluationConstants.POUND_SIGN) > -1) {
 			throw new IllegalArgumentException("A variable or function name "
-					+ "can not contain a pound sign character.");
+					+ "cannot contain a pound sign character");
 		}
 
 		// Check if name contains an operator character.
@@ -1488,23 +1477,23 @@ public class Evaluator {
 			if (name.indexOf(operator.getSymbol()) > -1) {
 				throw new IllegalArgumentException(
 						"A variable or function name "
-								+ "can not contain an operator symbol.");
+								+ "cannot contain an operator symbol");
 			}
 		}
 
 		// Check if name contains other special characters.
 		if (name.indexOf("!") > -1) {
 			throw new IllegalArgumentException("A variable or function name "
-					+ "can not contain a special character.");
+					+ "cannot contain a special character");
 		} else if (name.indexOf("~") > -1) {
 			throw new IllegalArgumentException("A variable or function name "
-					+ "can not contain a special character.");
+					+ "cannot contain a special character");
 		} else if (name.indexOf("^") > -1) {
 			throw new IllegalArgumentException("A variable or function name "
-					+ "can not contain a special character.");
+					+ "cannot contain a special character");
 		} else if (name.indexOf(",") > -1) {
 			throw new IllegalArgumentException("A variable or function name "
-					+ "can not contain a special character.");
+					+ "cannot contain a special character");
 		}
 	}
 
@@ -1548,9 +1537,8 @@ public class Evaluator {
 	 * 
 	 * @return A new expression with the variables replaced with their values.
 	 * 
-	 * @exception EvaluateException
-	 *                Thrown is an error is encoutnered while processing the
-	 *                expression.
+	 * @throws EvaluationException
+	 *         is an error is encountered while processing the expression
 	 */
 	public String replaceVariables(final String expression)
 			throws EvaluationException {
@@ -1582,7 +1570,7 @@ public class Evaluator {
 						isValidName(variableName);
 					} catch (IllegalArgumentException iae) {
 						throw new EvaluationException("Invalid variable name of \""
-								+ variableName + "\".", iae);
+								+ variableName + "\"", iae);
 					}
 					
 					String variableValue = getVariableValue(variableName);
@@ -1612,7 +1600,7 @@ public class Evaluator {
 		if (openBraceIndex > -1) {
 			throw new EvaluationException(
 					"A variable has not been closed (index=" + openBraceIndex
-							+ ").");
+							+ ")");
 		}
 
 		return replacedExpression;
@@ -1626,7 +1614,8 @@ public class Evaluator {
 	 * 
 	 * @return The arguments with any nested function calls evaluated.
 	 * 
-	 * @throws EvaluationException Thrown if an error occurs.
+	 * @throws EvaluationException
+	 *         thrown if an error occurs
 	 */
 	protected String processNestedFunctions(final String arguments)
 			throws EvaluationException {

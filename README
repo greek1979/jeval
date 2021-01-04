@@ -73,3 +73,10 @@ Documented sample applications can be found in "samples":
 * String functions
 * String operations
 * Variables
+
+5. AUTHORS AND CONTRIBUTORS
+
+Original version of JEval was developed and published by Rob Breidecker (please
+contact him at rbreidec@gmail.com for details) under the Apache License 2.0.
+The last public version was 0.9.4 in 2011, as available from Maven Central
+repository; subsequently, project went into long hibernation sleep.

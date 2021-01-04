@@ -82,14 +82,14 @@ public class TextLines implements Function {
 	 *         inclusive, joined together with a platform default new line
 	 *         character(s), or a custom new line string (4th argument).
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if the argument(s) are not valid for this function.
+	 * @throws FunctionException
+	 *         if the argument(s) are not valid for this function
 	 */
 	public FunctionResult execute(final Evaluator evaluator, final String arguments)
 			throws FunctionException {
 		StringBuilder result = null;
 		String exceptionMessage = "One string and two integer argument are required"
-				+ ", one extra string argument is optional.";
+				+ ", one extra string argument is optional";
 
 		List<String> values = FunctionHelper.getStrings(arguments,
 				EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR,
@@ -105,15 +105,15 @@ public class TextLines implements Function {
 			String argumentTwo = values.get(1).trim();
 			int firstLine = Double.valueOf(argumentTwo).intValue();
 			if (firstLine < 1 && firstLine != -1) {
-				throw new FunctionException("Line numbers are 1-based; use -1 for last line.");
+				throw new FunctionException("Line numbers are 1-based; use -1 for last line");
 			}
 			String argumentThree = values.get(2).trim();
 			int lastLine = Double.valueOf(argumentThree).intValue();
 			if (lastLine < 1) {
-				throw new FunctionException("Last line must be a number greater than zero.");
+				throw new FunctionException("Last line must be a number greater than zero");
 			}
 			if (firstLine != -1 && firstLine > lastLine) {
-				throw new FunctionException("Last line must be after the first line.");
+				throw new FunctionException("Last line must be after the first line");
 			}
 			String argumentFour = DEFAULT_SEPARATOR;
 			if (values.size() > 3) {

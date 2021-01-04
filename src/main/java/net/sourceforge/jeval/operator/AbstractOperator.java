@@ -86,13 +86,12 @@ public abstract class AbstractOperator implements Operator {
 	 * 
 	 * @return String The value of the evaluated operands.
 	 * 
-	 * @exception EvaluateException
-	 *                Thrown when an error is found while evaluating the
-	 *                expression.
+	 * @throws EvaluationException
+	 *         when an error is found while evaluating the expression
 	 */
 	public String evaluate(final String leftOperand, final String rightOperand)
 			throws EvaluationException {
-		throw new EvaluationException("Invalid operation for a string.");
+		throw new EvaluationException("Invalid operation for a string");
 	}
 
 	/**
@@ -150,8 +149,8 @@ public abstract class AbstractOperator implements Operator {
 	 * 
 	 * @return True if the object is equal and false if not.
 	 * 
-	 * @exception IllegalStateException
-	 *                Thrown if the input object is not of the Operator type.
+	 * @throws IllegalStateException
+	 *         if the input object is not of the <code>Operator</code> type
 	 */
 	public boolean equals(final Object object) {
 		if (object == null) {
@@ -159,7 +158,7 @@ public abstract class AbstractOperator implements Operator {
 		}
 
 		if (!(object instanceof AbstractOperator)) {
-			throw new IllegalStateException("Invalid operator object.");
+			throw new IllegalStateException("Invalid operator object");
 		}
 
 		AbstractOperator operator = (AbstractOperator) object;

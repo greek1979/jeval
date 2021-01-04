@@ -49,8 +49,8 @@ public class Cos implements Function {
 	 * 
 	 * @return The cosine of the argument.
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if the argument(s) are not valid for this function.
+	 * @throws FunctionException
+	 *         if the argument(s) are not valid for this function
 	 */
 	public FunctionResult execute(final Evaluator evaluator, final String arguments)
 			throws FunctionException {
@@ -60,7 +60,7 @@ public class Cos implements Function {
 		try {
 			number = new Double(arguments);
 		} catch (Exception e) {
-			throw new FunctionException("Invalid argument.", e);
+			throw new FunctionException("Invalid argument", e);
 		}
 
 		result = new Double(Math.cos(number.doubleValue()));

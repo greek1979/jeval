@@ -65,13 +65,13 @@ public class CompareToIgnoreCase implements Function {
 	 *         second string or an integer value greater than zero if the first
 	 *         string follows the second string.
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if the argument(s) are not valid for this function.
+	 * @throws FunctionException
+	 *         if the argument(s) are not valid for this function
 	 */
 	public FunctionResult execute(final Evaluator evaluator, final String arguments)
 			throws FunctionException {
 		Integer result = null;
-		String exceptionMessage = "Two string arguments are required.";
+		String exceptionMessage = "Two string arguments are required";
 
 		List<String> strings = FunctionHelper.getStrings(arguments, 
 				EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR,

@@ -43,8 +43,8 @@ public interface Function {
 	 * 
 	 * @return The value of the evaluated argument and its type.
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if the argument(s) are not valid for this function.
+	 * @throws FunctionException
+	 *         thrown if the argument(s) are not valid for this function
 	 */
 	public FunctionResult execute(Evaluator evaluator, String arguments)
 			throws FunctionException;

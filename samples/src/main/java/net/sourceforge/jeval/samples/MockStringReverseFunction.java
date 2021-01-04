@@ -57,8 +57,8 @@ public class MockStringReverseFunction implements Function {
 	 * 
 	 * @return The source string in reverse order.
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if the argument(s) are not valid for this function.
+	 * @throws FunctionException
+	 *         Thrown if the argument(s) are not valid for this function
 	 */
 	public FunctionResult execute(Evaluator evaluator, String arguments)
 			throws FunctionException {

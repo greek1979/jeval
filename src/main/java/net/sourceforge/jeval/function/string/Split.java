@@ -73,14 +73,14 @@ public class Split implements Function {
 	 * @return Returns the source string splitted into smaller chunks, or the same
 	 *         string if specified chunk size is greater than the string length.
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if the argument(s) are not valid for this function.
+	 * @throws FunctionException
+	 *         if the argument(s) are not valid for this function
 	 */
 	public FunctionResult execute(final Evaluator evaluator, final String arguments)
 			throws FunctionException {
 		StringBuilder result = null;
 		String exceptionMessage = "One string and one integer argument are required"
-				+ ", one extra string argument is optional.";
+				+ ", one extra string argument is optional";
 
 		List<String> values = FunctionHelper.getStrings(arguments,
 				EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR,
@@ -96,7 +96,7 @@ public class Split implements Function {
 			String argumentTwo = values.get(1).trim();
 			int splitAt = Double.valueOf(argumentTwo).intValue();
 			if (splitAt < 1 || splitAt > 10000) {
-				throw new FunctionException("Chunk size must be a positive number.");
+				throw new FunctionException("Chunk size must be a positive number");
 			}
 			String argumentThree = DEFAULT_SEPARATOR;
 			if (values.size() > 2) {

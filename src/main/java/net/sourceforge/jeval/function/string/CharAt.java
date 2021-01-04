@@ -65,14 +65,14 @@ public class CharAt implements Function {
 	 * @return A character that is located at the specified index. The value is
 	 *         returned as a string.
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if the argument(s) are not valid for this function.
+	 * @throws FunctionException
+	 *         if the argument(s) are not valid for this function
 	 */
 	public FunctionResult execute(final Evaluator evaluator, final String arguments)
 			throws FunctionException {
 		String result = null;
 		String exceptionMessage = "One string and one integer argument "
-				+ "are required.";
+				+ "are required";
 
 		List<Object> values = FunctionHelper.getOneStringAndOneInteger(arguments,
 				EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR,

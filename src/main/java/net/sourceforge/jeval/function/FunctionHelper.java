@@ -44,9 +44,9 @@ public class FunctionHelper {
 	 * 
 	 * @return The arguments with white space and quote characters removed.
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if quote characters do not exist in the first and
-	 *                last positions after the white space is trimmed.
+	 * @throws FunctionException
+	 *         thrown if quote characters do not exist in the first and last
+	 *         positions after the white space is trimmed
 	 */
 	public static String trimAndRemoveQuoteChars(final String arguments,
 			final char quoteCharacter) throws FunctionException {
@@ -59,14 +59,14 @@ public class FunctionHelper {
 			trimmedArgument = trimmedArgument.substring(1, trimmedArgument
 					.length());
 		} else {
-			throw new FunctionException("Value does not start with a quote.");
+			throw new FunctionException("Value does not start with a quote");
 		}
 
 		if (trimmedArgument.charAt(trimmedArgument.length() - 1) == quoteCharacter) {
 			trimmedArgument = trimmedArgument.substring(0, trimmedArgument
 					.length() - 1);
 		} else {
-			throw new FunctionException("Value does not end with a quote.");
+			throw new FunctionException("Value does not end with a quote");
 		}
 
 		return trimmedArgument;
@@ -84,9 +84,8 @@ public class FunctionHelper {
 	 * 
 	 * @return A list of <code>Double</code> values found in the input string.
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if the string does not properly parse into Double
-	 *                values.
+	 * @throws FunctionException
+	 *         if the string does not properly parse into Double values
 	 */
 	public static List<Double> getDoubles(final String arguments,
 			final char delimiter) throws FunctionException {
@@ -103,7 +102,7 @@ public class FunctionHelper {
 				returnValues.add(new Double(token));
 			}
 		} catch (Exception e) {
-			throw new FunctionException("Invalid values in string.", e);
+			throw new FunctionException("Invalid values in string", e);
 		}
 
 		return returnValues;
@@ -124,9 +123,8 @@ public class FunctionHelper {
 	 * 
 	 * @return A list of <code>String</code> values found in the input string.
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if the string does not properly parse into String
-	 *                values.
+	 * @throws FunctionException
+	 *         if the string does not properly parse into String values
 	 */
 	public static List<String> getStrings(final String arguments,
 			final char delimiter, final char quoteCharacter) throws FunctionException {
@@ -142,7 +140,7 @@ public class FunctionHelper {
 				returnValues.add(token);
 			}
 		} catch (Exception e) {
-			throw new FunctionException("Invalid values in string.", e);
+			throw new FunctionException("Invalid values in string", e);
 		}
 
 		return returnValues;
@@ -163,9 +161,8 @@ public class FunctionHelper {
 	 * 
 	 * @return An array list of object values found in the input string.
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if the string does not properly parse into the
-	 *                proper objects.
+	 * @throws FunctionException
+	 *         if the string does not properly parse into proper objects
 	 */
 	public static List<Object> getOneStringAndOneInteger(final String arguments,
 			final char delimiter, final char quoteCharacter) throws FunctionException {
@@ -185,13 +182,13 @@ public class FunctionHelper {
 					final String token = tokenizer.nextElement().trim();
 					returnValues.add(new Integer(new Double(token).intValue()));
 				} else {
-					throw new FunctionException("Invalid values in string.");
+					throw new FunctionException("Invalid values in string");
 				}
 
 				tokenCtr++;
 			}
 		} catch (Exception e) {
-			throw new FunctionException("Invalid values in string.", e);
+			throw new FunctionException("Invalid values in string", e);
 		}
 
 		return returnValues;
@@ -212,9 +209,8 @@ public class FunctionHelper {
 	 * 
 	 * @return A list of object values found in the input string.
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if the string does not properly parse into the
-	 *                proper objects.
+	 * @throws FunctionException
+	 *         if the string does not properly parse into the proper objects
 	 */
 	public static List<Object> getTwoStringsAndOneInteger(final String arguments,
 			final char delimiter, final char quoteCharacter) throws FunctionException {
@@ -234,13 +230,13 @@ public class FunctionHelper {
 					final String token = tokenizer.nextElement().trim();
 					returnValues.add(new Integer(new Double(token).intValue()));
 				} else {
-					throw new FunctionException("Invalid values in string.");
+					throw new FunctionException("Invalid values in string");
 				}
 
 				tokenCtr++;
 			}
 		} catch (Exception e) {
-			throw new FunctionException("Invalid values in string.", e);
+			throw new FunctionException("Invalid values in string", e);
 		}
 
 		return returnValues;
@@ -261,9 +257,8 @@ public class FunctionHelper {
 	 * 
 	 * @return A list of object values found in the input string.
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if the string does not properly parse into the
-	 *                proper objects.
+	 * @throws FunctionException
+	 *         if the string does not properly parse into the proper objects
 	 */
 	public static List<Object> getOneStringAndTwoIntegers(final String arguments,
 			final char delimiter, final char quoteCharacter) throws FunctionException {
@@ -283,13 +278,13 @@ public class FunctionHelper {
 					final String token = tokenizer.nextElement().trim();
 					returnValues.add(new Integer(new Double(token).intValue()));
 				} else {
-					throw new FunctionException("Invalid values in string.");
+					throw new FunctionException("Invalid values in string");
 				}
 
 				tokenCtr++;
 			}
 		} catch (Exception e) {
-			throw new FunctionException("Invalid values in string.", e);
+			throw new FunctionException("Invalid values in string", e);
 		}
 
 		return returnValues;

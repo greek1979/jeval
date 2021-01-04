@@ -39,14 +39,14 @@ public class FunctionResult {
 	 *            The result type.
 	 * 
 	 * @throws FunctionException
-	 *             Thrown if result type is invalid.
+	 *         if result type is invalid
 	 */
 	public FunctionResult(String result, int type) throws FunctionException {
 
 		if (type < FunctionConstants.FUNCTION_RESULT_TYPE_NUMERIC
 				|| type > FunctionConstants.FUNCTION_RESULT_TYPE_STRING) {
 
-			throw new FunctionException("Invalid function result type.");
+			throw new FunctionException("Invalid function result type");
 		}
 
 		this.result = result;

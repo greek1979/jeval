@@ -28,19 +28,19 @@ import net.sourceforge.jeval.operator.Operator;
  */
 public class ExpressionTree {
 
-	// The left node in the tree.
+	/** The left node in the tree. */
 	private Object leftOperand = null;
 
-	// The right node in the tree.
+	/** The right node in the tree. */
 	private Object rightOperand = null;
 
-	// The operator for the two operands.
+	/** The operator for the two operands. */
 	private Operator operator = null;
 
-	// The unary operator, if one exists.
+	/** The unary operator, if one exists. */
 	private Operator unaryOperator = null;
 
-	// The Evaluator object processing this tree.
+	/** The Evaluator object processing this tree. */
 	private Evaluator evaluator = null;
 
 	/**
@@ -106,16 +106,17 @@ public class ExpressionTree {
 
 	/**
 	 * Evaluates the operands for this tree using the operator and the unary
-	 * operator.
+	 * operator, and returns the evaluation result.
 	 * 
 	 * @param wrapStringFunctionResults
 	 *            Indicates if the results from functions that return strings
 	 *            should be wrapped in quotes. The quote character used will be
 	 *            whatever is the current quote character for this object.
 	 * 
-	 * @exception EvaluateException
-	 *                Thrown is an error is encountered while processing the
-	 *                expression.
+	 * @return expression tree evaluation result
+	 * 
+	 * @throws EvaluationException
+	 *         is an error is encountered while processing the expression
 	 */
 	public String evaluate(final boolean wrapStringFunctionResults)
 			throws EvaluationException {
@@ -151,7 +152,7 @@ public class ExpressionTree {
 					leftResultDouble = new Double(leftResultString);
 					leftResultString = null;
 				} catch (NumberFormatException nfe) {
-					throw new EvaluationException("Expression is invalid.", nfe);
+					throw new EvaluationException("Expression is invalid", nfe);
 				}
 
 				if (leftExpressionOperand.getUnaryOperator() != null) {
@@ -162,7 +163,7 @@ public class ExpressionTree {
 			} else {
 				if (leftExpressionOperand.getUnaryOperator() != null) {
 					throw new EvaluationException("Invalid operand for "
-							+ "unary operator.");
+							+ "unary operator");
 				}
 			}
 		} else if (leftOperand instanceof ParsedFunction) {
@@ -208,7 +209,7 @@ public class ExpressionTree {
 
 					if (parsedFunction.getUnaryOperator() != null) {
 						throw new EvaluationException("Invalid operand for "
-								+ "unary operator.");
+								+ "unary operator");
 					}
 				}
 			} catch (FunctionException fe) {
@@ -220,12 +221,12 @@ public class ExpressionTree {
 					leftResultDouble = new Double(leftResultString);
 					leftResultString = null;
 				} catch (NumberFormatException nfe) {
-					throw new EvaluationException("Expression is invalid.", nfe);
+					throw new EvaluationException("Expression is invalid", nfe);
 				}
 			}
 		} else {
 			if (leftOperand != null) {
-				throw new EvaluationException("Expression is invalid.");
+				throw new EvaluationException("Expression is invalid");
 			}
 		}
 
@@ -257,7 +258,7 @@ public class ExpressionTree {
 					rightResultDouble = new Double(rightResultString);
 					rightResultString = null;
 				} catch (NumberFormatException nfe) {
-					throw new EvaluationException("Expression is invalid.", nfe);
+					throw new EvaluationException("Expression is invalid", nfe);
 				}
 
 				if (rightExpressionOperand.getUnaryOperator() != null) {
@@ -268,7 +269,7 @@ public class ExpressionTree {
 			} else {
 				if (rightExpressionOperand.getUnaryOperator() != null) {
 					throw new EvaluationException("Invalid operand for "
-							+ "unary operator.");
+							+ "unary operator");
 				}
 			}
 		} else if (rightOperand instanceof ParsedFunction) {
@@ -314,7 +315,7 @@ public class ExpressionTree {
 
 					if (parsedFunction.getUnaryOperator() != null) {
 						throw new EvaluationException("Invalid operand for "
-								+ "unary operator.");
+								+ "unary operator");
 					}
 				}
 			} catch (FunctionException fe) {
@@ -326,13 +327,13 @@ public class ExpressionTree {
 					rightResultDouble = new Double(rightResultString);
 					rightResultString = null;
 				} catch (NumberFormatException nfe) {
-					throw new EvaluationException("Expression is invalid.", nfe);
+					throw new EvaluationException("Expression is invalid", nfe);
 				}
 			}
 		} else if (rightOperand == null) {
 			// Do nothing.
 		} else {
-			throw new EvaluationException("Expression is invalid.");
+			throw new EvaluationException("Expression is invalid");
 		}
 
 		// Evaluate the the expression.
@@ -356,12 +357,12 @@ public class ExpressionTree {
 			} else {
 				// Do not allow numeric (left) and
 				// string (right) to be evaluated together.
-				throw new EvaluationException("Expression is invalid.");
+				throw new EvaluationException("Expression is invalid");
 			}
 
 			rtnResult = new Double(doubleResult).toString();
 		} else {
-			throw new EvaluationException("Expression is invalid.");
+			throw new EvaluationException("Expression is invalid");
 		}
 
 		return rtnResult;

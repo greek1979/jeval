@@ -66,14 +66,14 @@ public class Replace implements Function {
 	 * @return Returns a string with every occurence of the old character
 	 *         replaced with the new character.
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if the argument(s) are not valid for this function.
+	 * @throws FunctionException
+	 *         if the argument(s) are not valid for this function
 	 */
 	public FunctionResult execute(final Evaluator evaluator, final String arguments)
 			throws FunctionException {
 		String result = null;
 		String exceptionMessage = "One string argument and two character "
-				+ "arguments are required.";
+				+ "arguments are required";
 
 		List<String> values = FunctionHelper.getStrings(arguments, 
 				EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR,

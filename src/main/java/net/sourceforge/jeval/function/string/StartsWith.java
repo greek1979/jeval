@@ -66,14 +66,14 @@ public class StartsWith implements Function {
 	 *         a Boolean value that is compatible with the Boolean operators
 	 *         used by Evaluator.
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if the argument(s) are not valid for this function.
+	 * @throws FunctionException
+	 *         if the argument(s) are not valid for this function
 	 */
 	public FunctionResult execute(final Evaluator evaluator, final String arguments)
 			throws FunctionException {
 		String result = null;
 		String exceptionMessage = "Two string arguments and one integer "
-				+ "argument are required.";
+				+ "argument are required";
 
 		List<Object> values = FunctionHelper.getTwoStringsAndOneInteger(arguments,
 				EvaluationConstants.FUNCTION_ARGUMENT_SEPARATOR,

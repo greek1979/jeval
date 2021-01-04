@@ -12,7 +12,7 @@
 	<name>JEval</name>
 	<description>JEval is the advanced library for adding high-performance, mathematical, Boolean and functional expression parsing and evaluation to Java applications</description>
 
-	<!--url>http://jeval.sourceforge.net</url-->
+	<url>https://github.com/greek1979/jeval</url>
 
 	<licenses>
 		<license>
@@ -22,14 +22,10 @@
 		</license>
 	</licenses>
 
-	<!--scm>
-		<connection>scm:cvs:pserver:anonymous@jeval.cvs.sourceforge.net:/cvsroot/jeval:jeval</connection>
-		<url>http://jeval.cvs.sourceforge.net/jeval/</url>
-	</scm-->
 	<scm>
-		<connection>https://github.com/greek1979/jeval.git</connection>
-		<developerConnection>scm:git:ssh://git@github.com/greek1979/jeval:jeval</developerConnection>
-		<url>https://github.com/greek1979/jeval</url>
+		<connection>scm:git:git://github.com/greek1979/jeval.git</connection>
+		<developerConnection>scm:git:ssh://github.com:greek1979/jeval.git</developerConnection>
+		<url>https://github.com/greek1979/jeval/tree/master</url>
 	</scm>
 
 	<developers>
@@ -42,6 +38,7 @@
 		<developer>
 			<id>greek1979</id>
 			<name>Leonid Malikov</name>
+			<url>https://github.com/greek1979</url>
 			<timezone>+2</timezone>
 		</developer>
 	</developers>
@@ -65,6 +62,28 @@
 				<version>3.1.0</version>
 				<configuration>
 					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.2.0</version>
+				<configuration>
+					<sourcepath>${project.build.sourceDirectory}</sourcepath>
+					<encoding>UTF-8</encoding>
+					<!--outputDirectory>${project.basedir}/docs/api</outputDirectory-->
+					<outputDirectory>${project.build.directory}/apidocs</outputDirectory>
+					<windowtitle>JEval</windowtitle>
+					<show>package</show>
+					<version>true</version>
+					<author>false</author>
+					<serialwarn>true</serialwarn>
+					<use>true</use>
+					<overview>${project.build.sourceDirectory}/overview.html</overview>
+					<doctitle><![CDATA[<h1>JEval</h1>]]></doctitle>
+					<bottom><![CDATA[<i>Copyright (C) 2002-2008 Robert Breidecker.</i>]]></bottom>
+					<breakiterator>true</breakiterator>
+					<detectJavaApiLink>false</detectJavaApiLink>
+					<quiet>false</quiet>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -107,7 +126,7 @@
 			<artifactId>junit</artifactId>
 			<version>4.13.1</version>
 			<scope>test</scope>
-			<!--systemPath>${pom.basedir}/lib/junit/junit-4.13.1.jar</systemPath-->
+			<!--systemPath>${project.basedir}/lib/junit/junit-4.13.1.jar</systemPath-->
 		</dependency>
 	</dependencies>
 

@@ -58,13 +58,13 @@ public class Trim implements Function {
 	 * 
 	 * @return The source string, with white space removed from both ends.
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if the argument(s) are not valid for this function.
+	 * @throws FunctionException
+	 *         if the argument(s) are not valid for this function
 	 */
 	public FunctionResult execute(final Evaluator evaluator, final String arguments)
 			throws FunctionException {
 		String result = null;
-		String exceptionMessage = "One string argument is required.";
+		String exceptionMessage = "One string argument is required";
 
 		try {
 			String stringValue = arguments;

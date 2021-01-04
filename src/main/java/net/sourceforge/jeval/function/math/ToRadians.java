@@ -50,8 +50,8 @@ public class ToRadians implements Function {
 	 * 
 	 * @return A measurement of the argument in radians.
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if the argument(s) are not valid for this function.
+	 * @throws FunctionException
+	 *         if the argument(s) are not valid for this function
 	 */
 	public FunctionResult execute(Evaluator evaluator, String arguments)
 			throws FunctionException {
@@ -61,7 +61,7 @@ public class ToRadians implements Function {
 		try {
 			number = new Double(arguments);
 		} catch (Exception e) {
-			throw new FunctionException("Invalid argument.", e);
+			throw new FunctionException("Invalid argument", e);
 		}
 
 		result = new Double(Math.toRadians(number.doubleValue()));

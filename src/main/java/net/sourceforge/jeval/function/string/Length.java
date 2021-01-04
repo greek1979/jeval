@@ -57,13 +57,13 @@ public class Length implements Function {
 	 * 
 	 * @return The length of the source string.
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if the argument(s) are not valid for this function.
+	 * @throws FunctionException
+	 *         if the argument(s) are not valid for this function
 	 */
 	public FunctionResult execute(final Evaluator evaluator, final String arguments)
 			throws FunctionException {
 		Integer result = null;
-		String exceptionMessage = "One string argument is required.";
+		String exceptionMessage = "One string argument is required";
 
 		try {
 			String stringValue = arguments;

@@ -57,13 +57,13 @@ public class ToLowerCase implements Function {
 	 * 
 	 * @return The source string, converted to lowercase.
 	 * 
-	 * @exception FunctionException
-	 *                Thrown if the argument(s) are not valid for this function.
+	 * @throws FunctionException
+	 *         if the argument(s) are not valid for this function
 	 */
 	public FunctionResult execute(final Evaluator evaluator, final String arguments)
 			throws FunctionException {
 		String result = null;
-		String exceptionMessage = "One string argument is required.";
+		String exceptionMessage = "One string argument is required";
 
 		try {
 			String stringValue = arguments;
