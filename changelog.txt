@@ -1,5 +1,5 @@
 JEval CHANGELOG
-http://jeval.sourceforge.net
+https://greek1979.github.io/jeval/
 --------------------
 
 Changes in version 0.9.6 (beta)
@@ -10,6 +10,7 @@ Changes in version 0.9.6 (beta)
 3.  Added runtime type checks.
 4.  Added new string functions (lines, matches, split).
 5.  Added support for relative index to string functions.
+6.  Removed non-functional Gradle build wrapper.
 
 Changes in version 0.9.4 (beta)
 ------------------------------------

@@ -81,7 +81,7 @@
 				<configuration>
 					<sourcepath>${project.build.sourceDirectory}</sourcepath>
 					<encoding>UTF-8</encoding>
-					<!--outputDirectory>${project.basedir}/docs/api</outputDirectory-->
+					<!--outputDirectory>${project.basedir}/docs</outputDirectory-->
 					<outputDirectory>${project.build.directory}/apidocs</outputDirectory>
 					<windowtitle>JEval</windowtitle>
 					<show>package</show>

@@ -1,13 +1,14 @@
 JEval, release 0.9.6 beta (November 2019)
-https://github.com/greek1979/jeval
+https://greek1979.github.io/jeval/
 ----------------------------------------------
 
 1. INTRODUCTION
 
-JEval is the advanced library for adding mathematical, string, Boolean and 
-functional expression parsing and evaluation to your Java applications. 
+JEval is the advanced library for adding mathematical, String, Boolean and 
+functional expression parsing and evaluation to your Java applications.
+Custom expression variables and plug-in functions are supported as well.
 
-JEval Features:
+Key Features of JEval library:
 
 * Parses and evaluates dynamic and static expressions at run time.
 * A great solution for filtering data at runtime.
@@ -32,15 +33,18 @@ Release contents:
 * "src/main" contains the Java source files for the project
 * "src/test" contains the Java source files for the project's test suite
 * "dist" contains the project distribution jar files
-* "lib" contains all third-party libraries needed for running the samples and/or 
+* "lib" contains all third-party libraries needed for running the samples and 
 building the framework
-* "docs/api" contains general documentation and API Javadocs
+* "docs" contains general documentation and API Javadocs
 * "samples" contains demo applications
-* "gradle" includes Gradle libraries to support Gradle build script
 
 Ant build scripts for the project and the samples are provided. The standard 
 samples can be built with the included Ant runtime by invoking the corresponding
-"ant-build.bat" files (see samples subdirectories).
+"ant-build.bat" files (see samples subdirectories). Ant build generates the
+"dist" and "docs" directories.
+
+Apache Maven build profile is also provided here, and the project can be built,
+packaged, and deployed to local repository with relevant Maven commands.
 
 The JEval project is released under the terms of the Apache Software License 
 (see LICENSE). All libraries included in the "lib" directory are subject to 
@@ -48,7 +52,8 @@ their respective licenses.
 
 Old project site at SourceForge ( http://sourceforge.net/projects/jeval/ ) has
 been deprecated and removed. JEval is superceded by mXparser library for math
-expressions only.
+expressions only, while this source is provided for backward compatibility and
+to assist in possible troubleshooting of existing applications.
 
 3. DISTRIBUTION JAR FILES
 
