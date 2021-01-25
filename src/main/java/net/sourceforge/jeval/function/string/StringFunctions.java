@@ -50,9 +50,13 @@ public class StringFunctions implements FunctionGroup {
 		functions.add(new Eval());
 		functions.add(new IndexOf());
 		functions.add(new LastIndexOf());
+		functions.add(new Left());
 		functions.add(new Length());
 		functions.add(new RegexMatches());
 		functions.add(new Replace());
+		functions.add(new ReplaceStr());
+		functions.add(new ReplaceOnce());
+		functions.add(new Right());
 		functions.add(new Split());
 		functions.add(new StartsWith());
 		functions.add(new Substring());

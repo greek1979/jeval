@@ -588,6 +588,11 @@ public class JEvalTests extends TestCase {
 					.evaluate("substring('abcdef', 2, 4)"));
 			assertEquals("'12'", evaluator
 					.evaluate("substring('ab12ef', 2, 4)"));
+			assertEquals("'abc'", evaluator.evaluate("left('abcdef', 3)"));
+			assertEquals("'abcdef'", evaluator.evaluate("left('abcdef', 9)"));
+			assertEquals("'def'", evaluator.evaluate("right('abcdef', 3)"));
+			assertEquals("'abcdef'", evaluator.evaluate("right('abcdef', 7)"));
+			assertEquals("'de'", evaluator.evaluate("left(right('abcdef', 3), 2)"));
 			assertEquals("'abcdef'", evaluator
 					.evaluate("toLowerCase('AbCdEf')"));
 			assertEquals("'ABCDEF'", evaluator
@@ -607,6 +612,12 @@ public class JEvalTests extends TestCase {
 			assertEquals(EvaluationConstants.BOOLEAN_STRING_TRUE, evaluator
 					.evaluate("endsWith('#{NAME}', 'o')"));
 
+			evaluator.putVariable("object", "Elevator 1997-97");
+			assertEquals("'Elevator 19Go-Go'", evaluator
+					.evaluate("replacestr('#{object}', '97', '#{NAME}')"));
+			assertEquals("'Elevator 1...97-97'", evaluator
+					.evaluate("replaceonce('#{object}', '9', '...')"));
+
 			// This example shows an unexpected result. The quotes cause the
 			// expression to be treated as a string instead of an expression.
 			// See the
@@ -621,6 +632,7 @@ public class JEvalTests extends TestCase {
 			assertException(evaluator, "charAt(2)");
 			assertException(evaluator, "concat(\"Hello \", \"World!\")");
 			assertException(evaluator, "'abc '.trim()");
+			assertException(evaluator, "replacestr('abcde', '', 'xyz')");
 
 			// String variables require quotes around them when used in many
 			// functions.

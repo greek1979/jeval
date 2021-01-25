@@ -10,19 +10,19 @@ Custom expression variables and plug-in functions are supported as well.
 
 Key Features of JEval library:
 
-* Parses and evaluates dynamic and static expressions at run time.
-* A great solution for filtering data at runtime.
-* Supports mathematical, Boolean, String and functional expressions.
-* Supports all major mathematical and Boolean operators.
-* Supports custom functions.
-* 43 Math and String functions built in and ready to use.
-* Supports nested functions.
-* Supports variables.
-* Allows for custom variable resolver.
-* No reparsing of expressions when variables change.
-* No dependencies to other non-standard Java libraries.
-* JUnit tests.
-* Compatible with J2SE 1.6 and above.
+* Parses and evaluates dynamic and static expressions at run time
+* A great solution for filtering data at runtime
+* Supports mathematical, Boolean, String and functional expressions
+* Supports all major mathematical and Boolean operators
+* Supports custom functions
+* 47 Math and String functions built in and ready to use
+* Supports nested functions
+* Supports variables
+* Allows for custom variable resolver
+* No reparsing of expressions when variables change
+* No dependencies to other non-standard Java libraries
+* JUnit tests
+* Compatible with J2SE 1.6 and above
 
 2. RELEASE INFO
 
@@ -82,6 +82,6 @@ Documented sample applications can be found in "samples":
 5. AUTHORS AND CONTRIBUTORS
 
 Original version of JEval was developed and published by Rob Breidecker (please
-contact him at rbreidec@gmail.com for details) under the Apache License 2.0.
-The last public version was 0.9.4 in 2011, as available from Maven Central
-repository; subsequently, project went into long hibernation sleep.
+contact him at rbreidec@gmail.com for details) and released under the terms of the
+Apache License 2.0. The last version available in Maven Central artifacts repo
+is 0.9.4 from 2011. Afterwards, project was hibernated and subsequently, removed.
