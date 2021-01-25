@@ -615,6 +615,8 @@ public class JEvalTests extends TestCase {
 			evaluator.putVariable("object", "Elevator 1997-97");
 			assertEquals("'Elevator 19Go-Go'", evaluator
 					.evaluate("replacestr('#{object}', '97', '#{NAME}')"));
+			assertEquals("'cdef'", evaluator
+					.evaluate("replacestr('abcdef', 'ab', '')"));
 			assertEquals("'Elevator 1...97-97'", evaluator
 					.evaluate("replaceonce('#{object}', '9', '...')"));
 

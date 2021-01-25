@@ -101,15 +101,13 @@ public class ReplaceStr implements Function {
 
 			int strIndex = argumentOne.indexOf(argumentTwo);
 			if (strIndex != -1) {
-				StringBuilder sb = new StringBuilder(argumentOne.length()
-						+ argumentThree.length() - argumentTwo.length());
-				sb.append(argumentOne);
+				StringBuilder sb = new StringBuilder(argumentOne);
 				while (strIndex != -1) {
 					sb.replace(strIndex, strIndex + argumentTwo.length(),
 							argumentThree);
 					strIndex += argumentThree.length();
 					if (strIndex < sb.length()) { 
-						strIndex = argumentOne.indexOf(argumentTwo, strIndex);
+						strIndex = sb.indexOf(argumentTwo, strIndex);
 					} else {
 						break;
 					}
