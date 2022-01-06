@@ -55,9 +55,7 @@ public class Random implements Function {
 	 */
 	public FunctionResult execute(final Evaluator evaluator, final String arguments)
 			throws FunctionException {
-		Double result = new Double(Math.random());
-
-		return new FunctionResult(result.toString(), 
+		return new FunctionResult(Double.toString(Math.random()), 
 				FunctionConstants.FUNCTION_RESULT_TYPE_NUMERIC);
 	}
 }

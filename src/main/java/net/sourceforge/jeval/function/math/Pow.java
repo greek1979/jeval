@@ -72,7 +72,7 @@ public class Pow implements Function {
 		try {
 			double argumentOne = numbers.get(0).doubleValue();
 			double argumentTwo = numbers.get(1).doubleValue();
-			result = new Double(Math.pow(argumentOne, argumentTwo));
+			result = Math.pow(argumentOne, argumentTwo);
 		} catch (Exception e) {
 			throw new FunctionException("Two numeric arguments are required", e);
 		}

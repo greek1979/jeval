@@ -37,8 +37,6 @@ public class MultiplicationOperator extends AbstractOperator {
 	 *            The right operand being evaluated.
 	 */
 	public double evaluate(final double leftOperand, final double rightOperand) {
-		Double rtnValue = new Double(leftOperand * rightOperand);
-
-		return rtnValue.doubleValue();
+		return leftOperand * rightOperand;
 	}
 }

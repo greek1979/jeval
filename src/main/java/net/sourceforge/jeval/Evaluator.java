@@ -674,7 +674,7 @@ public class Evaluator {
 		final String result = evaluate(expression);
 
 		try {
-			Double doubleResult = new Double(result);
+			Double doubleResult = Double.parseDouble(result);
 
 			if (doubleResult.doubleValue() == 1.0) {
 				return true;
@@ -708,7 +708,7 @@ public class Evaluator {
 		Double doubleResult = null;
 
 		try {
-			doubleResult = new Double(result);
+			doubleResult = Double.parseDouble(result);
 		} catch (NumberFormatException nfe) {
 			throw new EvaluationException(
 					"Expression does not produce a number", nfe);
@@ -1232,14 +1232,14 @@ public class Evaluator {
 			if (!isExpressionString(resultString)) {
 				Double resultDouble = null;
 				try {
-					resultDouble = new Double(resultString);
+					resultDouble = Double.parseDouble(resultString);
 				} catch (Exception e) {
 					throw new EvaluationException("Expression is invalid", e);
 				}
 
 				// Process a unary operator if one exists.
 				if (resultExpressionOperand.getUnaryOperator() != null) {
-					resultDouble = new Double(resultExpressionOperand
+					resultDouble = Double.valueOf(resultExpressionOperand
 							.getUnaryOperator().evaluate(
 									resultDouble.doubleValue()));
 				}
@@ -1272,11 +1272,11 @@ public class Evaluator {
 				if (functionResult.getType() == 
 					FunctionConstants.FUNCTION_RESULT_TYPE_NUMERIC) {
 					
-					Double resultDouble = new Double(resultString);
+					Double resultDouble = Double.parseDouble(resultString);
 
 					// Process a unary operator if one exists.
 					if (parsedFunction.getUnaryOperator() != null) {
-						resultDouble = new Double(parsedFunction
+						resultDouble = Double.valueOf(parsedFunction
 								.getUnaryOperator().evaluate(
 										resultDouble.doubleValue()));
 					}
@@ -1523,8 +1523,8 @@ public class Evaluator {
 		// Install the math variables.
 		if (loadMathVariables) {
 			// Add the two math variables.
-			putVariable("E", new Double(Math.E).toString());
-			putVariable("PI", new Double(Math.PI).toString());
+			putVariable("E", Double.valueOf(Math.E).toString());
+			putVariable("PI", Double.valueOf(Math.PI).toString());
 		}
 	}
 

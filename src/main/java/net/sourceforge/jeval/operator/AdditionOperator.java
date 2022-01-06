@@ -37,9 +37,7 @@ public class AdditionOperator extends AbstractOperator {
 	 *            The right operand being evaluated.
 	 */
 	public double evaluate(final double leftOperand, final double rightOperand) {
-		Double rtnValue = new Double(leftOperand + rightOperand);
-
-		return rtnValue.doubleValue();
+		return leftOperand + rightOperand;
 	}
 
 	/**
@@ -51,11 +49,9 @@ public class AdditionOperator extends AbstractOperator {
 	 *            The right operand being evaluated.
 	 */
 	public String evaluate(final String leftOperand, final String rightOperand) {
-		String rtnValue = new String(leftOperand.substring(0, leftOperand
+		return new String(leftOperand.substring(0, leftOperand
 				.length() - 1)
 				+ rightOperand.substring(1, rightOperand.length()));
-
-		return rtnValue;
 	}
 
 	/**

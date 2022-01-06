@@ -58,12 +58,12 @@ public class Sqrt implements Function {
 		Double number = null;
 
 		try {
-			number = new Double(arguments);
+			number = Double.parseDouble(arguments);
 		} catch (Exception e) {
 			throw new FunctionException("Invalid argument", e);
 		}
 
-		result = new Double(Math.sqrt(number.doubleValue()));
+		result = Math.sqrt(number.doubleValue());
 
 		return new FunctionResult(result.toString(), 
 				FunctionConstants.FUNCTION_RESULT_TYPE_NUMERIC);

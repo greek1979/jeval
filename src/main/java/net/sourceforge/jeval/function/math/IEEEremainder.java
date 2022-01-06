@@ -72,7 +72,7 @@ public class IEEEremainder implements Function {
 		try {
 			double argumentOne = numbers.get(0).doubleValue();
 			double argumentTwo = numbers.get(1).doubleValue();
-			result = new Double(Math.IEEEremainder(argumentOne, argumentTwo));
+			result = Math.IEEEremainder(argumentOne, argumentTwo);
 		} catch (Exception e) {
 			throw new FunctionException("Two numeric arguments are required", e);
 		}

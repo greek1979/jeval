@@ -148,7 +148,7 @@ public class EvaluationResult {
 	 */
 	public Double getDouble() throws NumberFormatException {
 
-		return new Double(result);
+		return Double.parseDouble(result);
 	}
 
 	/**

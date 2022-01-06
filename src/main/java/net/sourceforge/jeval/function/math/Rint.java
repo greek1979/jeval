@@ -60,12 +60,12 @@ public class Rint implements Function {
 		Double number = null;
 
 		try {
-			number = new Double(arguments);
+			number = Double.parseDouble(arguments);
 		} catch (Exception e) {
 			throw new FunctionException("Invalid argument", e);
 		}
 
-		result = new Double(Math.rint(number.doubleValue()));
+		result = Math.rint(number.doubleValue());
 
 		return new FunctionResult(result.toString(), 
 				FunctionConstants.FUNCTION_RESULT_TYPE_NUMERIC);

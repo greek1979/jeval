@@ -86,7 +86,7 @@ public class CompareToIgnoreCase implements Function {
 					strings.get(0), evaluator.getQuoteCharacter());
 			String argumentTwo = FunctionHelper.trimAndRemoveQuoteChars(
 					strings.get(1), evaluator.getQuoteCharacter());
-			result = new Integer(argumentOne.compareToIgnoreCase(argumentTwo));
+			result = argumentOne.compareToIgnoreCase(argumentTwo);
 		} catch (Exception e) {
 			throw new FunctionException(exceptionMessage, e);
 		}

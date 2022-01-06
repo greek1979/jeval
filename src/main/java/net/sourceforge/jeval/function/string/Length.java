@@ -71,7 +71,7 @@ public class Length implements Function {
 			String argumentOne = FunctionHelper.trimAndRemoveQuoteChars(
 					stringValue, evaluator.getQuoteCharacter());
 
-			result = new Integer(argumentOne.length());
+			result = argumentOne.length();
 		} catch (Exception e) {
 			throw new FunctionException(exceptionMessage, e);
 		}

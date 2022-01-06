@@ -70,7 +70,7 @@ public class Atan2 implements Function {
 		try {
 			double argumentOne = numbers.get(0).doubleValue();
 			double argumentTwo = numbers.get(1).doubleValue();
-			result = new Double(Math.atan2(argumentOne, argumentTwo));
+			result = Math.atan2(argumentOne, argumentTwo);
 		} catch (Exception e) {
 			throw new FunctionException("Two numeric arguments are required", e);
 		}

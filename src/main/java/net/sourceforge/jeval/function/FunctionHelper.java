@@ -99,7 +99,7 @@ public class FunctionHelper {
 
 			while (tokenizer.hasMoreElements()) {
 				final String token = tokenizer.nextElement().trim();
-				returnValues.add(new Double(token));
+				returnValues.add(Double.parseDouble(token));
 			}
 		} catch (Exception e) {
 			throw new FunctionException("Invalid values in string", e);
@@ -180,7 +180,7 @@ public class FunctionHelper {
 					returnValues.add(token);
 				} else if (tokenCtr == 1) {
 					final String token = tokenizer.nextElement().trim();
-					returnValues.add(new Integer(new Double(token).intValue()));
+					returnValues.add(Double.valueOf(token).intValue());
 				} else {
 					throw new FunctionException("Invalid values in string");
 				}
@@ -228,7 +228,7 @@ public class FunctionHelper {
 					returnValues.add(token);
 				} else if (tokenCtr == 2) {
 					final String token = tokenizer.nextElement().trim();
-					returnValues.add(new Integer(new Double(token).intValue()));
+					returnValues.add(Double.valueOf(token).intValue());
 				} else {
 					throw new FunctionException("Invalid values in string");
 				}
@@ -276,7 +276,7 @@ public class FunctionHelper {
 					returnValues.add(token);
 				} else if (tokenCtr == 1 || tokenCtr == 2) {
 					final String token = tokenizer.nextElement().trim();
-					returnValues.add(new Integer(new Double(token).intValue()));
+					returnValues.add(Double.valueOf(token).intValue());
 				} else {
 					throw new FunctionException("Invalid values in string");
 				}
