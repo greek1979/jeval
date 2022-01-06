@@ -199,16 +199,19 @@ public class Evaluator {
 	private Operator closedParenthesesOperator = new ClosedParenthesesOperator();
 
 	// Indicates if the user wants to load the system math variables.
-	private boolean loadMathVariables;
+	private final boolean loadMathVariables;
 
 	// Indicates if the user wants to load the system math functions.
-	private boolean loadMathFunctions;
+	private final boolean loadMathFunctions;
 
 	// Indicates if the user wants to load the system string functions.
-	private boolean loadStringFunctions;
-	
+	private final boolean loadStringFunctions;
+
+	// Indicates if the user wants string functions to avoid out-of-bounds errors.
+	private final boolean safeStringFunctions;
+
 	// Indicates if the user wants to process nested function calls.
-	private boolean processNestedFunctions;
+	private final boolean processNestedFunctions;
 
 	// Saves the previous expression, because we do not want to parse it, if
 	// it did not change.
@@ -235,7 +238,7 @@ public class Evaluator {
 	 * SINGLE_QUOTE, true, true, true and true.
 	 */
 	public Evaluator() {
-		this(EvaluationConstants.SINGLE_QUOTE, true, true, true, true);
+		this(EvaluationConstants.SINGLE_QUOTE, true, true, true, true, true);
 	}
 
 	/**
@@ -252,6 +255,9 @@ public class Evaluator {
 	 * @param loadStringFunctions
 	 *            Indicates if the standard String functions should be loaded or
 	 *            not.
+	 * @param safeStringFunctions
+	 *            Indicates if the string functions should avoid out-of-bounds
+	 *            errors by limiting position index to stay within string length.
 	 * @param processNestedFunctions
 	 *            Indicates if nested function calls should be processed or not.
 	 * 
@@ -260,7 +266,7 @@ public class Evaluator {
 	 */
 	public Evaluator(final char quoteCharacter,
 			final boolean loadMathVariables, final boolean loadMathFunctions,
-			final boolean loadStringFunctions,
+			final boolean loadStringFunctions, final boolean safeStringFunctions,
 			final boolean processNestedFunctions) {
 
 		// Install the operators used by Evaluator.
@@ -273,6 +279,7 @@ public class Evaluator {
 		// Install the system functions.
 		this.loadMathFunctions = loadMathFunctions;
 		this.loadStringFunctions = loadStringFunctions;
+		this.safeStringFunctions = safeStringFunctions;
 		loadSystemFunctions();
 
 		// Set the default quote character.
@@ -1627,7 +1634,7 @@ public class Evaluator {
 
 			Evaluator argumentsEvaluator = new Evaluator(quoteCharacter,
 					loadMathVariables, loadMathFunctions, loadStringFunctions,
-					processNestedFunctions);
+					safeStringFunctions, processNestedFunctions);
 			argumentsEvaluator.setFunctions(getFunctions());
 			argumentsEvaluator.setVariables(getVariables());
 			argumentsEvaluator.setVariableResolver(getVariableResolver());
@@ -1685,7 +1692,7 @@ public class Evaluator {
 	 * 
 	 * @return the loadMathFunctions
 	 */
-	public boolean getLoadMathFunctions() {
+	public boolean isLoadMathFunctions() {
 		return loadMathFunctions;
 	}
 
@@ -1695,8 +1702,19 @@ public class Evaluator {
 	 * 
 	 * @return the loadStringFunctions
 	 */
-	public boolean getLoadStringFunctions() {
+	public boolean isLoadStringFunctions() {
 		return loadStringFunctions;
+	}
+
+	/**
+	 * Returns the value used during construction of this object to specify if
+	 * string functions must avoid out-of-bounds errors by rigorously checking
+	 * arguments against input string length.
+	 * 
+	 * @return the safeStringFunctions
+	 */
+	public boolean isSafeStringFunctions() {
+		return safeStringFunctions;
 	}
 
 	/**
@@ -1705,7 +1723,7 @@ public class Evaluator {
 	 * 
 	 * @return the processNestedFunctions
 	 */
-	public boolean getProcessNestedFunctions() {
+	public boolean isProcessNestedFunctions() {
 		return processNestedFunctions;
 	}
 }

@@ -173,7 +173,7 @@ public class ExpressionTree {
 			String arguments = parsedFunction.getArguments();
 			arguments = evaluator.replaceVariables(arguments);
 			
-			if (evaluator.getProcessNestedFunctions()) {
+			if (evaluator.isProcessNestedFunctions()) {
 				arguments = evaluator.processNestedFunctions(arguments);
 			}
 
@@ -279,7 +279,7 @@ public class ExpressionTree {
 			String arguments = parsedFunction.getArguments();
 			arguments = evaluator.replaceVariables(arguments);
 			
-			if (evaluator.getProcessNestedFunctions()) {
+			if (evaluator.isProcessNestedFunctions()) {
 				arguments = evaluator.processNestedFunctions(arguments);
 			}
 

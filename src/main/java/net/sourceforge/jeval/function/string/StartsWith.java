@@ -61,7 +61,7 @@ public class StartsWith implements Function {
 	 *            instance of Evaluator. If there are multiple arguments, they
 	 *            must be separated by a comma (",").
 	 * 
-	 * @return Returns "1.0" (true) if the string ends with the suffix,
+	 * @return Returns "1.0" (true) if the string begins with the suffix,
 	 *         otherwise it returns "0.0" (false). The return value respresents
 	 *         a Boolean value that is compatible with the Boolean operators
 	 *         used by Evaluator.
@@ -89,8 +89,16 @@ public class StartsWith implements Function {
 			String argumentTwo = FunctionHelper.trimAndRemoveQuoteChars(
 					(String) values.get(1), evaluator.getQuoteCharacter());
 			int index = ((Integer) values.get(2)).intValue();
+			if (index < 0) {
+				exceptionMessage = "Third argument cannot be a negative number";
+				throw new FunctionException(exceptionMessage);
+			}
 
-			if (argumentOne.startsWith(argumentTwo, index)) {
+			if (argumentTwo.length() == 0) {
+				result = EvaluationConstants.BOOLEAN_STRING_TRUE;
+			} else if (index > argumentOne.length() - argumentTwo.length()) {
+				result = EvaluationConstants.BOOLEAN_STRING_FALSE;
+			} else if (argumentOne.startsWith(argumentTwo, index)) {
 				result = EvaluationConstants.BOOLEAN_STRING_TRUE;
 			} else {
 				result = EvaluationConstants.BOOLEAN_STRING_FALSE;

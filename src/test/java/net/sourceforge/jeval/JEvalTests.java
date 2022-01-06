@@ -673,7 +673,7 @@ public class JEvalTests extends TestCase {
 			// Create a new evaluator with nested function processing turned
 			// off.
 			evaluator = new Evaluator(EvaluationConstants.SINGLE_QUOTE, true,
-					true, true, false);
+					true, true, false, false);
 
 			// This expression which worked earlier, no longer is valid, because
 			// it contains a nested function call.

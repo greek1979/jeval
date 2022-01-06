@@ -90,11 +90,20 @@ public class Substring implements Function {
 			int endingIndex = ((Integer) values.get(2)).intValue();
 			if (beginningIndex < 0) {
 				beginningIndex = argumentOne.length() + beginningIndex;
+			} else if (evaluator.isSafeStringFunctions() &&
+					beginningIndex > argumentOne.length()) {
+				endingIndex = beginningIndex = argumentOne.length();
 			}
 			if (endingIndex < 0) {
 				endingIndex = argumentOne.length() + endingIndex;
+			} else if (evaluator.isSafeStringFunctions() &&
+					endingIndex > argumentOne.length()) {
+				endingIndex = argumentOne.length();
 			}
 			result = argumentOne.substring(beginningIndex, endingIndex);
+		} catch (IndexOutOfBoundsException e) {
+			exceptionMessage = "Substring start or end is out of bounds";
+			throw new FunctionException(exceptionMessage, e);
 		} catch (Exception e) {
 			throw new FunctionException(exceptionMessage, e);
 		}

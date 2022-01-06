@@ -42,7 +42,7 @@ public class NestedFunctionsSample {
 			 * Create a new evaluator and turn off nested function support.
 			 */
 			evaluator = new Evaluator(EvaluationConstants.SINGLE_QUOTE, true,
-					true, true, false);
+					true, true, false, false);
 
 			/**
 			 * This expression is now invalid, because nested function support

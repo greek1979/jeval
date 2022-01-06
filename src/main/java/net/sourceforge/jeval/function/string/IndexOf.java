@@ -87,7 +87,17 @@ public class IndexOf implements Function {
 			String argumentTwo = FunctionHelper.trimAndRemoveQuoteChars(
 					(String) values.get(1), evaluator.getQuoteCharacter());
 			int index = ((Integer) values.get(2)).intValue();
-			result = new Integer(argumentOne.indexOf(argumentTwo, index));
+			if (argumentTwo.length() == 0) {
+				result = 0;
+			} else if (index >= argumentOne.length() &&
+					evaluator.isSafeStringFunctions()) {
+				result = -1;
+			} else {
+				result = argumentOne.indexOf(argumentTwo, index);
+			}
+		} catch (IndexOutOfBoundsException e) {
+			exceptionMessage = "Substring position is out of bounds";
+			throw new FunctionException(exceptionMessage, e);
 		} catch (Exception e) {
 			throw new FunctionException(exceptionMessage, e);
 		}

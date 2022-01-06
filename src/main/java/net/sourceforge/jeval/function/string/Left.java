@@ -88,7 +88,7 @@ public class Left implements Function {
 			int argumentTwo = ((Integer) values.get(1)).intValue();
 
 			if (argumentTwo <= 0) {
-				exceptionMessage = "Second argument must be a positive whole number";
+				exceptionMessage = "Second argument cannot be a negative number";
 				throw new FunctionException(exceptionMessage);
 			} else if (argumentTwo >= argumentOne.length()) {
 				result = argumentOne;

@@ -86,7 +86,9 @@ public class EndsWith implements Function {
 			String argumentTwo = FunctionHelper.trimAndRemoveQuoteChars(
 					strings.get(1), evaluator.getQuoteCharacter());
 
-			if (argumentOne.endsWith(argumentTwo)) {
+			if (argumentTwo.length() == 0) {
+				result = EvaluationConstants.BOOLEAN_STRING_TRUE;
+			} else if (argumentOne.endsWith(argumentTwo)) {
 				result = EvaluationConstants.BOOLEAN_STRING_TRUE;
 			} else {
 				result = EvaluationConstants.BOOLEAN_STRING_FALSE;

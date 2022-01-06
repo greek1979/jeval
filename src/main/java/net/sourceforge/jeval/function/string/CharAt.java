@@ -86,10 +86,21 @@ public class CharAt implements Function {
 			String argumentOne = FunctionHelper.trimAndRemoveQuoteChars(
 					(String) values.get(0), evaluator.getQuoteCharacter());
 			int index = ((Integer) values.get(1)).intValue();
-			if (index < 0) {
-				index = argumentOne.length() + index;
+			
+			if (index >= argumentOne.length() &&
+					evaluator.isSafeStringFunctions()) {
+				result = "";
+			} else if (argumentOne.length() == 0) {
+				result = "";
+			} else {
+				if (index < 0) {
+					index = argumentOne.length() + index;
+				}
+				result = String.valueOf(argumentOne.charAt(index));
 			}
-			result = String.valueOf(argumentOne.charAt(index));
+		} catch (IndexOutOfBoundsException e) {
+			exceptionMessage = "Character position is out of bounds";
+			throw new FunctionException(exceptionMessage, e);
 		} catch (Exception e) {
 			throw new FunctionException(exceptionMessage, e);
 		}
