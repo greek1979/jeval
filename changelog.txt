@@ -2,6 +2,20 @@ JEval CHANGELOG
 https://greek1979.github.io/jeval/
 --------------------
 
+Changes in version 0.9.8 (beta)
+------------------------------------
+
+1.  Minimum Java version is now 1.7 (Java 7)
+2.  Fix for the bug #3 (Brackets)
+
+Changes in version 0.9.7 (beta)
+------------------------------------
+
+1.  Upgraded to Apache Ant 1.9.12 and JUnit 4.13
+2.  Negative index in string functions (CharAt, Substring)
+3.  New splitting functions (RegexMatches, Split, TextLines)
+4.  New string functions (Left, Right, ReplaceStr) 
+
 Changes in version 0.9.6 (beta)
 ------------------------------------
 
