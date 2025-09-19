@@ -1,4 +1,4 @@
-JEval, release 0.9.6 beta (November 2019)
+JEval, release 0.9.8 beta (September 2025)
 https://greek1979.github.io/jeval/
 ----------------------------------------------
 
@@ -22,12 +22,16 @@ Key Features of JEval library:
 * No reparsing of expressions when variables change
 * No dependencies to other non-standard Java libraries
 * JUnit tests
-* Compatible with J2SE 1.6 and above
+* Compatible with Java 8 (J2SE 1.8) and above
+
+With some code review and minimum changes, the library can run on Java 7
+(J2SE 1.7 and compatible runtimes) as well, although this is not something
+generally advised. But hey, if there is a need, it can be made to function.
 
 2. RELEASE INFO
 
-JEval requires J2SE 1.6 and above.  This release was tested using jdk 1.8.0_221 
-running in Java 1.6 compatibility mode.
+JEval requires Java 8 and above. This release was tested using jdk 1.8.0_221 
+running in Java 8 compatibility mode.
 
 Release contents:
 * "src/main" contains the Java source files for the project
@@ -79,7 +83,15 @@ Documented sample applications can be found in "samples":
 * String operations
 * Variables
 
-5. AUTHORS AND CONTRIBUTORS
+5. THREAD SAFETY NOTICE
+
+The main Evaluator class is a non-reentrant, not-thread-safe implementation. For
+every expression to parse and evaluate, a dedicated instance of Evaluator MUST BE
+instantiated OR an existing instance can be reused, assuming it is not longer used
+by the previous caller. Keeping multiple Evaluator instances in the shared object
+pool should be fine, as long as each instance is used by a single execution thread.
+
+6. AUTHORS AND CONTRIBUTORS
 
 Original version of JEval was developed and published by Rob Breidecker (please
 contact him at rbreidec@gmail.com for details) and released under the terms of the

@@ -784,6 +784,7 @@ public class JEvalTests {
 			// expression are evaluated.
 			assertEquals("15.0", evaluator.evaluate("abs(-8)+7"));
 			assertEquals("15.0", evaluator.evaluate("(0+abs(-8))+7"));
+			assertEquals("15.0", evaluator.evaluate("((abs(-8)))+7"));
 
 			/*
 			 * These tests involve invalid expressions.
