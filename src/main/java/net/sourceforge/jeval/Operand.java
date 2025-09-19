@@ -16,35 +16,19 @@
 
 package net.sourceforge.jeval;
 
-import net.sourceforge.jeval.operator.UnaryOperator;
+import net.sourceforge.jeval.operator.Operator;
 
 /**
  * Represents an operand being processed in the expression.
  */
-public class ExpressionOperand extends UnaryOperand {
-
-	// The value of the operand.
-	private String value = null;
+interface Operand {
 
 	/**
-	 * Create a new ExpressionOperand.
+	 * Returns the unary operator for this object.
 	 * 
-	 * @param value
-	 *            The value for the new ExpressionOperand.
-	 * @param unaryOperator
-	 *            The unary operator for this object.
+	 * @return The unary operator for this object.
 	 */
-	public ExpressionOperand(final String value, final UnaryOperator unaryOperator) {
-		super(unaryOperator);
-		this.value = value;
-	}
-
-	/**
-	 * Returns the value of this object.
-	 * 
-	 * @return The value of this object.
-	 */
-	public String getValue() {
-		return value;
+	public default Operator getUnaryOperator() {
+		return null;
 	}
 }

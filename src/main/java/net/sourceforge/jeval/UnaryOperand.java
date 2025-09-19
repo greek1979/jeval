@@ -16,48 +16,27 @@
 
 package net.sourceforge.jeval;
 
-import net.sourceforge.jeval.operator.Operator;
 import net.sourceforge.jeval.operator.UnaryOperator;
 
 /**
- * Represents an operator being processed in the expression.
+ * Represents an operand being processed in the expression.
  */
-public class ExpressionOperator {
+abstract class UnaryOperand implements Operand {
 
-	// The operator that this object represents.
-	private Operator operator = null;
-
-	// The unary operator for this object, if there is one.
-	private UnaryOperator unaryOperator = null;
+	// The unary operator for the operand, if one exists.
+	private final UnaryOperator unaryOperator;
 
 	/**
-	 * Creates a new ExpressionOperator.
+	 * Create a new Operand.
 	 * 
-	 * @param operator
-	 *            The operator this object represents.
 	 * @param unaryOperator
 	 *            The unary operator for this object.
 	 */
-	public ExpressionOperator(final Operator operator,
-			final UnaryOperator unaryOperator) {
-		this.operator = operator;
+	public UnaryOperand(final UnaryOperator unaryOperator) {
 		this.unaryOperator = unaryOperator;
 	}
 
-	/**
-	 * Returns the operator for this object.
-	 * 
-	 * @return The operator for this object.
-	 */
-	public Operator getOperator() {
-		return operator;
-	}
-
-	/**
-	 * Returns the unary operator for this object.
-	 * 
-	 * @return The unary operator for this object.
-	 */
+	@Override
 	public UnaryOperator getUnaryOperator() {
 		return unaryOperator;
 	}

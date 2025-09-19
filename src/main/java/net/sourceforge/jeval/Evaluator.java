@@ -47,6 +47,7 @@ import net.sourceforge.jeval.operator.NotEqualOperator;
 import net.sourceforge.jeval.operator.OpenParenthesesOperator;
 import net.sourceforge.jeval.operator.Operator;
 import net.sourceforge.jeval.operator.SubtractionOperator;
+import net.sourceforge.jeval.operator.UnaryOperator;
 
 /**
  * This class is used to evaluate mathematical, string, Boolean and functional
@@ -221,13 +222,13 @@ public class Evaluator {
 	private Stack<ExpressionOperator> previousOperatorStack = null;
 
 	// The previous stack of parsed operands.
-	private Stack previousOperandStack = null;
+	private Stack<Operand> previousOperandStack = null;
 
 	// The stack of parsed operators
 	private Stack<ExpressionOperator> operatorStack = null;
 
 	// The stack of parsed operands.
-	private Stack operandStack = null;
+	private Stack<Operand> operandStack = null;
 	
 	// Allows for user to set their own variable resolver.
 	private VariableResolver variableResolver = null;
@@ -613,8 +614,7 @@ public class Evaluator {
 		// Parse the expression.
 		parse(expression);
 
-		String result = getResult(operatorStack, operandStack,
-				wrapStringFunctionResults);
+		String result = getResult(wrapStringFunctionResults);
 
 		// Remove the quotes if necessary.
 		if (isExpressionString(result) && !keepQuotes) {
@@ -675,7 +675,7 @@ public class Evaluator {
 	 *         when an error is found while evaluating the expression; also thrown
 	 *         if the result cannot be converted to a boolean value
 	 */
-	public boolean getBooleanResult(final String expression)
+	public final boolean getBooleanResult(final String expression)
 			throws EvaluationException {
 
 		final String result = evaluate(expression);
@@ -708,7 +708,7 @@ public class Evaluator {
 	 *         when an error is found while evaluating the expression; also thrown
 	 *         if the result cannot be converted to a boolean value
 	 */
-	public double getNumberResult(final String expression)
+	public final double getNumberResult(final String expression)
 			throws EvaluationException {
 
 		final String result = evaluate(expression);
@@ -727,9 +727,11 @@ public class Evaluator {
 	/**
 	 * This method parses a mathematical, boolean or functional expressions.
 	 * When the expression is eventually evaluated, as long as the expression
-	 * has not changed, it will not have to be reparsed. See the class
-	 * description and test classes for more information on how to write an
-	 * expression.
+	 * has not changed, it will not have to be reparsed. If new expression
+	 * has been submitted and it failed to parse, any previously parsed
+	 * expression will be invalidated and no longer available for reuse. See
+	 * the class description and test classes for more information on how to
+	 * write an expression.
 	 * 
 	 * @param expression
 	 *            The expression to evaluate.
@@ -737,101 +739,96 @@ public class Evaluator {
 	 * @throws EvaluationException
 	 *         when an error is found while evaluating the expression
 	 */
+	@SuppressWarnings("unchecked")
 	public void parse(final String expression) throws EvaluationException {
 
-		// Save the expression.
-		boolean parse = true;
-		if (!expression.equals(previousExpression)) {
-			previousExpression = expression;
-		} else {
-			parse = false;
-			operatorStack = (Stack) previousOperatorStack.clone();
-			operandStack = (Stack) previousOperandStack.clone();
+		// Reuse the parsed expression.
+		if (expression.equals(previousExpression)) {
+			operatorStack = (Stack<ExpressionOperator>) previousOperatorStack.clone();
+			operandStack = (Stack<Operand>) previousOperandStack.clone();
+			return;
 		}
 
+		// Otherwise, save the expression before parsing it.
+		previousExpression = expression;
+
 		try {
-			if (parse) {
-				// These stacks will keep track of the operands and operators.
-				operandStack = new Stack();
-				operatorStack = new Stack<ExpressionOperator>();
+			// These stacks will keep track of the operands and operators.
+			operatorStack = new Stack<ExpressionOperator>();
+			operandStack = new Stack<Operand>();
 
-				// Flags to help us keep track of what we are processing.
-				boolean haveOperand = false;
-				boolean haveOperator = false;
-				Operator unaryOperator = null;
+			// Flags to help us keep track of what we are processing.
+			boolean haveOperand = false;
+			boolean haveOperator = false;
+			UnaryOperator unaryOperator = null;
 
-				// We are going to process until we get to the end, so get the
-				// length.
-				int numChars = expression.length();
-				int charCtr = 0;
+			// Process until the counter exceeds the length. The goal is to
+			// get all of the operands and operators.
+			for (int charCtr = 0; charCtr < expression.length();) {
+				Operator operator = null;
+				int operatorIndex = -1;
 
-				// Process until the counter exceeds the length. The goal is to
-				// get
-				// all of the operands and operators.
-				while (charCtr < numChars) {
-					Operator operator = null;
-					int operatorIndex = -1;
+				// Skip any white space.
+				if (EvaluationHelper.isSpace(expression.charAt(charCtr))) {
+					charCtr++;
+					continue;
+				}
 
-					// Skip any white space.
-					if (EvaluationHelper.isSpace(expression.charAt(charCtr))) {
-						charCtr++;
-						continue;
-					}
+				// Get the next operator.
+				NextOperator nextOperator = getNextOperator(expression,
+						charCtr, null);
 
-					// Get the next operator.
-					NextOperator nextOperator = getNextOperator(expression,
-							charCtr, null);
+				if (nextOperator != null) {
+					operator = nextOperator.getOperator();
+					operatorIndex = nextOperator.getIndex();
+				}
 
-					if (nextOperator != null) {
-						operator = nextOperator.getOperator();
-						operatorIndex = nextOperator.getIndex();
-					}
+				// Check if it is time to process an operand.
+				if (operatorIndex > charCtr || operatorIndex == -1) {
+					charCtr = processOperand(expression, charCtr,
+							operatorIndex, unaryOperator);
 
-					// Check if it is time to process an operand.
-					if (operatorIndex > charCtr || operatorIndex == -1) {
-						charCtr = processOperand(expression, charCtr,
-								operatorIndex, operandStack, unaryOperator);
+					haveOperand = true;
+					haveOperator = false;
+					unaryOperator = null;
+				}
 
-						haveOperand = true;
-						haveOperator = false;
+				// Check if it is time to process an operator.
+				if (operatorIndex == charCtr) {
+					if (operator instanceof UnaryOperator
+							&& (haveOperator || charCtr == 0)) {
+						charCtr = processUnaryOperator(operatorIndex,
+								operator);
+
+						if (unaryOperator == null) {
+							// We have an unary operator.
+							unaryOperator = (UnaryOperator) operator;
+						} else {
+							throw new EvaluationException(
+									"Consecutive unary "
+											+ "operators are not allowed (index="
+											+ charCtr + ")");
+						}
+					} else {
+						charCtr = processOperator(expression,
+								operatorIndex, operator, haveOperand, unaryOperator);
+
 						unaryOperator = null;
 					}
 
-					// Check if it is time to process an operator.
-					if (operatorIndex == charCtr) {
-						if (nextOperator.getOperator().isUnary()
-								&& (haveOperator || charCtr == 0)) {
-							charCtr = processUnaryOperator(operatorIndex,
-									nextOperator.getOperator());
-
-							if (unaryOperator == null) {
-								// We have an unary operator.
-								unaryOperator = nextOperator.getOperator();
-							} else {
-								throw new EvaluationException(
-										"Consecutive unary "
-												+ "operators are not allowed (index="
-												+ charCtr + ")");
-							}
-						} else {
-							charCtr = processOperator(expression,
-									operatorIndex, operator, operatorStack,
-									operandStack, haveOperand, unaryOperator);
-
-							unaryOperator = null;
-						}
-
-						if (!(nextOperator.getOperator() instanceof ClosedParenthesesOperator)) {
-							haveOperand = false;
-							haveOperator = true;
-						}
+					if (!(operator instanceof ClosedParenthesesOperator)) {
+						haveOperand = false;
+						haveOperator = true;
+					} else {
+						//haveOperand = false;
+						haveOperator = false;
 					}
 				}
-
-				// Save the parsed operators and operands.
-				previousOperatorStack = (Stack) operatorStack.clone();
-				previousOperandStack = (Stack) operandStack.clone();
 			}
+
+			// Save the parsed operators and operands.
+			previousOperatorStack = (Stack<ExpressionOperator>) operatorStack.clone();
+			previousOperandStack = (Stack<Operand>) operandStack.clone();
 		} catch (Exception e) {
 			// Clear the previous expression, because it is invalid.
 			previousExpression = "";
@@ -877,8 +874,6 @@ public class Evaluator {
 	 * @param operatorIndex
 	 *            The position in the expression where the current operator
 	 *            being processed is located.
-	 * @param operandStack
-	 *            The stack of operands.
 	 * @param unaryOperator
 	 *            The unary operator if we are working with one.
 	 * 
@@ -889,11 +884,11 @@ public class Evaluator {
 	 *         when an error is found while evaluating the expression
 	 */
 	private int processOperand(final String expression, final int charCtr,
-			final int operatorIndex, final Stack operandStack,
-			final Operator unaryOperator) throws EvaluationException {
+			final int operatorIndex,	final UnaryOperator unaryOperator)
+			throws EvaluationException {
 
 		String operandString = null;
-		int rtnCtr = -1;
+		int rtnCtr;
 
 		// Get the operand to process.
 		if (operatorIndex == -1) {
@@ -905,12 +900,10 @@ public class Evaluator {
 		}
 
 		if (operandString.length() == 0) {
-			throw new EvaluationException("Expression is invalid");
+			throw new EvaluationException("Missing operands at " + charCtr);
 		}
 
-		final ExpressionOperand operand = new ExpressionOperand(operandString,
-				unaryOperator);
-		operandStack.push(operand);
+		operandStack.push(new ExpressionOperand(operandString, unaryOperator));
 
 		return rtnCtr;
 	}
@@ -925,10 +918,6 @@ public class Evaluator {
 	 *            being processed is located.
 	 * @param operator
 	 *            The operator being processed.
-	 * @param operatorStack
-	 *            The stack of operators.
-	 * @param operandStack
-	 *            The stack of operands.
 	 * @param haveOperand
 	 *            Indicates if have an operand to process.
 	 * @param unaryOperator
@@ -942,19 +931,15 @@ public class Evaluator {
 	 *         when an error is found while evaluating the expression
 	 */
 	private int processOperator(final String expression,
-			final int originalOperatorIndex, final Operator originalOperator,
-			final Stack<ExpressionOperator> operatorStack, final Stack operandStack,
-			final boolean haveOperand, final Operator unaryOperator)
+			int operatorIndex, Operator operator,
+			final boolean haveOperand, final UnaryOperator unaryOperator)
 			throws EvaluationException {
-
-		int operatorIndex = originalOperatorIndex;
-		Operator operator = originalOperator;
 
 		// If we have and operand and the current operator is an instance
 		// of OpenParenthesesOperator, then we are ready to process a function.
 		if (haveOperand && operator instanceof OpenParenthesesOperator) {
 			NextOperator nextOperator = processFunction(expression,
-					operatorIndex, operandStack);
+					operatorIndex);
 
 			operator = nextOperator.getOperator();
 			operatorIndex = nextOperator.getIndex() + operator.getLength();
@@ -962,10 +947,13 @@ public class Evaluator {
 			nextOperator = getNextOperator(expression, operatorIndex, null);
 
 			// Look to see if there is another operator.
-			// If there is, the process it, else get out of this routine.
+			// If there is, then process it, else get out of this routine.
 			if (nextOperator != null) {
 				operator = nextOperator.getOperator();
 				operatorIndex = nextOperator.getIndex();
+				if (operator instanceof ClosedParenthesesOperator) {
+					return operatorIndex;
+				}
 			} else {
 				return operatorIndex;
 			}
@@ -978,33 +966,25 @@ public class Evaluator {
 					operator, unaryOperator);
 			operatorStack.push(expressionOperator);
 		} else if (operator instanceof ClosedParenthesesOperator) {
-			ExpressionOperator stackOperator = null;
-
-			if (operatorStack.size() > 0) {
-				stackOperator = operatorStack.peek();
-			}
-
 			// Process until we reach an open parentheses.
-			while (stackOperator != null
-					&& !(stackOperator.getOperator() instanceof OpenParenthesesOperator)) {
-				processTree(operandStack, operatorStack);
-
-				if (operatorStack.size() > 0) {
-					stackOperator = operatorStack.peek();
+			while (!operatorStack.isEmpty()) {
+				Operator stackOperator = operatorStack.peek().getOperator();
+				if (stackOperator instanceof OpenParenthesesOperator) {
+					break;
 				} else {
-					stackOperator = null;
+					processTree();
 				}
 			}
 
 			if (operatorStack.isEmpty()) {
-				throw new EvaluationException("Expression is invalid");
+				throw new EvaluationException("Closing parenthesis without opening one");
 			}
 
 			// Pop the open parameter from the stack.
 			final ExpressionOperator expressionOperator = operatorStack.pop();
 
 			if (!(expressionOperator.getOperator() instanceof OpenParenthesesOperator)) {
-				throw new EvaluationException("Expression is invalid");
+				throw new EvaluationException("Not an opening parenthesis");
 			}
 
 			// Process the unary operator if we have one.
@@ -1018,31 +998,20 @@ public class Evaluator {
 			}
 		} else {
 			// Process non-param operator.
-			if (operatorStack.size() > 0) {
-				ExpressionOperator stackOperator = operatorStack.peek();
-
-				while (stackOperator != null
-						&& stackOperator.getOperator().getPrecedence() >= operator
-								.getPrecedence()) {
-					processTree(operandStack, operatorStack);
-
-					if (operatorStack.size() > 0) {
-						stackOperator = operatorStack.peek();
-					} else {
-						stackOperator = null;
-					}
+			while (!operatorStack.isEmpty()) {
+				Operator stackOperator = operatorStack.peek().getOperator();
+				if (stackOperator.compareTo(operator) >= 0) {
+					processTree();
+				} else {
+					break;
 				}
 			}
 
-			ExpressionOperator expressionOperator = new ExpressionOperator(
-					operator, unaryOperator);
-
-			operatorStack.push(expressionOperator);
+			operatorStack.push(new ExpressionOperator(
+					operator, unaryOperator));
 		}
 
-		final int rtnCtr = operatorIndex + operator.getLength();
-
-		return rtnCtr;
+		return operatorIndex + operator.getLength();
 	}
 
 	/**
@@ -1060,9 +1029,7 @@ public class Evaluator {
 	private int processUnaryOperator(final int operatorIndex,
 			final Operator operator) {
 
-		final int rtnCtr = operatorIndex + operator.getSymbol().length();
-
-		return rtnCtr;
+		return operatorIndex + operator.getSymbol().length();
 	}
 
 	/**
@@ -1073,10 +1040,6 @@ public class Evaluator {
 	 * @param operatorIndex
 	 *            The position in the expression where the current operator
 	 *            being processed is located.
-	 * @param operandStack
-	 *            The stack of operands.
-	 * @param operatorStack
-	 *            The stack of operators.
 	 * @param operator
 	 *            The current operator being processed.
 	 * @param unaryOperator
@@ -1090,8 +1053,7 @@ public class Evaluator {
 	 *         is an error is encountered while processing the expression
 	 */
 	private NextOperator processFunction(final String expression,
-			final int operatorIndex, final Stack operandStack)
-			throws EvaluationException {
+			final int operatorIndex) throws EvaluationException {
 
 		int parenthesisCount = 1;
 		NextOperator nextOperator = null;
@@ -1119,9 +1081,8 @@ public class Evaluator {
 				nextOperatorIndex);
 
 		// Pop the function name from the stack.
-		final ExpressionOperand operand = (ExpressionOperand) operandStack
-				.pop();
-		final Operator unaryOperator = operand.getUnaryOperator();
+		final ExpressionOperand operand = (ExpressionOperand) operandStack.pop();
+		final UnaryOperator unaryOperator = operand.getUnaryOperator();
 		final String functionName = operand.getValue();
 
 		// Validate that the function name is valid.
@@ -1140,42 +1101,35 @@ public class Evaluator {
 					+ operatorIndex + ")");
 		}
 
-		final ParsedFunction parsedFunction = new ParsedFunction(function,
-				arguments, unaryOperator);
-		operandStack.push(parsedFunction);
+		operandStack.push(new ParsedFunction(function, arguments, unaryOperator));
 
 		return nextOperator;
 	}
 
 	/**
 	 * Processes an expresssion tree that has been parsed into an operand stack
-	 * and oeprator stack.
-	 * 
-	 * @param operandStack
-	 *            The stack of operands.
-	 * @param operatorStack
-	 *            The stack of operators.
+	 * and an operator stack.
 	 */
-	private void processTree(final Stack operandStack, final Stack<ExpressionOperator> operatorStack) {
+	private void processTree() {
 
-		Object rightOperand = null;
-		Object leftOperand = null;
+		Operand rightOperand = null;
+		Operand leftOperand = null;
 		Operator operator = null;
 
 		// Get the right operand node from the tree.
-		if (operandStack.size() > 0) {
+		if (!operandStack.isEmpty()) {
 			rightOperand = operandStack.pop();
 		}
 
 		// Get the left operand node from the tree.
-		if (operandStack.size() > 0) {
+		if (!operandStack.isEmpty()) {
 			leftOperand = operandStack.pop();
 		}
 
 		// Get the operator node from the tree.
 		operator = operatorStack.pop().getOperator();
 
-		// Build an expressin tree from the nodes.
+		// Build an expression tree from the nodes.
 		final ExpressionTree tree = new ExpressionTree(this, leftOperand,
 				rightOperand, operator, null);
 
@@ -1186,10 +1140,6 @@ public class Evaluator {
 	/**
 	 * Returns the final result of the evaluated expression.
 	 * 
-	 * @param operatorStack
-	 *            The stack of operators.
-	 * @param operandStack
-	 *            The stack of operands.
 	 * @param wrapStringFunctionResults
 	 *            Indicates if the results from functions that return strings
 	 *            should be wrapped in quotes. The quote character used will be
@@ -1200,26 +1150,25 @@ public class Evaluator {
 	 * @throws EvaluationException
 	 *         is an error is encountered while processing the expression
 	 */
-	private String getResult(final Stack<ExpressionOperator> operatorStack,
-			final Stack operandStack, final boolean wrapStringFunctionResults)
+	protected String getResult(final boolean wrapStringFunctionResults)
 			throws EvaluationException {
 
 		// The result to return.
 		String resultString = null;
 
 		// Process the rest of the operators left on the stack.
-		while (operatorStack.size() > 0) {
-			processTree(operandStack, operatorStack);
+		while (!operatorStack.isEmpty()) {
+			processTree();
 		}
 
 		// At this point only one operand should be left on the tree.
 		// It may be a tree operand that contains other tree and/or
 		// other operands.
 		if (operandStack.size() != 1) {
-			throw new EvaluationException("Expression is invalid");
+			throw new EvaluationException("Invalid number of operands; expected one");
 		}
 
-		final Object finalOperand = operandStack.pop();
+		final Operand finalOperand = operandStack.pop();
 
 		// Check if the final operand is a tree.
 		if (finalOperand instanceof ExpressionTree) {
@@ -1227,7 +1176,7 @@ public class Evaluator {
 			resultString = ((ExpressionTree) finalOperand)
 					.evaluate(wrapStringFunctionResults);
 		}
-		// Check if the final operand is an operand.
+		// Check if the final operand is a simple (valued) operand.
 		else if (finalOperand instanceof ExpressionOperand) {
 			ExpressionOperand resultExpressionOperand = (ExpressionOperand) finalOperand;
 
@@ -1241,7 +1190,7 @@ public class Evaluator {
 				try {
 					resultDouble = Double.parseDouble(resultString);
 				} catch (Exception e) {
-					throw new EvaluationException("Expression is invalid", e);
+					throw new EvaluationException("Unable to parse a floating point number", e);
 				}
 
 				// Process a unary operator if one exists.
@@ -1309,7 +1258,7 @@ public class Evaluator {
 				throw new EvaluationException(fe.getMessage(), fe);
 			}
 		} else {
-			throw new EvaluationException("Expression is invalid");
+			throw new EvaluationException("Invalid expression structure");
 		}
 
 		return resultString;
@@ -1349,9 +1298,7 @@ public class Evaluator {
 			}
 
 			// Assumes the operators are installed in order of length.
-			final int numOperators = operators.size();
-			for (int operatorCtr = 0; operatorCtr < numOperators; operatorCtr++) {
-				Operator operator = operators.get(operatorCtr);
+			for (Operator operator : operators) {
 
 				if (match != null) {
 					// Look through the operators until we find the

@@ -17,12 +17,12 @@
 package net.sourceforge.jeval;
 
 import net.sourceforge.jeval.function.Function;
-import net.sourceforge.jeval.operator.Operator;
+import net.sourceforge.jeval.operator.UnaryOperator;
 
 /**
  * This class represents a function that has been parsed.
  */
-public class ParsedFunction {
+public class ParsedFunction extends UnaryOperand {
 
 	// The function that has been parsed.
 	// FIXME Make all class instance methods final if possible.
@@ -30,9 +30,6 @@ public class ParsedFunction {
 
 	// The arguments to the function.
 	private final String arguments;
-
-	// The unary operator for this object, if there is one.
-	private final Operator unaryOperator;
 
 	/**
 	 * The constructor for this class.
@@ -45,11 +42,11 @@ public class ParsedFunction {
 	 *            The unary operator for this object, if there is one.
 	 */
 	public ParsedFunction(final Function function, final String arguments,
-			final Operator unaryOperator) {
+			final UnaryOperator unaryOperator) {
 
+		super(unaryOperator);
 		this.function = function;
 		this.arguments = arguments;
-		this.unaryOperator = unaryOperator;
 	}
 
 	/**
@@ -68,14 +65,5 @@ public class ParsedFunction {
 	 */
 	public String getArguments() {
 		return arguments;
-	}
-
-	/**
-	 * Returns the unary operator for this object, if there is one.
-	 * 
-	 * @return The unary operator for this object, if there is one.
-	 */
-	public Operator getUnaryOperator() {
-		return unaryOperator;
 	}
 }

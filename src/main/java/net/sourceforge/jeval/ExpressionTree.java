@@ -21,27 +21,25 @@ import net.sourceforge.jeval.function.FunctionConstants;
 import net.sourceforge.jeval.function.FunctionException;
 import net.sourceforge.jeval.function.FunctionResult;
 import net.sourceforge.jeval.operator.Operator;
+import net.sourceforge.jeval.operator.UnaryOperator;
 
 /**
  * Represents an expression tree made up of a left operand, right operand,
  * operator and unary operator.
  */
-public class ExpressionTree {
+public class ExpressionTree extends UnaryOperand {
 
 	/** The left node in the tree. */
-	private Object leftOperand = null;
+	private final Object leftOperand;
 
 	/** The right node in the tree. */
-	private Object rightOperand = null;
+	private final Object rightOperand;
 
 	/** The operator for the two operands. */
-	private Operator operator = null;
-
-	/** The unary operator, if one exists. */
-	private Operator unaryOperator = null;
+	private final Operator operator;
 
 	/** The Evaluator object processing this tree. */
-	private Evaluator evaluator = null;
+	private final Evaluator evaluator;
 
 	/**
 	 * Creates a new ExpressionTree.
@@ -59,13 +57,13 @@ public class ExpressionTree {
 	 */
 	public ExpressionTree(final Evaluator evaluator, final Object leftOperand,
 			final Object rightOperand, final Operator operator,
-			final Operator unaryOperator) {
+			final UnaryOperator unaryOperator) {
 
+		super(unaryOperator);
 		this.evaluator = evaluator;
 		this.leftOperand = leftOperand;
 		this.rightOperand = rightOperand;
 		this.operator = operator;
-		this.unaryOperator = unaryOperator;
 	}
 
 	/**
@@ -93,15 +91,6 @@ public class ExpressionTree {
 	 */
 	public Operator getOperator() {
 		return operator;
-	}
-
-	/**
-	 * Returns the unary operator for this tree.
-	 * 
-	 * @return The unary operator of this tree.
-	 */
-	public Operator getUnaryOperator() {
-		return unaryOperator;
 	}
 
 	/**
@@ -152,7 +141,7 @@ public class ExpressionTree {
 					leftResultDouble = Double.parseDouble(leftResultString);
 					leftResultString = null;
 				} catch (NumberFormatException nfe) {
-					throw new EvaluationException("Expression is invalid", nfe);
+					throw new EvaluationException("Unable to parse a left-side number", nfe);
 				}
 
 				if (leftExpressionOperand.getUnaryOperator() != null) {
@@ -221,7 +210,7 @@ public class ExpressionTree {
 					leftResultDouble = Double.parseDouble(leftResultString);
 					leftResultString = null;
 				} catch (NumberFormatException nfe) {
-					throw new EvaluationException("Expression is invalid", nfe);
+					throw new EvaluationException("Unable to parse a left-side number", nfe);
 				}
 			}
 		} else {
@@ -258,7 +247,7 @@ public class ExpressionTree {
 					rightResultDouble = Double.parseDouble(rightResultString);
 					rightResultString = null;
 				} catch (NumberFormatException nfe) {
-					throw new EvaluationException("Expression is invalid", nfe);
+					throw new EvaluationException("Unable to parse a right-side number", nfe);
 				}
 
 				if (rightExpressionOperand.getUnaryOperator() != null) {
@@ -327,7 +316,7 @@ public class ExpressionTree {
 					rightResultDouble = Double.parseDouble(rightResultString);
 					rightResultString = null;
 				} catch (NumberFormatException nfe) {
-					throw new EvaluationException("Expression is invalid", nfe);
+					throw new EvaluationException("Unable to parse a right-side number", nfe);
 				}
 			}
 		} else if (rightOperand == null) {
@@ -351,13 +340,13 @@ public class ExpressionTree {
 		} else if (leftResultDouble != null && rightResultDouble == null) {
 			double doubleResult = -1;
 
-			if (unaryOperator != null) {
-				doubleResult = unaryOperator.evaluate(leftResultDouble
+			if (getUnaryOperator() != null) {
+				doubleResult = getUnaryOperator().evaluate(leftResultDouble
 						.doubleValue());
 			} else {
 				// Do not allow numeric (left) and
 				// string (right) to be evaluated together.
-				throw new EvaluationException("Expression is invalid");
+				throw new EvaluationException("Cannot evaluate number and string together");
 			}
 
 			rtnResult = Double.valueOf(doubleResult).toString();

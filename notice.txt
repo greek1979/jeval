@@ -14,4 +14,4 @@
 
    The name "JEval" must not be used to endorse or promote products derived 
    from this software without prior written permission. For written permission, 
-   please contact rbreidec@gmail.com.
+   please contact leonidmalikov@gmail.com or rbreidec@gmail.com.
