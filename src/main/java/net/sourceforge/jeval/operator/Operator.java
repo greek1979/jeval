@@ -21,7 +21,7 @@ import net.sourceforge.jeval.EvaluationException;
 /**
  * An oerator than can specified in an expression.
  */
-public interface Operator {
+public interface Operator extends Comparable<Operator> {
 
 	/**
 	 * Evaluates two double operands.
@@ -52,16 +52,6 @@ public interface Operator {
 			final String rightOperand) throws EvaluationException;
 
 	/**
-	 * Evaluate one double operand.
-	 * 
-	 * @param operand
-	 *            The operand being evaluated.
-	 * 
-	 * @return The value of the evaluated operands as <code>double</code>
-	 */
-	public abstract double evaluate(final double operand);
-
-	/**
 	 * Returns the character(s) that makes up the operator.
 	 * 
 	 * @return The operator symbol.
@@ -69,23 +59,9 @@ public interface Operator {
 	public abstract String getSymbol();
 
 	/**
-	 * Returns the precedence given to this operator.
-	 * 
-	 * @return The precedecne given to this operator.
-	 */
-	public abstract int getPrecedence();
-
-	/**
 	 * Returns the length of the operator symbol.
 	 * 
 	 * @return The length of the operator symbol.
 	 */
 	public abstract int getLength();
-
-	/**
-	 * Returns an indicator of if the operator is unary or not.
-	 * 
-	 * @return An indicator of if the operator is unary or not.
-	 */
-	public abstract boolean isUnary();
 }

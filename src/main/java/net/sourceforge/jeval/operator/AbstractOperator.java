@@ -22,13 +22,11 @@ import net.sourceforge.jeval.EvaluationException;
  * This is the standard operator that is the parent to all operators found in
  * expressions.
  */
-public abstract class AbstractOperator implements Operator {
+abstract class AbstractOperator implements Operator {
 
-	private String symbol = null;
+	private final String symbol;
 
-	private int precedence = 0;
-
-	private boolean unary = false;
+	private final int precedence;
 
 	/**
 	 * A constructor that takes the operator symbol and precedence as input.
@@ -41,27 +39,7 @@ public abstract class AbstractOperator implements Operator {
 	public AbstractOperator(final String symbol, final int precedence) {
 
 		this.symbol = symbol;
-		this.precedence = precedence;
-	}
-
-	/**
-	 * A constructor that takes the operator symbol, precedence, unary indicator
-	 * and unary precedence as input.
-	 * 
-	 * @param symbol
-	 *            The character(s) that makes up the operator.
-	 * @param precedence
-	 *            The precedence level given to this operator.
-	 * @param unary
-	 *            Indicates of the operator is a unary operator or not.
-	 */
-	public AbstractOperator(
-
-	String symbol, int precedence, boolean unary) {
-
-		this.symbol = symbol;
-		this.precedence = precedence;
-		this.unary = unary;
+		this.precedence = precedence > 0 ? precedence : 0;
 	}
 
 	/**
@@ -72,6 +50,7 @@ public abstract class AbstractOperator implements Operator {
 	 * @param rightOperand
 	 *            The right operand being evaluated.
 	 */
+	@Override
 	public double evaluate(final double leftOperand, final double rightOperand) {
 		return 0;
 	}
@@ -89,19 +68,10 @@ public abstract class AbstractOperator implements Operator {
 	 * @throws EvaluationException
 	 *         when an error is found while evaluating the expression
 	 */
+	@Override
 	public String evaluate(final String leftOperand, final String rightOperand)
 			throws EvaluationException {
 		throw new EvaluationException("Invalid operation for a string");
-	}
-
-	/**
-	 * Evaluate one double operand.
-	 * 
-	 * @param operand
-	 *            The operand being evaluated.
-	 */
-	public double evaluate(double operand) {
-		return 0;
 	}
 
 	/**
@@ -109,17 +79,19 @@ public abstract class AbstractOperator implements Operator {
 	 * 
 	 * @return The operator symbol.
 	 */
+	@Override
 	public String getSymbol() {
 		return symbol;
 	}
 
-	/**
-	 * Returns the precedence given to this operator.
-	 * 
-	 * @return The precedecne given to this operator.
-	 */
-	public int getPrecedence() {
-		return precedence;
+	@Override
+	public int compareTo(Operator other) {
+		if (other instanceof AbstractOperator) {
+			return Integer.compare(precedence,
+					((AbstractOperator) other).precedence);
+		} else {
+			return 0;
+		}
 	}
 
 	/**
@@ -127,17 +99,9 @@ public abstract class AbstractOperator implements Operator {
 	 * 
 	 * @return The length of the operator symbol.
 	 */
+	@Override
 	public int getLength() {
 		return symbol.length();
-	}
-
-	/**
-	 * Returns an indicator of if the operator is unary or not.
-	 * 
-	 * @return An indicator of if the operator is unary or not.
-	 */
-	public boolean isUnary() {
-		return unary;
 	}
 
 	/**
@@ -152,22 +116,15 @@ public abstract class AbstractOperator implements Operator {
 	 * @throws IllegalStateException
 	 *         if the input object is not of the <code>Operator</code> type
 	 */
+	@Override
 	public boolean equals(final Object object) {
 		if (object == null) {
 			return false;
-		}
-
-		if (!(object instanceof AbstractOperator)) {
+		} else if (!(object instanceof AbstractOperator)) {
 			throw new IllegalStateException("Invalid operator object");
+		} else {
+			return symbol.equals(((AbstractOperator) object).getSymbol());
 		}
-
-		AbstractOperator operator = (AbstractOperator) object;
-
-		if (symbol.equals(operator.getSymbol())) {
-			return true;
-		}
-
-		return false;
 	}
 
 	/**
@@ -175,6 +132,7 @@ public abstract class AbstractOperator implements Operator {
 	 * 
 	 * @return The operator symbol.
 	 */
+	@Override
 	public String toString() {
 		return getSymbol();
 	}

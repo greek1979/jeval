@@ -19,13 +19,14 @@ package net.sourceforge.jeval.operator;
 /**
  * The addition operator.
  */
-public class AdditionOperator extends AbstractOperator {
+public class AdditionOperator extends AbstractOperator
+		implements UnaryOperator {
 
 	/**
 	 * Default constructor.
 	 */
 	public AdditionOperator() {
-		super("+", 5, true);
+		super("+", 5);
 	}
 
 	/**
@@ -54,12 +55,7 @@ public class AdditionOperator extends AbstractOperator {
 				+ rightOperand.substring(1, rightOperand.length()));
 	}
 
-	/**
-	 * Evaluate one double operand.
-	 * 
-	 * @param operand
-	 *            The operand being evaluated.
-	 */
+	@Override
 	public double evaluate(double operand) {
 		return operand;
 	}

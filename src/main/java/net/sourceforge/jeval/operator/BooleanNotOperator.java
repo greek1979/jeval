@@ -19,26 +19,18 @@ package net.sourceforge.jeval.operator;
 /**
  * The boolean not operator.
  */
-public class BooleanNotOperator extends AbstractOperator {
+public class BooleanNotOperator extends AbstractOperator
+		implements UnaryOperator {
 
 	/**
 	 * Default constructor.
 	 */
 	public BooleanNotOperator() {
-		super("!", 0, true);
+		super("!", 0);
 	}
 
-	/**
-	 * Evaluate one double operand.
-	 * 
-	 * @param operand
-	 *            The operand being evaluated.
-	 */
+	@Override
 	public double evaluate(final double operand) {
-		if (operand == 1) {
-			return 0;
-		}
-
-		return 1;
+		return operand == 1 ? 0.0d : 1.0d;
 	}
 }

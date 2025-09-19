@@ -16,33 +16,21 @@
 
 package net.sourceforge.jeval.operator;
 
+import net.sourceforge.jeval.EvaluationException;
+
 /**
- * The subtraction operator.
+ * An unary operator than can specified in an expression.
  */
-public class SubtractionOperator extends AbstractOperator
-		implements UnaryOperator {
+public interface UnaryOperator extends Operator {
 
 	/**
-	 * Default constructor.
-	 */
-	public SubtractionOperator() {
-		super("-", 5);
-	}
-
-	/**
-	 * Evaluates two double operands.
+	 * Evaluate one double operand.
 	 * 
-	 * @param leftOperand
-	 *            The left operand being evaluated.
-	 * @param rightOperand
-	 *            The right operand being evaluated.
+	 * @param operand
+	 *            The operand being evaluated.
+	 * 
+	 * @return The value of the evaluated operands as <code>double</code>
 	 */
-	public double evaluate(final double leftOperand, final double rightOperand) {
-		return leftOperand - rightOperand;
-	}
-
-	@Override
-	public double evaluate(final double operand) {
-		return -operand;
-	}
+	public abstract double evaluate(final double operand)
+			throws EvaluationException;
 }
