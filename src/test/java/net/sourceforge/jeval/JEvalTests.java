@@ -16,11 +16,12 @@
 
 package net.sourceforge.jeval;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Contains suite of expression tests for validating JEval.
@@ -28,17 +29,15 @@ import org.junit.Test;
  */
 public class JEvalTests {
 
+	Evaluator evaluator = new Evaluator();
+
 	/**
-	 * Test expressions containing mathematical operations.
+	 * Test expressions containing mathematical operations, pt 1.
+	 * These tests involve valid expressions.
 	 */
 	@Test
-	public void testEvaluateMathematicalOperations() {
-		Evaluator evaluator = new Evaluator();
-
+	void testEvaluateMathematicalOperations1() {
 		try {
-			/*
-			 * These tests involve valid expressions.
-			 */
 			assertEquals("4.0", evaluator.evaluate("4"));
 			assertEquals("-4.0", evaluator.evaluate("-4"));
 			assertEquals("5.0", evaluator.evaluate("4 + 1"));
@@ -61,9 +60,6 @@ public class JEvalTests {
 			assertEquals("-2.0", evaluator.evaluate("4 / -2"));
 			assertEquals("1.0", evaluator.evaluate("7 % 2"));
 			assertEquals("1.0", evaluator.evaluate("7 % -2"));
-			assertEquals("14.0", evaluator.evaluate("4 * 3 + 2"));
-			assertEquals("10.0", evaluator.evaluate("4 + 3 * 2"));
-			assertEquals("16.0", evaluator.evaluate("4 / 2 * 8"));
 			assertEquals("4.0", evaluator.evaluate("(4)"));
 			assertEquals("-4.0", evaluator.evaluate("(-4)"));
 			assertEquals("-4.0", evaluator.evaluate("-(4)"));
@@ -73,6 +69,21 @@ public class JEvalTests {
 			assertEquals("-6.0", evaluator.evaluate("-(3 + 3)"));
 			assertEquals("4.0", evaluator.evaluate("(3) + 1"));
 			assertEquals("2.0", evaluator.evaluate("(3) - 1"));
+		} catch (Exception e) {
+			throw new AssertionError(e);
+		}
+	}
+
+	/**
+	 * Test expressions containing mathematical operations, pt 2.
+	 * These tests involve valid expressions.
+	 */
+	@Test
+	void testEvaluateMathematicalOperations2() {
+		try {
+			assertEquals("14.0", evaluator.evaluate("4 * 3 + 2"));
+			assertEquals("10.0", evaluator.evaluate("4 + 3 * 2"));
+			assertEquals("16.0", evaluator.evaluate("4 / 2 * 8"));
 			assertEquals("14.0", evaluator.evaluate("(4 + 3) * 2"));
 			assertEquals("13.0", evaluator
 					.evaluate("4 + (3 + 1) + (3 + 1) + 1"));
@@ -93,14 +104,10 @@ public class JEvalTests {
 
 	/**
 	 * Test expressions with invalid syntax for mathematical operations.
+	 * These tests involve invalid expressions.
 	 */
 	@Test
-	public void testEvaluateInvalidMathematicalSyntax() {
-		Evaluator evaluator = new Evaluator();
-
-		/*
-		 * These tests involve invalid expressions.
-		 */
+	void testEvaluateInvalidMathematicalSyntax() {
 		assertException(evaluator, "-");
 		assertException(evaluator, "4 + ");
 		assertException(evaluator, "4 - ");
@@ -118,15 +125,11 @@ public class JEvalTests {
 
 	/**
 	 * Test expressions containing Boolean operations.
+	 * These tests involve valid expressions.
 	 */
 	@Test
-	public void testEvaluateBooleanOperations() {
-		Evaluator evaluator = new Evaluator();
-
+	void testEvaluateBooleanOperations() {
 		try {
-			/*
-			 * These tests involve valid expressions.
-			 */
 			assertEquals(EvaluationConstants.BOOLEAN_STRING_FALSE, evaluator
 					.evaluate("3 < 3"));
 			assertEquals(EvaluationConstants.BOOLEAN_STRING_TRUE, evaluator
@@ -212,14 +215,10 @@ public class JEvalTests {
 
 	/**
 	 * Test expressions with invalid syntax for Boolean operations.
+	 * These tests involve invalid expressions.
 	 */
 	@Test
-	public void testEvaluateInvalidBooleanSyntax() {
-		Evaluator evaluator = new Evaluator();
-
-		/*
-		 * These tests involve invalid expressions.
-		 */
+	void testEvaluateInvalidBooleanSyntax() {
 		assertException(evaluator, "3 3 < 3");
 		assertException(evaluator, "3 << 3");
 		assertException(evaluator, "3 <> 4");
@@ -233,15 +232,11 @@ public class JEvalTests {
 
 	/**
 	 * Test expressions containing string operations.
+	 * These tests involve valid expressions.
 	 */
 	@Test
-	public void testEvaluateStringOperations() {
-		Evaluator evaluator = new Evaluator();
-
+	void testEvaluateStringOperations() {
 		try {
-			/*
-			 * These tests involve valid expressions.
-			 */
 			assertEquals("'A'", evaluator.evaluate("'A'"));
 			assertEquals("'AC'", evaluator.evaluate("'A' + 'C'"));
 			assertEquals("'A + C'", evaluator.evaluate("'A + C'"));
@@ -287,14 +282,10 @@ public class JEvalTests {
 
 	/**
 	 * Test expressions with invalid string operation syntax.
+	 * These tests involve invalid expressions.
 	 */
 	@Test
-	public void testEvaluateInvalidStringSyntax() {
-		Evaluator evaluator = new Evaluator();
-
-		/*
-		 * These tests involve invalid expressions.
-		 */
+	void testEvaluateInvalidStringSyntax() {
 		assertException(evaluator, "A");
 		assertException(evaluator, "A'");
 		assertException(evaluator, "a + b");
@@ -312,15 +303,11 @@ public class JEvalTests {
 
 	/**
 	 * Test expressions containing variables.
+	 * These tests involve valid expressions.
 	 */
 	@Test
-	public void testEvaluateVariables() {
-		Evaluator evaluator = new Evaluator();
-
+	void testEvaluateValidVariables() {
 		try {
-			/*
-			 * These tests involve valid expressions.
-			 */
 			assertEquals("2.718281828459045", evaluator.evaluate("#{E}"));
 			assertEquals("3.141592653589793", evaluator.evaluate("#{PI}"));
 			assertEquals("5.859874482048838", evaluator
@@ -359,9 +346,18 @@ public class JEvalTests {
 			assertEquals("-1.0", evaluator.evaluate("#{x} / #{y}"));
 			evaluator.clearVariables();
 
-			/*
-			 * These tests involve invalid expressions.
-			 */
+		} catch (Exception e) {
+			throw new AssertionError(e);
+		}
+	}
+
+	/**
+	 * Test expressions containing variables.
+	 * These tests involve invalid expressions.
+	 */
+	@Test
+	void testEvaluateInvalidVariables() {
+		try {
 			evaluator.putVariable("a", "Hello");
 			evaluator.putVariable("b", "World");
 			// There are no quotes around the string variables.
@@ -378,9 +374,18 @@ public class JEvalTests {
 			assertException(evaluator, "a + #{x} + y");
 			evaluator.clearVariables();
 
-			/*
-			 * These test involve a variable resolver.
-			 */
+		} catch (Exception e) {
+			throw new AssertionError(e);
+		}
+	}
+
+	/**
+	 * Test expressions containing variables.
+	 * These test involve a variable resolver.
+	 */
+	@Test
+	void testEvaluateVariablesResolver() {
+		try {
 			evaluator.setVariableResolver(new MockVariableResolver());
 			assertEquals("1", evaluator.getVariableValue("MockVariable1"));
 			assertEquals("2.0", evaluator.evaluate("#{MockVariable2}"));
@@ -405,9 +410,7 @@ public class JEvalTests {
 	 * the variable. This test passes the variable into a function.
 	 */
 	@Test
-	public void testEvaluateBug2142824() {
-		Evaluator evaluator = new Evaluator();
-
+	void testEvaluateBug2142824() {
 		try {
 			String expr = "#{var1} + abs(#{var2})";
 			evaluator.putVariable("var1", "2");
@@ -429,9 +432,7 @@ public class JEvalTests {
 	 * Test nested functions with variables.
 	 */
 	@Test
-	public void testNestedFunctionsWithVariables() {
-		Evaluator evaluator = new Evaluator();
-
+	void testNestedFunctionsWithVariables() {
 		try {
 			// Test an expression with a nested function and a variable in that
 			// function.
@@ -471,9 +472,7 @@ public class JEvalTests {
 	 * Test expressions containing custom functions.
 	 */
 	@Test
-	public void testEvaluateCustomFunctions() {
-		Evaluator evaluator = new Evaluator();
-
+	void testEvaluateCustomFunctions() {
 		try {
 			/*
 			 * These tests involve valid expressions.
@@ -501,15 +500,11 @@ public class JEvalTests {
 
 	/**
 	 * Test expressions containing mathematical functions.
+	 * These tests involve valid expressions.
 	 */
 	@Test
-	public void testEvaluateMathematicalFunctions() {
-		Evaluator evaluator = new Evaluator();
-
+	void testEvaluateMathematicalFunctions() {
 		try {
-			/*
-			 * These tests involve valid expressions.
-			 */
 			assertEquals("1.0", evaluator.evaluate("abs(-1)"));
 			assertEquals("2.0", evaluator.evaluate("abs(-1) + 1"));
 			assertEquals("0.0", evaluator.evaluate("abs(-1) - 1"));
@@ -554,14 +549,10 @@ public class JEvalTests {
 
 	/**
 	 * Test expressions with invalid mathematical function syntax.
+	 * These tests involve invalid expressions.
 	 */
 	@Test
-	public void testEvaluateInvalidMathFunctions() {
-		Evaluator evaluator = new Evaluator();
-
-		/*
-		 * These tests involve invalid expressions.
-		 */
+	void testEvaluateInvalidMathFunctions() {
 		assertException(evaluator, "abs)");
 		assertException(evaluator, "abs(");
 		assertException(evaluator, "abs()");
@@ -574,39 +565,28 @@ public class JEvalTests {
 
 	/**
 	 * Test expressions containing string functions.
+	 * These tests involve valid expressions.
 	 */
 	@Test
-	public void testEvaluateStringFunctions() {
-		Evaluator evaluator = new Evaluator();
-
+	void testEvaluateStringFunctions() {
 		try {
-			/*
-			 * These tests involve valid expressions.
-			 */
 			assertEquals("'s'", evaluator.evaluate("charAt('test', 2)"));
 			assertEquals("'stop'", evaluator
 					.evaluate("charAt('test', 2) + 'top'"));
-			assertTrue(Double
-					.valueOf(evaluator.evaluate("compareTo('1', '2')"))
-					.doubleValue() < 0);
-			assertTrue(Double
-					.valueOf(evaluator.evaluate("compareTo('1', '1')"))
-					.doubleValue() == 0);
-			assertTrue(Double
-					.valueOf(evaluator.evaluate("compareTo('2', '1')"))
-					.doubleValue() > 0);
-			assertTrue(Double.valueOf(
-					evaluator.evaluate("compareTo('aBc', 'abc')"))
-					.doubleValue() < 0);
-			assertTrue(Double.valueOf(
-					evaluator.evaluate("compareTo('aBc', 'aBc')"))
-					.doubleValue() == 0);
-			assertTrue(Double.valueOf(
-					evaluator.evaluate("compareTo('abc', 'aBc')"))
-					.doubleValue() > 0);
-			assertTrue(Double.valueOf(
-					evaluator.evaluate("compareToIgnoreCase('aBc', 'abc')"))
-					.doubleValue() == 0);
+			assertTrue(Double.parseDouble(evaluator
+					.evaluate("compareTo('1', '2')")) < 0);
+			assertTrue(Double.parseDouble(evaluator
+					.evaluate("compareTo('1', '1')")) == 0);
+			assertTrue(Double.parseDouble(evaluator
+					.evaluate("compareTo('2', '1')")) > 0);
+			assertTrue(Double.parseDouble(evaluator
+					.evaluate("compareTo('aBc', 'abc')")) < 0);
+			assertTrue(Double.parseDouble(evaluator
+					.evaluate("compareTo('aBc', 'aBc')")) == 0);
+			assertTrue(Double.parseDouble(evaluator
+					.evaluate("compareTo('abc', 'aBc')")) > 0);
+			assertTrue(Double.parseDouble(evaluator
+					.evaluate("compareToIgnoreCase('aBc', 'abc')")) == 0);
 			assertEquals("'Hello World!'", evaluator
 					.evaluate("concat('Hello ', 'World!')"));
 			assertEquals(EvaluationConstants.BOOLEAN_STRING_TRUE, evaluator
@@ -677,17 +657,12 @@ public class JEvalTests {
 		}
 	}
 
-
 	/**
 	 * Test expressions containing invalid string functions.
+	 * These tests involve invalid function syntax.
 	 */
 	@Test
-	public void testEvaluateInvalidStringFunctions() {
-		Evaluator evaluator = new Evaluator();
-
-		/*
-		 * These tests involve invalid function syntax.
-		 */
+	void testEvaluateInvalidStringFunctions() {
 		assertException(evaluator, "charAt(2)");
 		assertException(evaluator, "concat(\"Hello \", \"World!\")");
 		assertException(evaluator, "'abc '.trim()");
@@ -701,15 +676,11 @@ public class JEvalTests {
 
 	/**
 	 * Test expressions containing nested function calls.
+	 * These tests involve valid expressions.
 	 */
 	@Test
-	public void testValidNestedFunctions() {
-		Evaluator evaluator = new Evaluator();
-
+	void testValidNestedFunctions() {
 		try {
-			/*
-			 * These tests involve valid expressions.
-			 */
 			assertEquals("'a b c'", evaluator
 					.evaluate("trim( trim(' a b c ') )"));
 			assertEquals("'A B C'", evaluator
@@ -724,15 +695,11 @@ public class JEvalTests {
 
 	/**
 	 * Test expressions containing invalid nested function calls.
+	 * These tests involve invalid expressions.
 	 */
 	@Test
-	public void testInvalidNestedFunctions() {
-		Evaluator evaluator = new Evaluator();
-
+	void testInvalidNestedFunctions() {
 		try {
-			/*
-			 * These tests involve invalid expressions.
-			 */
 			// atan2 can not take a string as the first argument in the nested
 			// call.
 			assertException(evaluator, "atan2(atan2('1', 1), 1)");
@@ -755,16 +722,11 @@ public class JEvalTests {
 
 	/**
 	 * Test expressions containing complex scenerios.
+	 * These tests involve valid expressions.
 	 */
 	@Test
-	public void testEvaluateComplexExpressions() {
-		Evaluator evaluator = new Evaluator();
-
+	void testEvaluateValidComplexExpressions() {
 		try {
-			/*
-			 * These tests involve valid expressions.
-			 */
-
 			// This expression takes a numeric result from a string function
 			// and adds it to a number.
 			assertEquals("10.0", evaluator
@@ -786,10 +748,18 @@ public class JEvalTests {
 			assertEquals("15.0", evaluator.evaluate("(0+abs(-8))+7"));
 			assertEquals("15.0", evaluator.evaluate("((abs(-8)))+7"));
 
-			/*
-			 * These tests involve invalid expressions.
-			 */
+		} catch (Exception e) {
+			throw new AssertionError(e);
+		}
+	}
 
+	/**
+	 * Test expressions containing complex scenerios.
+	 * These tests involve invalid expressions.
+	 */
+	@Test
+	void testEvaluateInvalidComplexExpressions() {
+		try {
 			// Empty expression is not allowed.
 			assertException(evaluator, "");
 
@@ -804,6 +774,7 @@ public class JEvalTests {
 
 			// The variable, zzz, does not exist.
 			assertException(evaluator, "'#{zzz}'");
+
 		} catch (Exception e) {
 			throw new AssertionError(e);
 		}
@@ -811,29 +782,21 @@ public class JEvalTests {
 
 	/**
 	 * Test valid names as Boolean expressions.
+	 * These are valid names.
 	 */
 	@Test
-	public void testValidNames() {
-		final Evaluator evaluator = new Evaluator();
-
-		// These are valid names.
-		try {
-			evaluator.isValidName("myFunction");
-			evaluator.isValidName("my_function");
-			evaluator.isValidName("my5Function");
-		} catch (Exception e) {
-			fail(e.toString());
-		}
+	void testValidNames() {
+		assertDoesNotThrow(() -> evaluator.isValidName("myFunction"));
+		assertDoesNotThrow(() -> evaluator.isValidName("my_function"));
+		assertDoesNotThrow(() -> evaluator.isValidName("my5Function"));
 	}
 
 	/**
 	 * Test invalid names as Boolean expressions.
+	 * These are invalid names.
 	 */
 	@Test
-	public void testIsValidName() {
-		final Evaluator evaluator = new Evaluator();
-
-		// These are invalid names.
+	void testIsValidName() {
 		assertInvalidName(evaluator, "0myFunction");
 		assertInvalidName(evaluator, "1myFunction");
 		assertInvalidName(evaluator, "2myFunction");
@@ -861,29 +824,19 @@ public class JEvalTests {
 		assertInvalidName(evaluator, "my!function");
 	}
 
-	private void assertInvalidName(final Evaluator evaluator, final String name) {
-		try {
-			evaluator.isValidName(name);
-
-			fail();
-		} catch (Exception e) {
-			// We are expecting an exception.
-		}
+	private static void assertInvalidName(final Evaluator evaluator, final String name) {
+		// We are expecting an exception.
+		assertThrows(IllegalArgumentException.class, () -> evaluator.isValidName(name));
 	}
 
 	/**
 	 * Convienence method for assert that an evaluation exception has occurrd.
+	 * If an exception is thrown, then we have been successful.
 	 * 
 	 * @param evaluator
 	 * @param expression
 	 */
-	private void assertException(Evaluator evaluator, String expression) {
-		try {
-			evaluator.evaluate(expression);
-			throw new AssertionError(
-					"The expression should have thrown an exception.");
-		} catch (EvaluationException ee) {
-			// If an exception is thrown, then we have been successful.
-		}
+	private static void assertException(Evaluator evaluator, String expression) {
+		assertThrows(EvaluationException.class, () -> evaluator.evaluate(expression));
 	}
 }
